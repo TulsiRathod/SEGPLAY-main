@@ -1,0 +1,144 @@
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 0px;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(69, 69, 69, 0.9);
+}
+
+/* Modal Content */
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  height: 95vh;
+  border: 1px solid #bdc0cc;
+  border-radius: 8px;
+
+}
+
+#rules_modal{
+  width: 1500px !important;
+}
+
+#order_modal_content{
+  width: 1300px;
+}
+
+#portfolio_modal_content{
+  width: 1300px;
+}
+
+#exchange_modal_content{
+  width: 1300px;
+}
+
+.scroll_content {
+
+  /* position: fixed; */
+  overflow-x: auto;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 3px;
+  margin-left: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: inherit;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #8d8d8db3;
+  border-radius: 10px;
+}
+
+.msg {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 1em; 
+  padding: 10px;
+  
+}
+
+/* The Close Button */
+
+.close {
+  color: #000000;
+  position: relative;
+  
+  bottom: 10px;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#rules_modal_close{
+  left: 1430px;
+}
+
+#table_order_close{
+  left: 1230px;
+}
+
+#portfolio_close{
+  left:1230px;
+}
+
+#exchange_close{
+  left:1230px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal button */
+.modal-btn {
+  background-color: #259b95;
+  color: #ffffff;
+  width: 100px !important;
+  height: 35px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 5px !important;
+  margin-bottom: -10px !important;
+  position: relative;
+  float: right;
+  left: 660px;
+  box-shadow: 10px 10px 20px #00000033;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.modal-btn:hover {
+  background-color: #26a29c;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.modal_title {
+  font-size: 23px;
+  font-weight: 700;
+  margin-top: -45px;
+}
+
+unput[type="checkbox"]
+{
+    vertical-align:middle;
+}
