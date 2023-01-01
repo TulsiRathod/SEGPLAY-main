@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import RulesModal from "./RulesModal";
 import { SERVER_URL } from "../Baseurl";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [rulesModal, setRulesModal] = useState(false);
@@ -23,16 +23,13 @@ const Login = () => {
     })
       .then((response) => {
         console.log("Success",response);
-        toast.success(response.data.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.success(response.data.message);
+        localStorage.setItem('SEG_TEAM_ID',response.data.data.id);
         setRulesModal(true);
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.response.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(error.response.data.message);
       });
   };
 

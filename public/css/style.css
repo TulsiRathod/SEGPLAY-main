@@ -266,9 +266,10 @@ h3 {
     padding: 20px 0px 0px; 
 }
 .seg_card{
-    width: 100%;
+    width: 16vh;
     height: 23vh;
-    perspective: 300px;
+    perspective: 150px;
+    margin-bottom: 20px;
 }
 .card_content {
     position: relative;
