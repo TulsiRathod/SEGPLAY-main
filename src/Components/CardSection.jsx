@@ -27,7 +27,7 @@ const CardSection = ({day}) => {
     })
       .then((response) => {
         setCards(response.data.cards);
-        setShow(false);
+        setShow(true);
       })
       .catch((error) => {
         console.log("error", error);
