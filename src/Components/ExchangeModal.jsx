@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const ExchangeModal = ({exchangeModal,closeModal,stockExchangeDetails}) => {
-  useEffect(()=>{
-    console.log(stockExchangeDetails);
-  })
   return (
     <>
       <div id="exchange_modal" class="modal" style={exchangeModal ? { display: "flex" } : { display: "none" }}>

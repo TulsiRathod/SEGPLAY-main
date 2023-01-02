@@ -8,7 +8,7 @@ const Wallet = ({balance,portfolioDetails}) => {
       temp+=(elem.holded_stock*elem.current_price);
   })
     setHoldings(temp);
-  });
+  },[portfolioDetails]);
   return (
     <>
       <div className="wallet">

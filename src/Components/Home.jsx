@@ -22,9 +22,9 @@ const Home = () => {
   const [exchangeModal, setExchangeModal] = useState(false);
   const [day, setDay] = useState(1);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
-  const [balance,setBalance]=useState();
+  const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
-
+  const [holdings, setHoldings] = useState(0);
 
   const closeModal = () => {
     setRulesModal(false);
@@ -54,7 +54,7 @@ const Home = () => {
       url: `${SERVER_URL}api/main/stock-exchange?day_no=${day}`,
     })
       .then((response) => {
-        console.log("Stock Details",response.data.data);
+        // console.log("Stock Details",  response.data.data);
         setStockExchangeDetails(response.data.data);
       })
       .catch((error) => {
@@ -79,13 +79,24 @@ const Home = () => {
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
 
-    return () => {socket.off("day");socket.off("round")};
+    return () => {
+      socket.off("day");
+      socket.off("round");
+    };
   }, []);
-  
+
   useEffect(()=>{
+    var temp=0;
+    portfolioDetails.map((elem)=>{
+      temp+=(elem.holded_stock*elem.current_price);
+  })
+    setHoldings(temp);
+  },[portfolioDetails]);
+
+  useEffect(() => {
     getWalletDetails();
     getStockExchange();
-  },[])
+  }, []);
 
   return (
     <>
@@ -113,11 +124,49 @@ const Home = () => {
           <div className="main_section">
             <div className="row">
               <div className="col-lg-9">
-                <Portfolio portfolioDetails={portfolioDetails}/>
-                <CardSection day={day}/>
+                <Portfolio portfolioDetails={portfolioDetails} />
+                <CardSection day={day} />
               </div>
               <div className="col-lg-3 p-0">
-                <Wallet balance={balance} portfolioDetails={portfolioDetails} />
+                <div className="wallet">
+                  <h3>
+                    <img
+                      src="../assets/coin.png"
+                      width="25"
+                      style={{ marginRight: "7px" }}
+                      alt=""
+                    />
+                    Wallet
+                  </h3>
+                  <hr />
+                  <div>
+                    <div className="balance">
+                      <p>Available balance</p>
+                      <h4>
+                        Rs. <span>{balance}</span>
+                      </h4>
+                    </div>
+                    <div className="balance">
+                      <p>Holdings</p>
+                      <h4>
+                        Rs. <span>{holdings}</span>
+                      </h4>
+                    </div>
+                    <hr
+                      style={{
+                        borderTopStyle: "dashed",
+                        borderTopWidth: "5px",
+                        margin: " 12px 0px 0px !important",
+                      }}
+                    />
+                    <div className="balance">
+                      <p>Total Networth</p>
+                      <h4>
+                        Rs. <span>{balance + holdings}</span>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
                 <Order />
               </div>
             </div>
@@ -127,7 +176,11 @@ const Home = () => {
       <RulesModal rulesModal={rulesModal} closeModal={closeModal} />
       <OrderModal orderModal={orderModal} closeModal={closeModal} />
       <PortfolioModal portfolioModal={portfolioModal} closeModal={closeModal} />
-      <ExchangeModal exchangeModal={exchangeModal} closeModal={closeModal} stockExchangeDetails={stockExchangeDetails}/>
+      <ExchangeModal
+        exchangeModal={exchangeModal}
+        closeModal={closeModal}
+        stockExchangeDetails={stockExchangeDetails}
+      />
     </>
   );
 };

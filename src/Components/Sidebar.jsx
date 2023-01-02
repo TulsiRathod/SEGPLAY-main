@@ -26,6 +26,7 @@ const Sidebar = ({
       .then((response) => {
         // console.log("Success", response);
         toast.success(response.data.message);
+        localStorage.removeItem("SEG_TEAM_ID");
         nav("/");
       })
       .catch((error) => {
