@@ -2,13 +2,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../Baseurl";
 
-const CardSection = () => {
+const CardSection = ({day}) => {
   const [cards, setCards] = useState([]);
-  const [show,setShow]=useState(true);
+  const [show,setShow]=useState(false);
   
   useEffect(() => {
-    getCard();
+    if(day!=0){
+      getCard();
+    }
   },[]);
+
+  useEffect(()=>{
+    if (localStorage.getItem(`SEG_NEWS_${day}`) !== null) {
+      setShow(true);
+    }
+  },[day])
 
   const getCard = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -19,7 +27,7 @@ const CardSection = () => {
     })
       .then((response) => {
         setCards(response.data.cards);
-        // console.log(response);
+        setShow(false);
       })
       .catch((error) => {
         console.log("error", error);
@@ -34,9 +42,7 @@ const CardSection = () => {
     return string;
   };
 
-  const cardShow = ()=>{
-    setShow(show?false:true);
-  }
+ 
 
   return (
     <>
@@ -46,7 +52,7 @@ const CardSection = () => {
             <div className="row">
               {cards.map((elem)=>
                 <div className="col">
-                <div className="seg_card" onClick={cardShow}>
+                <div className="seg_card">
                   <div className={`card_content ${show?'is-flipped':''}`}>
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />

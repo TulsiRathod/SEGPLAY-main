@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const Portfolio = () => {
+const Portfolio = ({portfolioDetails}) => {
+  const [portfolio,setPortfolio]=useState([]);
+  useEffect(()=>{
+    setPortfolio(portfolioDetails);
+  })
   return (
     <>
       <div className="portfolio ">
@@ -30,54 +34,13 @@ const Portfolio = () => {
                             <th style={{ textAlign: "center" }}>Last Price</th>
                             <th style={{ textAlign: "end" }}>Quantity</th>
                           </tr>
+                          {portfolio.map((elem)=>
                           <tr>
-                            <td>
-                              <h5>NFLX</h5>
-                              Netflix, Inc.
-                            </td>
-                            <td style={{ textAlign: "center" }}>
-                              <p>$250.00</p>
-                            </td>
-                            <td style={{ textAlign: "end" }}>
-                              <p>50K</p>
-                            </td>
+                            <td><h5>{elem.company_name}</h5></td>
+                            <td style={{ textAlign: "center" }}><p>{elem.current_price}</p></td>
+                            <td style={{ textAlign: "end" }}><p>{elem.holded_stock}</p></td>
                           </tr>
-                          <tr>
-                            <td>
-                              <h5>NFLX</h5>
-                              Netflix, Inc.
-                            </td>
-                            <td style={{ textAlign: "center" }}>
-                              <p>$250.00</p>
-                            </td>
-                            <td style={{ textAlign: "end" }}>
-                              <p>50K</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <h5>NFLX</h5>
-                              Netflix, Inc.
-                            </td>
-                            <td style={{ textAlign: "center" }}>
-                              <p>$250.00</p>
-                            </td>
-                            <td style={{ textAlign: "end" }}>
-                              <p>50K</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <h5>NFLX</h5>
-                              Netflix, Inc.
-                            </td>
-                            <td style={{ textAlign: "center" }}>
-                              <p>$250.00</p>
-                            </td>
-                            <td style={{ textAlign: "end" }}>
-                              <p>50K</p>
-                            </td>
-                          </tr>
+                          )}
                         </table>
                       </div>
                     </div>

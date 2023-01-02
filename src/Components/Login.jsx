@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RulesModal from "./RulesModal";
 import { SERVER_URL } from "../Baseurl";
@@ -50,6 +50,12 @@ const Login = () => {
   const HandleAccept = () => {
     nav("/Home");
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem("SEG_TEAM_ID")){
+      nav('/Home');
+    }
+  })
 
   return (
     <>

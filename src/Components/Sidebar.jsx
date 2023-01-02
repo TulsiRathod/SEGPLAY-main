@@ -24,7 +24,7 @@ const Sidebar = ({
       },
     })
       .then((response) => {
-        console.log("Success", response);
+        // console.log("Success", response);
         toast.success(response.data.message);
         nav("/");
       })
@@ -40,7 +40,7 @@ const Sidebar = ({
       url: `${SERVER_URL}api/main/getNews?day=${day}`,
     })
       .then((response) => {
-        console.log("Success", response.data.news);
+        // console.log("Success", response.data.news);
         localStorage.setItem(`SEG_NEWS_${day}`,JSON.stringify(response.data.news));
       })
       .catch((error) => {
@@ -51,13 +51,13 @@ const Sidebar = ({
   const showNews = () => {let arr=[]
     for (let i = 1; i <= day; i++) {
       arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)))
-      console.log(news);
+      // console.log(news);
     }
     setNews(arr.reverse());
   };
 
   useEffect(() => {
-    if (localStorage.getItem(`SEG_NEWS_${day}`) === null) {
+    if (localStorage.getItem(`SEG_NEWS_${day}`) === null && day!=0) {
       getNews();
     }
   }, [day]);

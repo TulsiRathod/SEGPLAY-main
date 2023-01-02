@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../Baseurl";
 import ExchangeModal from "./ExchangeModal";
 import OrderModal from "./OrderModal";
@@ -12,6 +12,7 @@ import Portfolio from "./Portfolio";
 import CardSection from "./CardSection";
 import Wallet from "./Wallet";
 import Order from "./Order";
+import axios from "axios";
 const socket = io(SERVER_URL);
 
 const Home = () => {
@@ -19,13 +20,31 @@ const Home = () => {
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
-  const [day, setDay] = useState(0);
+  const [day, setDay] = useState(1);
+  const [portfolioDetails, setPortfolioDetails] = useState([]);
+  const [balance,setBalance]=useState();
 
   const closeModal = () => {
     setRulesModal(false);
     setOrderModal(false);
     setPortfolioModal(false);
     setExchangeModal(false);
+  };
+
+  const getWalletDetails = () => {
+    const team_id = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/team-portfolio?team_id=63ae2c134d99e60251af7e54`,
+    })
+      .then((response) => {
+        console.log("Wallet Details",response.data.data);
+        setPortfolioDetails(response.data.data);
+        setBalance(response.data.available_balance);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -47,6 +66,10 @@ const Home = () => {
 
     return () => {socket.off("day");socket.off("round")};
   }, []);
+  
+  useEffect(()=>{
+    getWalletDetails();
+  },[])
 
   return (
     <>
@@ -74,11 +97,11 @@ const Home = () => {
           <div className="main_section">
             <div className="row">
               <div className="col-lg-9">
-                <Portfolio />
-                <CardSection />
+                <Portfolio portfolioDetails={portfolioDetails}/>
+                <CardSection day={day}/>
               </div>
               <div className="col-lg-3 p-0">
-                <Wallet />
+                <Wallet balance={balance} portfolioDetails={portfolioDetails} />
                 <Order />
               </div>
             </div>

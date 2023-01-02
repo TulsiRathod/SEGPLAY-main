@@ -1,29 +1,14 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { SERVER_URL } from "../Baseurl";
 
-const Wallet = () => {
-  const [walletDetails, setWalletDetails] = useState();
-  const [balance,setBalance]=useState();
-  const getWalletDetails = () => {
-    const team_id = localStorage.getItem("SEG_TEAM_ID");
-    axios({
-      method: "get",
-      url: `${SERVER_URL}api/main/team-portfolio?team_id=${team_id}`,
-    })
-      .then((response) => {
-        console.log(response);
-        setWalletDetails(response.data.data);
-        setBalance(response.data.available_balance);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    getWalletDetails();
-  }, []);
+const Wallet = ({balance,portfolioDetails}) => {
+  const [holdings,setHoldings]=useState(0);
+  useEffect(()=>{
+    var temp=0;
+    portfolioDetails.map((elem)=>{
+      temp+=(elem.holded_stock*elem.current_price);
+  })
+    setHoldings(temp);
+  });
   return (
     <>
       <div className="wallet">
@@ -47,7 +32,7 @@ const Wallet = () => {
           <div className="balance">
             <p>Holdings</p>
             <h4>
-              Rs. <span>13,00,000</span>
+              Rs. <span>{holdings}</span>
             </h4>
           </div>
           <hr
@@ -60,7 +45,7 @@ const Wallet = () => {
           <div className="balance">
             <p>Total Networth</p>
             <h4>
-              Rs. <span>27,00,000</span>
+              Rs. <span>{balance+holdings}</span>
             </h4>
           </div>
         </div>
