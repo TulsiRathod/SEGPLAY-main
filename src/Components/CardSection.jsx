@@ -2,32 +2,37 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../Baseurl";
 
-const CardSection = ({day}) => {
+const CardSection = ({day,round}) => {
   const [cards, setCards] = useState([]);
   const [show,setShow]=useState(false);
   
   useEffect(() => {
-    if(day!=0){
+    if(round!=0&&day!=0){
       getCard();
     }
-  },[]);
+  },[round]);
 
-  useEffect(()=>{
-    if (localStorage.getItem(`SEG_NEWS_${day}`) !== null) {
-      setShow(true);
-    }
-  },[day])
+  // useEffect(()=>{
+  //   if (localStorage.getItem(`SEG_NEWS_${day}`) !== null) {
+  //     setShow(true);
+  //   }
+  // },[day])
 
   const getCard = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     axios({
-      method: "get",
-      url: `${SERVER_URL}api/main/getCards/?day=${day}&teamid=${teamId}`,
+      method: "post",
+      url: `${SERVER_URL}api/main/getCards`,
+      data :{
+        day:day,
+        teamid:teamId,
+      }
     })
       .then((response) => {
         setCards(response.data.cards);
         setShow(true);
+        console.log(response);
       })
       .catch((error) => {
         console.log("error", error);
@@ -41,8 +46,6 @@ const CardSection = ({day}) => {
     }
     return string;
   };
-
- 
 
   return (
     <>

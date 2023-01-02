@@ -21,6 +21,7 @@ const Home = () => {
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
   const [day, setDay] = useState(1);
+  const [round, setRound] = useState(1);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
@@ -75,7 +76,7 @@ const Home = () => {
 
     socket.on("round", (data) => {
       toast.success(`Round ${data.round} Started`);
-      setDay(data.day);
+      setRound(data.round);
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
 
@@ -125,7 +126,7 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-9">
                 <Portfolio portfolioDetails={portfolioDetails} />
-                <CardSection day={day} />
+                <CardSection day={day} round={round}/>
               </div>
               <div className="col-lg-3 p-0">
                 <div className="wallet">
