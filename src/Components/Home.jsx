@@ -23,6 +23,8 @@ const Home = () => {
   const [day, setDay] = useState(1);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
   const [balance,setBalance]=useState();
+  const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
+
 
   const closeModal = () => {
     setRulesModal(false);
@@ -35,12 +37,25 @@ const Home = () => {
     const team_id = localStorage.getItem("SEG_TEAM_ID");
     axios({
       method: "get",
-      url: `${SERVER_URL}api/main/team-portfolio?team_id=63ae2c134d99e60251af7e54`,
+      url: `${SERVER_URL}api/main/team-portfolio?team_id=${team_id}`,
     })
       .then((response) => {
-        console.log("Wallet Details",response.data.data);
         setPortfolioDetails(response.data.data);
         setBalance(response.data.available_balance);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getStockExchange = () => {
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/stock-exchange?day_no=${day}`,
+    })
+      .then((response) => {
+        console.log("Stock Details",response.data.data);
+        setStockExchangeDetails(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -69,6 +84,7 @@ const Home = () => {
   
   useEffect(()=>{
     getWalletDetails();
+    getStockExchange();
   },[])
 
   return (
@@ -111,7 +127,7 @@ const Home = () => {
       <RulesModal rulesModal={rulesModal} closeModal={closeModal} />
       <OrderModal orderModal={orderModal} closeModal={closeModal} />
       <PortfolioModal portfolioModal={portfolioModal} closeModal={closeModal} />
-      <ExchangeModal exchangeModal={exchangeModal} closeModal={closeModal} />
+      <ExchangeModal exchangeModal={exchangeModal} closeModal={closeModal} stockExchangeDetails={stockExchangeDetails}/>
     </>
   );
 };

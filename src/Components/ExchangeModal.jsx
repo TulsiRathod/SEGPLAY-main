@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const ExchangeModal = ({exchangeModal,closeModal}) => {
+const ExchangeModal = ({exchangeModal,closeModal,stockExchangeDetails}) => {
+  useEffect(()=>{
+    console.log(stockExchangeDetails);
+  })
   return (
     <>
       <div id="exchange_modal" class="modal" style={exchangeModal ? { display: "flex" } : { display: "none" }}>
@@ -26,96 +29,24 @@ const ExchangeModal = ({exchangeModal,closeModal}) => {
               </thead>
 
               <tbody>
+                {stockExchangeDetails.map((elem)=>
                 <tr>
                   <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
+                    <h5>{elem.company_ticker}</h5>
+                    {elem.company_name}
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
+                    <p>{elem.price}</p>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <p>250000</p>
+                    <p>{elem.quantity}</p>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <p>XYZ</p>
+                    <p>{elem.sector}</p>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>XYZ</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>XYZ</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>XYZ</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>XYZ</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>XYZ</p>
-                  </td>
-                </tr>
+                )}
+               
               </tbody>
             </table>
           </div>
