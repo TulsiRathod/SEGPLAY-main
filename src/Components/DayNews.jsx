@@ -26,7 +26,7 @@ const DayNews = ({ day, news }) => {
                     {elem.map((elem_news) =>
                       elem_news.day === elems ? (
                         <div className="mt-3">
-                          <div className="d-flex align-items-center justify-content-center">
+                          <div className="d-flex align-items-center justify-content-start">
                             <div>
                               <img
                                 src="../assets/profile.png"

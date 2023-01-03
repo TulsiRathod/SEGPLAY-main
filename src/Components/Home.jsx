@@ -86,13 +86,13 @@ const Home = () => {
     };
   }, []);
 
-  useEffect(()=>{
-    var temp=0;
-    portfolioDetails.map((elem)=>{
-      temp+=(elem.holded_stock*elem.current_price);
-  })
+  useEffect(() => {
+    var temp = 0;
+    portfolioDetails.map((elem) => {
+      temp += elem.holded_stock * elem.current_price;
+    });
     setHoldings(temp);
-  },[portfolioDetails]);
+  }, [portfolioDetails]);
 
   useEffect(() => {
     getWalletDetails();
@@ -111,7 +111,7 @@ const Home = () => {
             >
               00:00
             </div>
-            <div className="col-lg-4">Round-1</div>
+            <div className="col-lg-4">Round-{round}</div>
           </div>
         </div>
         <Sidebar
@@ -126,7 +126,7 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-9">
                 <Portfolio portfolioDetails={portfolioDetails} />
-                <CardSection day={day} round={round}/>
+                <CardSection day={day} round={round} />
               </div>
               <div className="col-lg-3 p-0">
                 <div className="wallet">
@@ -168,7 +168,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <Order />
+                <Order stockDetails={stockExchangeDetails} />
               </div>
             </div>
           </div>

@@ -1,9 +1,13 @@
 import React from "react";
 
-const ExchangeModal = ({exchangeModal,closeModal,stockExchangeDetails}) => {
+const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
   return (
     <>
-      <div id="exchange_modal" class="modal" style={exchangeModal ? { display: "flex" } : { display: "none" }}>
+      <div
+        id="exchange_modal"
+        class="modal"
+        style={exchangeModal ? { display: "flex" } : { display: "none" }}
+      >
         <div class="modal-content" id="exchange_modal_content">
           <span class="close" id="exchange_close" onClick={closeModal}>
             &times;
@@ -26,24 +30,25 @@ const ExchangeModal = ({exchangeModal,closeModal,stockExchangeDetails}) => {
               </thead>
 
               <tbody>
-                {stockExchangeDetails.map((elem)=>
-                <tr>
-                  <td>
-                    <h5>{elem.company_ticker}</h5>
-                    {elem.company_name}
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{elem.price}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{elem.quantity}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{elem.sector}</p>
-                  </td>
-                </tr>
-                )}
-               
+                {stockExchangeDetails.length > 0
+                  ? stockExchangeDetails.map((elem) => (
+                      <tr>
+                        <td>
+                          <h5>{elem.company_ticker}</h5>
+                          {elem.company_name}
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          <p>{elem.price}</p>
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          <p>{elem.quantity}</p>
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          <p>{elem.sector}</p>
+                        </td>
+                      </tr>
+                    ))
+                  : "No data found"}
               </tbody>
             </table>
           </div>
