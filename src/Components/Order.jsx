@@ -70,7 +70,7 @@ const Order = (props) => {
           />
           <input
             className="form-control"
-            style={{ marginBottom: "calc(15vh - 46px)" }}
+            style={{ marginBottom: "calc(14vh - 46px)" }}
             type="text"
             name="Total"
             id="TotalA"

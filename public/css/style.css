@@ -5,6 +5,9 @@
     --greenapple : #ECF9E6;
 }
 
+body{
+    overflow-y: hidden;
+}
 
 * {
     box-sizing: border-box;
@@ -35,7 +38,7 @@ a {
 }
 /************************* sidebar and newsbar *********************/
 .sidebar {
-    min-height: calc(100vh - 20px);
+    height: calc(100vh - 20px);
     display: flex;
     border-radius: 10px;
 }
@@ -147,7 +150,7 @@ h3 {
 .portfolio{
     min-height: calc(50vh - 30px);
     background-color: var(--greenapple);
-    padding: 31px 25px 5px;
+    padding: 20px 25px 5px;
     border-radius: 10px;
 }
 .portfolio h3{
