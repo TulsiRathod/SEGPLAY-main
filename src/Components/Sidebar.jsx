@@ -13,7 +13,7 @@ const Sidebar = ({
   day,
 }) => {
   const nav = useNavigate();
-  const [news,setNews]=useState({});
+  const [news, setNews] = useState({});
   const logout = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
@@ -42,23 +42,27 @@ const Sidebar = ({
     })
       .then((response) => {
         // console.log("Success", response.data.news);
-        localStorage.setItem(`SEG_NEWS_${day}`,JSON.stringify(response.data.news));
+        localStorage.setItem(
+          `SEG_NEWS_${day}`,
+          JSON.stringify(response.data.news)
+        );
       })
       .catch((error) => {
         console.log("fail", error);
       });
   };
 
-  const showNews = () => {let arr=[]
+  const showNews = () => {
+    let arr = [];
     for (let i = 1; i <= day; i++) {
-      arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)))
+      arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)));
       // console.log(news);
     }
     setNews(arr.reverse());
   };
 
   useEffect(() => {
-    if (localStorage.getItem(`SEG_NEWS_${day}`) === null && day!=0) {
+    if (localStorage.getItem(`SEG_NEWS_${day}`) === null && day != 0) {
       getNews();
     }
   }, [day]);
@@ -99,6 +103,15 @@ const Sidebar = ({
                   <a>
                     <i
                       className="fa-regular fa-id-card-clip "
+                      style={{ fontSize: "16px" }}
+                    ></i>
+                  </a>
+                </li>
+
+                <li>
+                  <a>
+                    <i
+                      className="fa fa-history"
                       style={{ fontSize: "16px" }}
                     ></i>
                   </a>
@@ -163,7 +176,7 @@ const Sidebar = ({
                 className="accordion accordion-flush pe-1"
                 id="accordionFlushExample "
               >
-                <DayNews news={news} day={day}/>
+                <DayNews news={news} day={day} />
               </div>
             </div>
           </section>
