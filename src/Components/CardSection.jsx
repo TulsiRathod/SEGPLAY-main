@@ -50,87 +50,227 @@ const CardSection = ({ day, round }) => {
   return (
     <>
       <div className="card-section">
-        <div className="row">
-          <div className="col-lg-10 ">
-            <div className="row">
-              {cards.map((elem) => (
-                <div className="col">
-                  <div className="seg_card">
-                    <div className={`card_content ${show ? "is-flipped" : ""}`}>
-                      <div className="card__face front">
-                        <img src="../assets/BullBear.png" alt="" />
-                      </div>
-                      <div className="card__face back">
-                        <img
-                          src="../assets/profile.png"
-                          alt=""
-                          width="40px"
-                          height="40px"
-                        />
-                        <div className="card_sign">
-                          <i
-                            className={`fa-sharp fa-solid fa-triangle ${
-                              elem.price < 0 ? "down" : ""
-                            }`}
-                          ></i>
-                          <span>Rs. {elem.price}/-</span>
-                          <p>{add3Dots(elem.news, 50)}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="col-lg-2 ">
-            <div className="row">
-              <div className="col">
-                <div className="seg_card">
-                  <div className="card_content">
-                    <div className="card__face front">
-                      <img src="../assets/BullBear.png" alt="" />
-                    </div>
-                    <div className="card__face back">
-                      <img
-                        src="../assets/profile.png"
-                        alt=""
-                        width="40px"
-                        height="40px"
-                      />
-                      <div className="card_sign">
-                        <i className="fa-sharp fa-solid fa-triangle"></i>
-                        <span>+Rs. 324/-</span>
-                        <p>Jainam IPO is Going to Collabrate with VNSGU</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <div className="row justify-content-between row-cols-5">
+          <div className="col seg_card ">
+            <div className="card_content is-flipped">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
               </div>
-              <div className="col">
-                <div className="seg_card">
-                  <div className="card_content">
-                    <div className="card__face front">
-                      <img src="../assets/BullBear.png" alt="" />
-                    </div>
-                    <div className="card__face back">
-                      <img
-                        src="../assets/profile.png"
-                        alt=""
-                        width="40px"
-                        height="40px"
-                      />
-                      <div className="card_sign">
-                        <i className="fa-sharp fa-solid fa-triangle"></i>
-                        <span>+Rs. 324/-</span>
-                        <p>Jainam IPO is Going to Collabrate with VNSGU</p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
                 </div>
               </div>
             </div>
-          </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          <div className="col seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+          {/* <div className="seg_card">
+            <div className="card_content">
+              <div className="card__face front">
+                <img src="../assets/BullBear.png" alt="" />
+              </div>
+              <div className="card__face back">
+                <img
+                  src="../assets/profile.png"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div className="card_sign">
+                  <i className="fa-sharp fa-solid fa-triangle"></i>
+                  <span>+Rs. 324/-</span>
+                  <p>Jainam IPO is Going to Collabrate with VNSGU</p>
+                </div>
+              </div>
+            </div>
+          </div>{" "} */}
         </div>
       </div>
     </>
