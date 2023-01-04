@@ -261,10 +261,15 @@ h3 {
 /************************** Card Section ******************************/
 .card-section {
   padding: 20px 0px 0px;
+  height: 390px;
+  /* border: 3px solid red; */
+  /* overflow-y: scroll; */
 }
+
 .seg_card {
-  width: 120px;
-  height: 170px;
+  width: 10vh;
+  height: 23vh;
+  min-height: 170px;
   perspective: 150px;
   margin-bottom: 20px;
 }
