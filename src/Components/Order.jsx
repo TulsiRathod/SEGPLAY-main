@@ -5,29 +5,23 @@ const Order = (props) => {
   const { stockDetails } = props;
   const [companyName, setCompanyName] = useState();
   const [quantity, setQuantity] = useState(500);
-  const [lot, setLot] = useState([500]);
+  const [maxQ, setMaxQ] = useState();
+  const [price, setPrice] = useState();
 
-  // useEffect(() => {
-  //   countQuantity();
-  // }, [companyName]);
+  useEffect(() => {
+    console.log(companyName);
+    calMaxLot();
+  }, [companyName]);
 
-  // const countQuantity = () => {
-  //   var maxQ = quantity / 12;
-  //   var vals = [];
-  //   var i = 500;
-  //   while (maxQ) {
-  //     vals.append(i);
-  //     i += 500;
-  //   }
-  //   console.log(vals, "lot");
-  // };
-
-  const handleStock = (v) => {
-    console.log(v, "hello");
-    // setCompanyName(e.company_name);
-    // setQuantity(e.quantity);
+  const calMaxLot = () => {
+    stockDetails.map((stock) => {
+      if (companyName === stock.company_name) {
+        setMaxQ(parseInt(stock.quantity / 12));
+        setPrice(parseInt(stock.price));
+      }
+    });
   };
-  console.log(stockDetails);
+
   return (
     <>
       <div className="order">
@@ -37,44 +31,45 @@ const Order = (props) => {
         <div id="order_share" action="#">
           <select
             className="form-select mb-3"
-            aria-label="Default select example"
+            style={{ backgroundColor: "#d2f9f7" }}
             name="company"
             id="company"
-            onChange={(e) => handleStock(e.target.value)}
+            onChange={(e) => {
+              setCompanyName(e.target.value);
+              setQuantity(500);
+            }}
           >
             <option value="0">Select company</option>
             {stockDetails.map((company) => (
-              <option value={company}>{company.company_name}</option>
+              <option value={company.name}>{company.company_name}</option>
             ))}
           </select>
-          {/* <select
-            className="form-select mb-3"
-            aria-label="Default select example"
-            name="qty"
-            id="qty"
-          >
-            <option value="0">Select share quantity</option>
 
-            <option value="500">500</option>
-          </select> */}
           <input
             type="number"
             value={quantity}
+            style={{ backgroundColor: "#d2f9f7" }}
             className="mb-3"
             onChange={(e) => setQuantity(e.target.value)}
             step={500}
             min={500}
-            max={2000}
+            max={maxQ}
+            placeholder="Enter value in 500's figure"
             name=""
             id=""
           />
           <input
             className="form-control"
-            style={{ marginBottom: "calc(14vh - 46px)" }}
+            style={{
+              marginBottom: "calc(14vh - 46px)",
+              backgroundColor: "#d2f9f7",
+            }}
+            value={price * quantity}
             type="text"
             name="Total"
             id="TotalA"
             placeholder="Total Amount"
+            disabled
           />
           <div className="row">
             <div className="col-lg-7 mb-1">

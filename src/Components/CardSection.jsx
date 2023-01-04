@@ -2,15 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../Baseurl";
 
-const CardSection = ({day,round}) => {
+const CardSection = ({ day, round }) => {
   const [cards, setCards] = useState([]);
-  const [show,setShow]=useState(false);
-  
+  const [show, setShow] = useState(false);
+
   useEffect(() => {
-    if(round!=0&&day!=0){
+    if (round != 0 && day != 0) {
       getCard();
     }
-  },[round]);
+  }, [round]);
 
   // useEffect(()=>{
   //   if (localStorage.getItem(`SEG_NEWS_${day}`) !== null) {
@@ -24,10 +24,10 @@ const CardSection = ({day,round}) => {
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/getCards`,
-      data :{
-        day:day,
-        teamid:teamId,
-      }
+      data: {
+        day: day,
+        teamid: teamId,
+      },
     })
       .then((response) => {
         setCards(response.data.cards);
@@ -53,30 +53,34 @@ const CardSection = ({day,round}) => {
         <div className="row">
           <div className="col-lg-10 ">
             <div className="row">
-              {cards.map((elem)=>
+              {cards.map((elem) => (
                 <div className="col">
-                <div className="seg_card">
-                  <div className={`card_content ${show?'is-flipped':''}`}>
-                    <div className="card__face front">
-                      <img src="../assets/BullBear.png" alt="" />
-                    </div>
-                    <div className="card__face back">
-                      <img
-                        src="../assets/profile.png"
-                        alt=""
-                        width="40px"
-                        height="40px"
-                      />
-                      <div className="card_sign">
-                        <i className={`fa-sharp fa-solid fa-triangle ${elem.price<0?'down':''}`}></i>
-                        <span>Rs. {elem.price}/-</span>
-                        <p>{add3Dots(elem.news,50)}</p>
+                  <div className="seg_card">
+                    <div className={`card_content ${show ? "is-flipped" : ""}`}>
+                      <div className="card__face front">
+                        <img src="../assets/BullBear.png" alt="" />
+                      </div>
+                      <div className="card__face back">
+                        <img
+                          src="../assets/profile.png"
+                          alt=""
+                          width="40px"
+                          height="40px"
+                        />
+                        <div className="card_sign">
+                          <i
+                            className={`fa-sharp fa-solid fa-triangle ${
+                              elem.price < 0 ? "down" : ""
+                            }`}
+                          ></i>
+                          <span>Rs. {elem.price}/-</span>
+                          <p>{add3Dots(elem.news, 50)}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              )}
+              ))}
             </div>
           </div>
           <div className="col-lg-2 ">

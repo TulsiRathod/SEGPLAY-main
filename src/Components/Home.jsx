@@ -20,8 +20,8 @@ const Home = () => {
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
-  const [day, setDay] = useState(0);
-  const [round, setRound] = useState(0);
+  const [day, setDay] = useState(1);
+  const [round, setRound] = useState(1);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
