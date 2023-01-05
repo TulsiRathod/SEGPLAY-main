@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../Baseurl";
 
-const CardSection = ({ day, round }) => {
+const CardSection = ({ day, round,cardReveal }) => {
   const [cards, setCards] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -11,6 +11,10 @@ const CardSection = ({ day, round }) => {
       getCard();
     }
   }, [round]);
+
+  useEffect(()=>{
+    cardReveal?setShow(true):setShow(false);
+  },[cardReveal]);
 
   // useEffect(()=>{
   //   if (localStorage.getItem(`SEG_NEWS_${day}`) !== null) {
@@ -57,7 +61,7 @@ const CardSection = ({ day, round }) => {
       .then((response) => {
         setCards(response.data.cards);
         setShow(true);
-        console.log(response);
+        // console.log(response);
       })
       .catch((error) => {
         console.log("error", error);
@@ -69,9 +73,9 @@ const CardSection = ({ day, round }) => {
       <div className="card-section">
         <div className="row justify-content-between row-cols-5">
           {cards.map((elem) => (
-           elem.type==1?
+           elem.type===1?
            <div className="col seg_card ">
-           <div className="card_content is-flipped">
+           <div className={`card_content ${cardReveal ? "is-flipped" : ""}`}>
              <div className="card__face front">
                <img src="../assets/BullBear.png" alt="" />
              </div>
@@ -94,7 +98,7 @@ const CardSection = ({ day, round }) => {
              </div>
            </div>
          </div>: <div className="col seg_card ">
-           <div className="card_content is-flipped">
+           <div className={`card_content ${cardReveal ? "is-flipped" : ""}`}>
              <div className="card__face front">
                <img src="../assets/BullBear.png" alt="" />
              </div>
