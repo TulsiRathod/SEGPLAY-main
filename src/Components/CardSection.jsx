@@ -71,6 +71,7 @@ const CardSection = ({ day, round,cardReveal }) => {
   return (
     <>
       <div className="card-section">
+        {cards.length>0?
         <div className="row justify-content-between row-cols-5">
           {cards.map((elem) => (
            elem.type===1?
@@ -124,7 +125,11 @@ const CardSection = ({ day, round,cardReveal }) => {
          </div>
 
           ))}
+        </div>:
+        <div className="d-flex justify-content-center">
+        <img src="../assets/BullBear.png" alt=""  style={{height:'60%',width:'50%',opacity:'0.5'}}/>
         </div>
+        }
       </div>
     </>
   );
