@@ -21,9 +21,9 @@ const Home = () => {
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
-  const [stockHistoryModal,setStockHistoryModal]=useState(false);
-  const [day, setDay] = useState(1);
-  const [round, setRound] = useState(1);
+  const [stockHistoryModal, setStockHistoryModal] = useState(false);
+  const [day, setDay] = useState(0);
+  const [round, setRound] = useState(0);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
@@ -83,10 +83,10 @@ const Home = () => {
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
 
-    socket.on("reveal",(data)=>{
+    socket.on("reveal", (data) => {
       console.log(data);
       toast.success(`Card Reveal`);
-    })
+    });
 
     return () => {
       socket.off("day");
@@ -191,7 +191,10 @@ const Home = () => {
         closeModal={closeModal}
         stockExchangeDetails={stockExchangeDetails}
       />
-      <StockHistory stockHistoryModal={stockHistoryModal} closeModal={closeModal}/>
+      <StockHistory
+        stockHistoryModal={stockHistoryModal}
+        closeModal={closeModal}
+      />
     </>
   );
 };

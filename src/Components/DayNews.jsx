@@ -14,39 +14,6 @@ const DayNews = ({ day, news }) => {
       {days &&
         days.map((elems) => (
           <div className="accordion-item">
-            {news &&
-              news.map((elem) => (
-                <div
-                  id={`panelsStayOpen-collapse${elems}`}
-                  className="accordion-collapse collapse"
-                  aria-labelledby={`panelsStayOpen-heading${elems}`}
-                  data-bs-parent="#accordionFlushExample"
-                >
-                  <div className="accordion-body">
-                    {elem.map((elem_news) =>
-                      elem_news.day === elems ? (
-                        <div className="mt-3">
-                          <div className="d-flex align-items-center justify-content-start">
-                            <div>
-                              <img
-                                src="../assets/profile.png"
-                                alt=""
-                                width="50px"
-                                height="50px"
-                              />
-                            </div>
-                            <div className="ps-2" style={{ fontSize: "13px" }}>
-                              {elem_news.news}
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        ""
-                      )
-                    )}
-                  </div>
-                </div>
-              ))}
             <h2
               className="accordion-header"
               id={`panelsStayOpen-heading${elems}`}
@@ -64,6 +31,49 @@ const DayNews = ({ day, news }) => {
                 Day {elems}
               </button>
             </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample"
+            >
+              {news &&
+                news.map((elem) => (
+                  <div
+                    id={`panelsStayOpen-collapse${elems}`}
+                    className="accordion-collapse collapse"
+                    aria-labelledby={`panelsStayOpen-heading${elems}`}
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div className="accordion-body">
+                      {elem.map((elem_news) =>
+                        elem_news.day === elems ? (
+                          <div className="mt-3">
+                            <div className="d-flex align-items-center justify-content-start">
+                              <div>
+                                <img
+                                  src="../assets/profile.png"
+                                  alt=""
+                                  width="50px"
+                                  height="50px"
+                                />
+                              </div>
+                              <div
+                                className="ps-2"
+                                style={{ fontSize: "13px" }}
+                              >
+                                {elem_news.news}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
         ))}
     </>
