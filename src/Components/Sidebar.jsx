@@ -10,6 +10,7 @@ const Sidebar = ({
   setPortfolioModal,
   setExchangeModal,
   setRulesModal,
+  setStockHistoryModal,
   day,
 }) => {
   const nav = useNavigate();
@@ -85,14 +86,11 @@ const Sidebar = ({
                 </li>
                 <li
                   onClick={() => {
-                    setOrderModal(true);
+                    setExchangeModal(true);
                   }}
                 >
                   <a>
-                    <i
-                      className="fa-solid fa-chart-line "
-                      style={{ fontSize: "15px" }}
-                    ></i>
+                    <i className="fa-solid fa-right-left"></i>
                   </a>
                 </li>
                 <li
@@ -107,27 +105,34 @@ const Sidebar = ({
                     ></i>
                   </a>
                 </li>
-
-                <li>
-                  <a>
-                    <i
-                      className="fa fa-history"
-                      style={{ fontSize: "16px" }}
-                    ></i>
-                  </a>
-                </li>
               </ul>
             </div>
 
             <div className="bottom_menu d-flex h-100">
               <ul className="list-unstyled text-center align-self-start mt-auto mb-0">
+             
                 <li
                   onClick={() => {
-                    setExchangeModal(true);
+                    setOrderModal(true);
                   }}
                 >
                   <a>
-                    <i className="fa-solid fa-right-left"></i>
+                    <i
+                      className="fa-solid fa-chart-line "
+                      style={{ fontSize: "15px" }}
+                    ></i>
+                  </a>
+                </li>
+                <li
+                onClick={()=>{
+                  setStockHistoryModal(true);
+                }}
+                >
+                  <a>
+                    <i
+                      className="fa fa-history"
+                      style={{ fontSize: "16px" }}
+                    ></i>
                   </a>
                 </li>
                 <li
@@ -142,7 +147,7 @@ const Sidebar = ({
                     ></i>
                   </a>
                 </li>
-
+                  
                 <li>
                   <a>
                     <img

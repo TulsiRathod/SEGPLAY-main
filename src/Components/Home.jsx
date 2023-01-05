@@ -13,6 +13,7 @@ import CardSection from "./CardSection";
 import Wallet from "./Wallet";
 import Order from "./Order";
 import axios from "axios";
+import StockHistory from "./StockHistory";
 const socket = io(SERVER_URL);
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
+  const [stockHistoryModal,setStockHistoryModal]=useState(false);
   const [day, setDay] = useState(1);
   const [round, setRound] = useState(1);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
@@ -32,6 +34,7 @@ const Home = () => {
     setOrderModal(false);
     setPortfolioModal(false);
     setExchangeModal(false);
+    setStockHistoryModal(false);
   };
 
   const getWalletDetails = () => {
@@ -80,6 +83,11 @@ const Home = () => {
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
 
+    socket.on("reveal",(data)=>{
+      console.log(data);
+      toast.success(`Card Reveal`);
+    })
+
     return () => {
       socket.off("day");
       socket.off("round");
@@ -119,6 +127,7 @@ const Home = () => {
           setPortfolioModal={setPortfolioModal}
           setExchangeModal={setExchangeModal}
           setRulesModal={setRulesModal}
+          setStockHistoryModal={setStockHistoryModal}
           day={day}
         />
         <div className="containers  ">
@@ -182,6 +191,7 @@ const Home = () => {
         closeModal={closeModal}
         stockExchangeDetails={stockExchangeDetails}
       />
+      <StockHistory stockHistoryModal={stockHistoryModal} closeModal={closeModal}/>
     </>
   );
 };
