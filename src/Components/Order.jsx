@@ -64,7 +64,7 @@ const Order = (props) => {
               marginBottom: "calc(14vh - 46px)",
               backgroundColor: "#d2f9f7",
             }}
-            value={price * quantity!==NaN?'':price*quantity}
+            value={companyName ? price * quantity : ""}
             type="text"
             name="Total"
             id="Totala"

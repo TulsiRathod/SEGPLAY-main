@@ -37,7 +37,7 @@ const DayNews = ({ day, news }) => {
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
             >
-              {news &&
+              {/* {news &&
                 news.map((elem) => (
                   <div
                     id={`panelsStayOpen-collapse${elems}`}
@@ -72,7 +72,12 @@ const DayNews = ({ day, news }) => {
                       )}
                     </div>
                   </div>
-                ))}
+                ))} */}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+              omnis eum quibusdam dicta rerum odio sed esse consequatur commodi
+              eligendi voluptas incidunt assumenda numquam quos consequuntur?
+              Quisquam deleniti vel, saepe quas eum, hic non perferendis
+              possimus, vitae assumenda quia sequi.
             </div>
           </div>
         ))}
