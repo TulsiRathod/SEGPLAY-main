@@ -1,6 +1,7 @@
 import React from "react";
 
 const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
+  // console.log(stockExchangeDetails);
   return (
     <>
       <div
