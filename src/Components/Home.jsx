@@ -22,8 +22,8 @@ const Home = () => {
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
   const [stockHistoryModal,setStockHistoryModal]=useState(false);
-  const [day, setDay] = useState(0);
-  const [round, setRound] = useState(0);
+  const [day, setDay] = useState(localStorage.getItem("SEG_CURRENT_DAY")?localStorage.getItem("SEG_CURRENT_DAY"):0);
+  const [round, setRound] = useState(localStorage.getItem("SEG_CURRENT_ROUND")?localStorage.getItem("SEG_CURRENT_ROUND"):0);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
@@ -56,7 +56,7 @@ const Home = () => {
   const getStockExchange = () => {
     axios({
       method: "get",
-      url: `${SERVER_URL}api/main/stock-exchange?day_no=${day}`,
+      url: `${SERVER_URL}api/main/stock-exchange?day_no=${1}`,
     })
       .then((response) => {
         console.log("Stock Details",  response.data.data);

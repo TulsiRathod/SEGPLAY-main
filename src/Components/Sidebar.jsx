@@ -11,10 +11,10 @@ const Sidebar = ({
   setExchangeModal,
   setRulesModal,
   setStockHistoryModal,
-  day,
 }) => {
   const nav = useNavigate();
   const [news, setNews] = useState({});
+  const day=localStorage.getItem("SEG_CURRENT_DAY");
   const logout = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
