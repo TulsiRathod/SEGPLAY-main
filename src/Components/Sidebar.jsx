@@ -42,7 +42,7 @@ const Sidebar = ({
       url: `${SERVER_URL}api/main/getNews?day=${day}`,
     })
       .then((response) => {
-        // console.log("Success", response.data.news);
+        console.log("Success", response.data.news);
         localStorage.setItem(
           `SEG_NEWS_${day}`,
           JSON.stringify(response.data.news)
