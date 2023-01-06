@@ -87,7 +87,7 @@ const Home = () => {
     socket.on("reveal",(data)=>{
       setCardReveal(true);
       toast.success(`Card Reveal`);
-    })
+    });
 
     return () => {
       socket.off("day");
@@ -193,7 +193,10 @@ const Home = () => {
         closeModal={closeModal}
         stockExchangeDetails={stockExchangeDetails}
       />
-      <StockHistory stockHistoryModal={stockHistoryModal} closeModal={closeModal}/>
+      <StockHistory
+        stockHistoryModal={stockHistoryModal}
+        closeModal={closeModal}
+      />
     </>
   );
 };

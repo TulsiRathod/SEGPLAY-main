@@ -110,7 +110,6 @@ const Sidebar = ({
 
             <div className="bottom_menu d-flex h-100">
               <ul className="list-unstyled text-center align-self-start mt-auto mb-0">
-             
                 <li
                   onClick={() => {
                     setOrderModal(true);
@@ -124,9 +123,9 @@ const Sidebar = ({
                   </a>
                 </li>
                 <li
-                onClick={()=>{
-                  setStockHistoryModal(true);
-                }}
+                  onClick={() => {
+                    setStockHistoryModal(true);
+                  }}
                 >
                   <a>
                     <i
@@ -147,7 +146,7 @@ const Sidebar = ({
                     ></i>
                   </a>
                 </li>
-                  
+
                 <li>
                   <a>
                     <img
@@ -170,7 +169,10 @@ const Sidebar = ({
           </nav>
         </div>
         <div className="newsbar">
-          <section>
+          <div class="accordion" id="accordionExample">
+            <DayNews news={news} day={day} />
+          </div>
+          {/* <section>
             <h3 className="mt-1">News</h3>
             <hr style={{ width: "calc(100% - 10px)" }} />
             <div
@@ -184,7 +186,7 @@ const Sidebar = ({
                 <DayNews news={news} day={day} />
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
       </div>
     </>
