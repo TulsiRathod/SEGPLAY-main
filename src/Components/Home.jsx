@@ -21,13 +21,14 @@ const Home = () => {
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
-  const [stockHistoryModal, setStockHistoryModal] = useState(false);
+  const [stockHistoryModal,setStockHistoryModal]=useState(false);
   const [day, setDay] = useState(0);
   const [round, setRound] = useState(0);
   const [portfolioDetails, setPortfolioDetails] = useState([]);
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
   const [holdings, setHoldings] = useState(0);
+  const [cardReveal,setCardReveal]=useState(false);
 
   const closeModal = () => {
     setRulesModal(false);
@@ -58,7 +59,7 @@ const Home = () => {
       url: `${SERVER_URL}api/main/stock-exchange?day_no=${day}`,
     })
       .then((response) => {
-        // console.log("Stock Details",  response.data.data);
+        console.log("Stock Details",  response.data.data);
         setStockExchangeDetails(response.data.data);
       })
       .catch((error) => {
@@ -83,14 +84,15 @@ const Home = () => {
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
 
-    socket.on("reveal", (data) => {
-      console.log(data);
+    socket.on("reveal",(data)=>{
+      setCardReveal(true);
       toast.success(`Card Reveal`);
     });
 
     return () => {
       socket.off("day");
       socket.off("round");
+      socket.off("reveal");
     };
   }, []);
 
@@ -135,7 +137,7 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-9">
                 <Portfolio portfolioDetails={portfolioDetails} />
-                <CardSection day={day} round={round} />
+                <CardSection day={day} round={round} cardReveal={cardReveal}/>
               </div>
               <div className="col-lg-3 p-0">
                 <div className="wallet">
