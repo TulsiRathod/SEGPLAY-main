@@ -1,25 +1,54 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { QuantityPicker } from "react-qty-picker";
+import { toast } from "react-hot-toast";
+import { SERVER_URL } from "../Baseurl";
 
 const Order = (props) => {
-  const { stockDetails } = props;
-  const [companyName, setCompanyName] = useState();
+  const { stockDetails, getWalletDetails } = props;
   const [quantity, setQuantity] = useState(500);
   const [maxQ, setMaxQ] = useState();
   const [price, setPrice] = useState();
-
+  const [companyName, setCompanyName] = useState();
+  const [companyId, setCompanyId] = useState();
   useEffect(() => {
-    console.log(companyName);
+    console.log(stockDetails);
     calMaxLot();
   }, [companyName]);
 
   const calMaxLot = () => {
     stockDetails.map((stock) => {
       if (companyName === stock.company_name) {
+        setCompanyId(stock.id);
         setMaxQ(parseInt(stock.quantity / 12));
         setPrice(parseInt(stock.price));
       }
     });
+  };
+
+  const handleBuy = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/buy-order`,
+      headers: {},
+      data: {
+        team_id: teamId,
+        company_id: companyId,
+        stock_quantity: parseInt(quantity),
+        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
+        round_type: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
+        order_time: new Date().toJSON(),
+      },
+    })
+      .then((response) => {
+        console.log("order ho gaya", response);
+        toast.success(response.data.message);
+        getWalletDetails();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
   };
 
   return (
@@ -78,7 +107,7 @@ const Order = (props) => {
               </button>
             </div>
             <div className="col-lg-5 ps-0 mb-1">
-              <button type="button" className="bn bn-green">
+              <button type="button" className="bn bn-green" onClick={handleBuy}>
                 BUY
               </button>
             </div>
