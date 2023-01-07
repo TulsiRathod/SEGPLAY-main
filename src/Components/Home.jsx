@@ -21,14 +21,22 @@ const Home = () => {
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
-  const [stockHistoryModal,setStockHistoryModal]=useState(false);
-  const [day, setDay] = useState(localStorage.getItem("SEG_CURRENT_DAY")?localStorage.getItem("SEG_CURRENT_DAY"):0);
-  const [round, setRound] = useState(localStorage.getItem("SEG_CURRENT_ROUND")?localStorage.getItem("SEG_CURRENT_ROUND"):0);
+  const [stockHistoryModal, setStockHistoryModal] = useState(false);
+  const [day, setDay] = useState(
+    localStorage.getItem("SEG_CURRENT_DAY")
+      ? localStorage.getItem("SEG_CURRENT_DAY")
+      : 0
+  );
+  const [round, setRound] = useState(
+    localStorage.getItem("SEG_CURRENT_ROUND")
+      ? localStorage.getItem("SEG_CURRENT_ROUND")
+      : 0
+  );
   const [portfolioDetails, setPortfolioDetails] = useState([]);
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
   const [holdings, setHoldings] = useState(0);
-  const [cardReveal,setCardReveal]=useState(false);
+  const [cardReveal, setCardReveal] = useState(false);
 
   const closeModal = () => {
     setRulesModal(false);
@@ -59,7 +67,7 @@ const Home = () => {
       url: `${SERVER_URL}api/main/stock-exchange?day_no=${1}`,
     })
       .then((response) => {
-        console.log("Stock Details",  response.data.data);
+        console.log("Stock Details", response.data.data);
         setStockExchangeDetails(response.data.data);
       })
       .catch((error) => {
@@ -84,7 +92,7 @@ const Home = () => {
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
 
-    socket.on("reveal",(data)=>{
+    socket.on("reveal", (data) => {
       setCardReveal(true);
       toast.success(`Card Reveal`);
     });
@@ -137,7 +145,7 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-9">
                 <Portfolio portfolioDetails={portfolioDetails} />
-                <CardSection day={day} round={round} cardReveal={cardReveal}/>
+                <CardSection day={day} round={round} cardReveal={cardReveal} />
               </div>
               <div className="col-lg-3 p-0">
                 <div className="wallet">
@@ -186,7 +194,11 @@ const Home = () => {
         </div>
       </div>
       <RulesModal rulesModal={rulesModal} closeModal={closeModal} />
-      <OrderModal orderModal={orderModal} closeModal={closeModal} />
+      <OrderModal
+        orderModal={orderModal}
+        closeModal={closeModal}
+        getWalletDetails={getWalletDetails}
+      />
       <PortfolioModal portfolioModal={portfolioModal} closeModal={closeModal} />
       <ExchangeModal
         exchangeModal={exchangeModal}

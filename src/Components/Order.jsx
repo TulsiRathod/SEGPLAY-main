@@ -3,19 +3,22 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { SERVER_URL } from "../Baseurl";
 
-const Order = ({stockDetails}) => {
-  const [quantity, setQuantity] = useState(0);
+const Order = (props) => {
+  const { stockDetails, getWalletDetails } = props;
+  const [quantity, setQuantity] = useState(500);
   const [maxQ, setMaxQ] = useState();
-  const [price, setPrice] = useState(0);
-  const [companyId,setCompanyId]=useState();
+  const [price, setPrice] = useState();
+  const [companyName, setCompanyName] = useState();
+  const [companyId, setCompanyId] = useState();
   useEffect(() => {
     console.log(stockDetails);
     calMaxLot();
-  }, [stockDetails]);
+  }, [companyName]);
 
   const calMaxLot = () => {
     stockDetails.map((stock) => {
-      if (companyId === stock.id) {
+      if (companyName === stock.company_name) {
+        setCompanyId(stock.id);
         setMaxQ(parseInt(stock.quantity / 12));
         setPrice(parseInt(stock.price));
       }
@@ -24,32 +27,28 @@ const Order = ({stockDetails}) => {
 
   const handleBuy = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
-    // console.log(teamId);
-    console.log(companyId);
-    // console.log(quantity);
-    // console.log(localStorage.getItem("SEG_CURRENT_DAY"));
-    // console.log(localStorage.getItem("SEG_CURRENT_ROUND"));
-    // axios({
-    //   method: "post",
-    //   url: `${SERVER_URL}api/main/buy-order`,
-    //   headers: {},
-    //   data: {
-    //     team_id:  teamId,
-    //     company_id: companyId,
-    //     stock_quantity:parseInt(quantity),
-    //     day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
-    //     round_type: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
-    //     order_time:new Date().toJSON(),
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log("Success", response);
-    //     toast.success(response.data.message);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     toast.error(error.response.data.message);
-    //   });
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/buy-order`,
+      headers: {},
+      data: {
+        team_id: teamId,
+        company_id: companyId,
+        stock_quantity: parseInt(quantity),
+        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
+        round_type: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
+        order_time: new Date().toJSON(),
+      },
+    })
+      .then((response) => {
+        console.log("order ho gaya", response);
+        toast.success(response.data.message);
+        getWalletDetails();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
   };
 
   return (
@@ -59,73 +58,48 @@ const Order = ({stockDetails}) => {
           Order
         </h3>
         <div id="order_share" action="#">
-          {/* <label htmlFor="company" style={{margin:'3px 0',color:'#FFF'}}>Company</label> */}
           <select
-            className="form-select mb-2"
+            className="form-select mb-3"
             style={{ backgroundColor: "#d2f9f7" }}
+            name="company"
             id="company"
             onChange={(e) => {
-              setCompanyId(e.target.name);
-              setPrice(e.target.value);
-              console.log(e.target.value);
-              console.log(e.target.name);
+              setCompanyName(e.target.value);
+              setQuantity(500);
             }}
-            
           >
-            <option defaultChecked={true} value={0}>Select company</option>
+            <option value="0">Select company</option>
             {stockDetails.map((company) => (
-              <option value={company.price} name={company.id}>{company.company_name}</option>
+              <option value={company.name}>{company.company_name}</option>
             ))}
           </select>
-          <div className="row" style={{padding:'5px 15px'}}>
-          <label htmlFor="Totala" className="col col-4" style={{margin:'5px 0',color:'#FFF',paddingLeft:'0'}}>Price</label>
-          <input
-            className="mb-2"
-            style={{
-              backgroundColor: "#d2f9f7",
-            }}
-            value={price}
-            type="text"
-            name="Total"
-            id="Totala"
-            placeholder="Total Amount"
-            disabled
-            className="col col-8"
-          />
-          </div>
-          <div className="row" style={{margin:'5px'}}>
-          <label htmlFor="price" style={{margin:'5px 0',color:'#FFF',paddingLeft:'0'}} className="col col-4">Quantity</label>
+
           <input
             type="number"
             value={quantity}
             style={{ backgroundColor: "#d2f9f7" }}
-            className="mb-2"
+            className="mb-3"
             onChange={(e) => setQuantity(e.target.value)}
             step={500}
             min={500}
             max={maxQ}
-            placeholder=""
+            placeholder="Enter value in 500's figure"
             name=""
-            id="price"
-            className="col col-8"
+            id=""
           />
-          </div>
-          <div className="row" style={{padding:'5px 15px 10px'}}>
-          <label htmlFor="Totala" className="col col-4" style={{margin:'5px 0',color:'#FFF',paddingLeft:'0'}}>Total</label>
           <input
-            className="mb-2"
+            className="form-control"
             style={{
+              marginBottom: "calc(14vh - 46px)",
               backgroundColor: "#d2f9f7",
             }}
-            value={price * quantity === NaN ?0: price * quantity}
+            value={companyName ? price * quantity : ""}
             type="text"
             name="Total"
             id="Totala"
             placeholder="Total Amount"
             disabled
-            className="col col-8"
           />
-          </div>
           <div className="row">
             <div className="col-lg-7 mb-1">
               <button type="button" className="bn bn-red">
