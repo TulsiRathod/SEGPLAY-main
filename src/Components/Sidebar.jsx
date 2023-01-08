@@ -35,7 +35,15 @@ const Sidebar = ({
         console.log(error);
         toast.error(error.response.data.message);
       });
-  };
+    };
+    const showNews = () => {
+      let arr = [];
+      for (let i = 1; i <= day; i++) {
+        arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)));
+        // console.log("show",arr);
+      }
+      setNews(arr.reverse());
+    };
 
   const getNews = () => {
     axios({
@@ -46,31 +54,20 @@ const Sidebar = ({
         localStorage.setItem(
           `SEG_NEWS_${day}`,
           JSON.stringify(response.data.news)
-        );
+          );
+          showNews();
       })
       .catch((error) => {
         console.log("fail", error);
       });
   };
 
-  const showNews = () => {
-    let arr = [];
-    for (let i = 1; i <= day; i++) {
-      arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)));
-      // console.log("show",arr);
-    }
-    setNews(arr.reverse());
-  };
 
   useEffect(() => {
     if (localStorage.getItem(`SEG_NEWS_${day}`) === null || day !==0 || day!==null) {
       getNews();
     }
   }, [day]);
-
-  useEffect(() => {
-    showNews();
-  },[cardReveal]);
 
   return (
     <>
