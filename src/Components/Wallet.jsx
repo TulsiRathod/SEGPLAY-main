@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 const Wallet = ({balance,portfolioDetails}) => {
+  console.log(portfolioDetails);
   const [holdings,setHoldings]=useState(0);
   useEffect(()=>{
-    var temp=0;
+    setHoldings(0);
     portfolioDetails.map((elem)=>{
-      temp+=(elem.holded_stock*elem.current_price);
+      setHoldings(holdings+elem.holded_stock*elem.current_price);
   })
-    setHoldings(temp);
   },[portfolioDetails]);
   return (
     <>

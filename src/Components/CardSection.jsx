@@ -7,20 +7,14 @@ const CardSection = ({ day, round,cardReveal }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (round != 0 && day != 0) {
+    if (day != 0) {
       getCard();
     }
-  }, [round]);
+  }, [day]);
 
   useEffect(()=>{
     cardReveal?setShow(true):setShow(false);
   },[cardReveal]);
-
-  // useEffect(()=>{
-  //   if (localStorage.getItem(`SEG_NEWS_${day}`) !== null) {
-  //     setShow(true);
-  //   }
-  // },[day])
 
   const cardType = (e) => {
     switch(e){

@@ -36,7 +36,9 @@ const Home = () => {
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
   const [holdings, setHoldings] = useState(0);
-  const [cardReveal, setCardReveal] = useState(false);
+  const [cardReveal, setCardReveal] = useState(localStorage.getItem("SEG_CARD_REVEAL")
+  ? localStorage.getItem("SEG_CARD_REVEAL")
+  : false);
 
   const closeModal = () => {
     setRulesModal(false);
@@ -67,7 +69,7 @@ const Home = () => {
       url: `${SERVER_URL}api/main/stock-exchange?day_no=${1}`,
     })
       .then((response) => {
-        console.log("Stock Details", response.data.data);
+        // console.log("Stock Details", response.data.data);
         setStockExchangeDetails(response.data.data);
       })
       .catch((error) => {
@@ -139,6 +141,7 @@ const Home = () => {
           setRulesModal={setRulesModal}
           setStockHistoryModal={setStockHistoryModal}
           day={day}
+          cardReveal={cardReveal}
         />
         <div className="containers  ">
           <div className="main_section">
@@ -199,7 +202,7 @@ const Home = () => {
         closeModal={closeModal}
         getWalletDetails={getWalletDetails}
       />
-      <PortfolioModal portfolioModal={portfolioModal} closeModal={closeModal} />
+      <PortfolioModal portfolioModal={portfolioModal} closeModal={closeModal} portfolioDetails={portfolioDetails} />
       <ExchangeModal
         exchangeModal={exchangeModal}
         closeModal={closeModal}

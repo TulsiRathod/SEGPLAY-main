@@ -11,7 +11,7 @@ const Order = (props) => {
   const [companyName, setCompanyName] = useState();
   const [companyId, setCompanyId] = useState();
   useEffect(() => {
-    console.log(stockDetails);
+    // console.log(stockDetails);
     calMaxLot();
   }, [companyName]);
 

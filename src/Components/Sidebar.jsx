@@ -11,6 +11,7 @@ const Sidebar = ({
   setExchangeModal,
   setRulesModal,
   setStockHistoryModal,
+  cardReveal,
 }) => {
   const nav = useNavigate();
   const [news, setNews] = useState({});
@@ -27,7 +28,7 @@ const Sidebar = ({
       .then((response) => {
         // console.log("Success", response);
         toast.success(response.data.message);
-        localStorage.removeItem("SEG_TEAM_ID");
+        localStorage.clear();
         nav("/");
       })
       .catch((error) => {
@@ -42,7 +43,6 @@ const Sidebar = ({
       url: `${SERVER_URL}api/main/getNews?day=${day}`,
     })
       .then((response) => {
-        console.log("boom news", response.data.news);
         localStorage.setItem(
           `SEG_NEWS_${day}`,
           JSON.stringify(response.data.news)
@@ -57,20 +57,20 @@ const Sidebar = ({
     let arr = [];
     for (let i = 1; i <= day; i++) {
       arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)));
-      // console.log(news);
+      // console.log("show",arr);
     }
     setNews(arr.reverse());
   };
 
   useEffect(() => {
-    if (localStorage.getItem(`SEG_NEWS_${day}`) === null && day != 0) {
+    if (localStorage.getItem(`SEG_NEWS_${day}`) === null && day !==0 || day!==null) {
       getNews();
     }
   }, [day]);
 
   useEffect(() => {
     showNews();
-  }, []);
+  },[cardReveal]);
 
   return (
     <>
@@ -170,7 +170,7 @@ const Sidebar = ({
         </div>
         <div className="newsbar">
           <div class="accordion" id="accordionExample">
-            <DayNews news={news} day={day} />
+            <DayNews news={news} day={day} cardReveal={cardReveal}/>
           </div>
           {/* <section>
             <h3 className="mt-1">News</h3>
