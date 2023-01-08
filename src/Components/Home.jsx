@@ -36,9 +36,11 @@ const Home = () => {
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
   const [holdings, setHoldings] = useState(0);
-  const [cardReveal, setCardReveal] = useState(localStorage.getItem("SEG_CARD_REVEAL")
-  ? localStorage.getItem("SEG_CARD_REVEAL")
-  : false);
+  const [cardReveal, setCardReveal] = useState(
+    localStorage.getItem("SEG_CARD_REVEAL")
+      ? localStorage.getItem("SEG_CARD_REVEAL")
+      : false
+  );
 
   const closeModal = () => {
     setRulesModal(false);
@@ -89,7 +91,16 @@ const Home = () => {
     });
 
     socket.on("round", (data) => {
-      toast.success(`Round ${data.round} Started`);
+      var round;
+      if (data.round === 1 || data.round === 2 || data.round === 3) {
+        round = data.round;
+      } else if (data.round === 4) {
+        round = "Veto Round";
+      } else if (data.round === 5) {
+        round = "Special round";
+      }
+
+      toast.success(`Round ${round} Started`);
       setRound(data.round);
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
@@ -151,20 +162,23 @@ const Home = () => {
                 <CardSection day={day} round={round} cardReveal={cardReveal} />
               </div>
               <div className="col-lg-3 p-0">
-                <Wallet balance={balance} portfolioDetails={portfolioDetails}/>
-                <Order stockDetails={stockExchangeDetails} />
+                <Wallet balance={balance} portfolioDetails={portfolioDetails} />
+                <Order
+                  stockDetails={stockExchangeDetails}
+                  getWalletDetails={getWalletDetails}
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
       <RulesModal rulesModal={rulesModal} closeModal={closeModal} />
-      <OrderModal
-        orderModal={orderModal}
+      <OrderModal orderModal={orderModal} closeModal={closeModal} />
+      <PortfolioModal
+        portfolioModal={portfolioModal}
         closeModal={closeModal}
-        getWalletDetails={getWalletDetails}
+        portfolioDetails={portfolioDetails}
       />
-      <PortfolioModal portfolioModal={portfolioModal} closeModal={closeModal} portfolioDetails={portfolioDetails} />
       <ExchangeModal
         exchangeModal={exchangeModal}
         closeModal={closeModal}

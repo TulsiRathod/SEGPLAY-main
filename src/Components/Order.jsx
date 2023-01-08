@@ -51,6 +51,59 @@ const Order = (props) => {
       });
   };
 
+  const handleSell = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/sell-order`,
+      headers: {},
+      data: {
+        team_id: teamId,
+        company_id: companyId,
+        stock_quantity: parseInt(quantity),
+        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
+        round_type: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
+        order_time: new Date().toJSON(),
+      },
+    })
+      .then((response) => {
+        console.log("Sell ho gaya", response);
+        toast.success(response.data.message);
+        getWalletDetails();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
+
+  const handleShortSell = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/short-sell-order`,
+      headers: {},
+      data: {
+        team_id: teamId,
+        company_id: companyId,
+        stock_quantity: parseInt(quantity),
+        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
+        stock_price: price,
+        round_type: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
+        order_time: new Date().toJSON(),
+      },
+    })
+      .then((response) => {
+        console.log("Short Sell ho gaya", response);
+        toast.success(response.data.message);
+        getWalletDetails();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
+
   return (
     <>
       <div className="order">
@@ -102,7 +155,7 @@ const Order = (props) => {
           />
           <div className="row">
             <div className="col-lg-7 mb-1">
-              <button type="button" className="bn bn-red">
+              <button type="button" className="bn bn-red" onClick={handleSell}>
                 SELL
               </button>
             </div>
@@ -119,7 +172,11 @@ const Order = (props) => {
               </button>
             </div>
             <div className="col-lg-7 ps-0 mt-1">
-              <button type="button" className="bn bn-red">
+              <button
+                type="button"
+                className="bn bn-red"
+                onClick={handleShortSell}
+              >
                 SORT SELL
               </button>
             </div>
