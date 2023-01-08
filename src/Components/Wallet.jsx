@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 const Wallet = ({balance,portfolioDetails}) => {
-  console.log(portfolioDetails);
   const [holdings,setHoldings]=useState(0);
   useEffect(()=>{
     var temp=0;
     portfolioDetails.map((elem)=>{
       temp+=elem.current_stock_price*elem.total_stock;
-      console.log(elem.current_stock_price*elem.total_stock);
     })
   setHoldings(temp);
   },[portfolioDetails]);
@@ -28,7 +26,7 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Available balance</p>
             <h4>
-              Rs. <span>{balance}</span>
+              Rs. <span>{balance?balance:0}</span>
             </h4>
           </div>
           <div className="balance">
@@ -47,7 +45,7 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Total Networth</p>
             <h4>
-              Rs. <span>{(balance+holdings)?(balance+holdings):balance}</span>
+              Rs. <span>{(balance+holdings)?(balance+holdings):0}</span>
             </h4>
           </div>
         </div>

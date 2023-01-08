@@ -50,12 +50,6 @@ const Login = () => {
     nav("/Home");
   };
 
-  useEffect(()=>{
-    if(localStorage.getItem("SEG_TEAM_ID")){
-      nav('/Home');
-    }
-  })
-
   return (
     <>
       <div class="backdesign"></div>

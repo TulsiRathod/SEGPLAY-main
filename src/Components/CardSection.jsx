@@ -55,7 +55,7 @@ const CardSection = ({ day, round,cardReveal }) => {
       .then((response) => {
         setCards(response.data.cards);
         setShow(true);
-        // console.log(response);
+        console.log(response);
       })
       .catch((error) => {
         console.log("error", error);
@@ -75,12 +75,13 @@ const CardSection = ({ day, round,cardReveal }) => {
                <img src="../assets/BullBear.png" alt="" />
              </div>
              <div className="card__face back">
-               <img
+               {/* <img
                  src="../assets/profile.png"
                  alt=""
                  width="40px"
                  height="40px"
-               />
+               /> */}
+               <span style={{background:'#808080',color:'#ffffff',padding:'5px',borderRadius:'30px'}}>{elem.company_ticker}</span>
                <div className="card_sign">
                  <i
                    className={`fa-sharp fa-solid fa-triangle ${
@@ -121,7 +122,7 @@ const CardSection = ({ day, round,cardReveal }) => {
           ))}
         </div>:
         <div className="d-flex justify-content-center">
-        <img src="../assets/BullBear.png" alt=""  style={{height:'60%',width:'50%',opacity:'0.5'}}/>
+        <img src="../assets/no-card.png" alt=""  style={{height:'60%',width:'50%',opacity:'0.5'}}/>
         </div>
         }
       </div>

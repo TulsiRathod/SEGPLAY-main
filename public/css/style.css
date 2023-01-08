@@ -340,7 +340,7 @@ h3 {
 
   position: relative;
 }
-.back img:first-child {
+.back span:first-child {
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;

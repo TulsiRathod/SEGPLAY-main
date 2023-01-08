@@ -63,7 +63,7 @@ const Sidebar = ({
   };
 
   useEffect(() => {
-    if (localStorage.getItem(`SEG_NEWS_${day}`) === null && day !==0 || day!==null) {
+    if (localStorage.getItem(`SEG_NEWS_${day}`) === null || day !==0 || day!==null) {
       getNews();
     }
   }, [day]);
