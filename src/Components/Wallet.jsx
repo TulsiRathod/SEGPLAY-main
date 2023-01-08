@@ -4,10 +4,12 @@ const Wallet = ({balance,portfolioDetails}) => {
   console.log(portfolioDetails);
   const [holdings,setHoldings]=useState(0);
   useEffect(()=>{
-    setHoldings(0);
+    var temp=0;
     portfolioDetails.map((elem)=>{
-      setHoldings(holdings+elem.holded_stock*elem.current_price);
-  })
+      temp+=elem.current_stock_price*elem.total_stock;
+      console.log(elem.current_stock_price*elem.total_stock);
+    })
+  setHoldings(temp);
   },[portfolioDetails]);
   return (
     <>
@@ -32,7 +34,7 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Holdings</p>
             <h4>
-              Rs. <span>{holdings}</span>
+              Rs. <span>{holdings?holdings:0}</span>
             </h4>
           </div>
           <hr
@@ -45,7 +47,7 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Total Networth</p>
             <h4>
-              Rs. <span>{balance+holdings}</span>
+              Rs. <span>{(balance+holdings)?(balance+holdings):balance}</span>
             </h4>
           </div>
         </div>

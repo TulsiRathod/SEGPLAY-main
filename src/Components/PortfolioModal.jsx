@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
 const PortfolioModal = ({portfolioModal,closeModal,portfolioDetails}) => {
-  useEffect(()=>{
-    console.log(portfolioDetails);
-  })
+  // useEffect(()=>{
+  //   console.log(portfolioDetails);
+  // })
   return (
     <>
       <div id="portfolio_modal" class="modal"  style={portfolioModal ? { display: "flex" } : { display: "none" }}>

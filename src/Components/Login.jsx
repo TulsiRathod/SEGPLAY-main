@@ -22,7 +22,6 @@ const Login = () => {
       }
     })
       .then((response) => {
-        console.log("Success",response);
         toast.success(response.data.message);
         localStorage.setItem('SEG_TEAM_ID',response.data.data.id);
         setRulesModal(true);
