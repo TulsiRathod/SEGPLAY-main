@@ -14,10 +14,13 @@ import Wallet from "./Wallet";
 import Order from "./Order";
 import axios from "axios";
 import StockHistory from "./StockHistory";
+import VetoModal from "./VetoModal";
 const socket = io(SERVER_URL);
 
 const Home = () => {
   const [rulesModal, setRulesModal] = useState(false);
+  const [showVeto, setShowVeto] = useState(false);
+
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
@@ -95,6 +98,7 @@ const Home = () => {
       if (data.round === 1 || data.round === 2 || data.round === 3) {
         round = data.round;
       } else if (data.round === 4) {
+        setShowVeto(true);
         round = "Veto Round";
       } else if (data.round === 5) {
         round = "Special round";
@@ -153,6 +157,7 @@ const Home = () => {
           setStockHistoryModal={setStockHistoryModal}
           day={day}
           cardReveal={cardReveal}
+          setShowVeto={() => setShowVeto(true)}
         />
         <div className="containers  ">
           <div className="main_section">
@@ -187,6 +192,12 @@ const Home = () => {
       <StockHistory
         stockHistoryModal={stockHistoryModal}
         closeModal={closeModal}
+      />
+      <VetoModal
+        vetoModal={showVeto}
+        closeModal={() => setShowVeto(false)}
+        stockExchangeDetails={stockExchangeDetails}
+        getWalletDetails={getWalletDetails}
       />
     </>
   );

@@ -22,27 +22,29 @@
   height: 95vh;
   border: 1px solid #bdc0cc;
   border-radius: 8px;
-
 }
 
-#rules_modal{
+#rules_modal {
   width: 1500px !important;
 }
 
-#order_modal_content{
+#order_modal_content {
   width: 1300px;
 }
 
-#portfolio_modal_content{
+#portfolio_modal_content {
   width: 1300px;
 }
 
-#exchange_modal_content{
+#exchange_modal_content {
   width: 1300px;
+}
+
+#veto_modal_content {
+  width: 99%;
 }
 
 .scroll_content {
-
   /* position: fixed; */
   overflow-x: auto;
 }
@@ -65,9 +67,8 @@
 .msg {
   margin-top: 5px;
   margin-bottom: 5px;
-  font-size: 1em; 
+  font-size: 1em;
   padding: 10px;
-  
 }
 
 /* The Close Button */
@@ -75,27 +76,27 @@
 .close {
   color: #000000;
   position: relative;
-  
+
   bottom: 10px;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-#rules_modal_close{
+#rules_modal_close {
   left: 1430px;
 }
 
-#table_order_close{
+#table_order_close {
   left: 1230px;
 }
 
-#portfolio_close{
-  left:1230px;
+#portfolio_close {
+  left: 1230px;
 }
 
-#exchange_close{
-  left:1230px;
+#exchange_close {
+  left: 1230px;
 }
 
 .close:hover,
@@ -138,7 +139,8 @@
   margin-top: -45px;
 }
 
-unput[type="checkbox"]
-{
-    vertical-align:middle;
+.veto_title {
+  font-size: 25px;
+  font-weight: 700;
+  color: #2d2d2db3;
 }

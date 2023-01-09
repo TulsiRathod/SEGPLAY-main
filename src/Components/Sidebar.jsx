@@ -12,10 +12,11 @@ const Sidebar = ({
   setRulesModal,
   setStockHistoryModal,
   cardReveal,
+  setShowVeto,
 }) => {
   const nav = useNavigate();
   const [news, setNews] = useState({});
-  const day=localStorage.getItem("SEG_CURRENT_DAY");
+  const day = localStorage.getItem("SEG_CURRENT_DAY");
   const logout = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
@@ -35,15 +36,15 @@ const Sidebar = ({
         console.log(error);
         toast.error(error.response.data.message);
       });
-    };
-    const showNews = () => {
-      let arr = [];
-      for (let i = 1; i <= day; i++) {
-        arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)));
-        // console.log("show",arr);
-      }
-      setNews(arr.reverse());
-    };
+  };
+  const showNews = () => {
+    let arr = [];
+    for (let i = 1; i <= day; i++) {
+      arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)));
+      // console.log("show",arr);
+    }
+    setNews(arr.reverse());
+  };
 
   const getNews = () => {
     axios({
@@ -54,17 +55,20 @@ const Sidebar = ({
         localStorage.setItem(
           `SEG_NEWS_${day}`,
           JSON.stringify(response.data.news)
-          );
-          showNews();
+        );
+        showNews();
       })
       .catch((error) => {
         console.log("fail", error);
       });
   };
 
-
   useEffect(() => {
-    if (localStorage.getItem(`SEG_NEWS_${day}`) === null || day !==0 || day!==null) {
+    if (
+      localStorage.getItem(`SEG_NEWS_${day}`) === null ||
+      day !== 0 ||
+      day !== null
+    ) {
       getNews();
     }
   }, [day]);
@@ -102,11 +106,6 @@ const Sidebar = ({
                     ></i>
                   </a>
                 </li>
-              </ul>
-            </div>
-
-            <div className="bottom_menu d-flex h-100">
-              <ul className="list-unstyled text-center align-self-start mt-auto mb-0">
                 <li
                   onClick={() => {
                     setOrderModal(true);
@@ -144,6 +143,25 @@ const Sidebar = ({
                   </a>
                 </li>
 
+                <li
+                  onClick={() => {
+                    setShowVeto(true);
+                  }}
+                >
+                  <a>
+                    <b
+                      className="mt-2"
+                      style={{ fontSize: "18px", color: "white" }}
+                    >
+                      V
+                    </b>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bottom_menu d-flex h-100">
+              <ul className="list-unstyled text-center align-self-start mt-auto mb-0">
                 <li>
                   <a>
                     <img
@@ -167,7 +185,7 @@ const Sidebar = ({
         </div>
         <div className="newsbar">
           <div class="accordion" id="accordionExample">
-            <DayNews news={news} day={day} cardReveal={cardReveal}/>
+            <DayNews news={news} day={day} cardReveal={cardReveal} />
           </div>
           {/* <section>
             <h3 className="mt-1">News</h3>

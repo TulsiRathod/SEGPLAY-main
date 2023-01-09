@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
 
-const StockHistory = ({stockHistoryModal,closeModal}) => {
+const StockHistory = ({ stockHistoryModal, closeModal }) => {
   return (
     <>
-      <div id="portfolio_modal" class="modal"  style={stockHistoryModal ? { display: "flex" } : { display: "none" }}>
+      <div
+        id="portfolio_modal"
+        class="modal"
+        style={stockHistoryModal ? { display: "flex" } : { display: "none" }}
+      >
         <div class="modal-content" id="portfolio_modal_content">
           <span class="close" id="portfolio_close" onClick={closeModal}>
             &times;
@@ -204,9 +208,9 @@ const StockHistory = ({stockHistoryModal,closeModal}) => {
             </table>
           </div>
         </div>
-      </div> 
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default StockHistory
+export default StockHistory;
