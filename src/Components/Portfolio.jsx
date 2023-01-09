@@ -5,6 +5,8 @@ const Portfolio = ({ portfolioDetails }) => {
   useEffect(() => {
     setPortfolio(portfolioDetails);
   });
+  const nf = new Intl.NumberFormat();
+
   return (
     <>
       <div className="portfolio ">
@@ -40,10 +42,10 @@ const Portfolio = ({ portfolioDetails }) => {
                       <h5>{elem.company_name}</h5>
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>{elem.current_stock_price}</p>
+                      <p>{nf.format(elem.current_stock_price)}</p>
                     </td>
                     <td style={{ textAlign: "end" }}>
-                      <p>{elem.total_stock}</p>
+                      <p>{nf.format(elem.total_stock)}</p>
                     </td>
                   </tr>
                 ))}

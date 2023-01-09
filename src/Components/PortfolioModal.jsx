@@ -1,12 +1,18 @@
 import React, { useEffect } from "react";
 
-const PortfolioModal = ({portfolioModal,closeModal,portfolioDetails}) => {
+const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails }) => {
   // useEffect(()=>{
   //   console.log(portfolioDetails);
   // })
+  const nf = new Intl.NumberFormat();
+
   return (
     <>
-      <div id="portfolio_modal" class="modal"  style={portfolioModal ? { display: "flex" } : { display: "none" }}>
+      <div
+        id="portfolio_modal"
+        class="modal"
+        style={portfolioModal ? { display: "flex" } : { display: "none" }}
+      >
         <div class="modal-content" id="portfolio_modal_content">
           <span class="close" id="portfolio_close" onClick={closeModal}>
             &times;
@@ -40,32 +46,49 @@ const PortfolioModal = ({portfolioModal,closeModal,portfolioDetails}) => {
               </thead>
 
               <tbody>
-                {portfolioDetails.map((elem)=>
-                <tr>
-                  <td>
-                    <h5>{elem.company_ticker}</h5>
-                    {elem.company_name}
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{elem.total_stock}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{Math.round(elem.total_investment_amount/elem.total_stock)}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{elem.total_investment_amount}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{elem.current_stock_price*elem.total_stock}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{Math.round((elem.current_stock_price*elem.total_stock)-elem.total_investment_amount)}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{Math.round((((elem.current_stock_price*elem.total_stock)-elem.total_investment_amount)/elem.total_investment_amount))}</p>
-                  </td>
-                </tr>
-                )}
+                {portfolioDetails.map((elem) => (
+                  <tr>
+                    <td>
+                      <h5>{elem.company_ticker}</h5>
+                      {elem.company_name}
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>{nf.format(elem.total_stock)}</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>
+                        {nf.format(
+                          elem.total_investment_amount / elem.total_stock
+                        )}
+                      </p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>{nf.format(elem.total_investment_amount)}</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>
+                        {nf.format(elem.current_stock_price * elem.total_stock)}
+                      </p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>
+                        {Math.round(
+                          elem.current_stock_price * elem.total_stock -
+                            elem.total_investment_amount
+                        )}
+                      </p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>
+                        {Math.round(
+                          (elem.current_stock_price * elem.total_stock -
+                            elem.total_investment_amount) /
+                            elem.total_investment_amount
+                        )}
+                      </p>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

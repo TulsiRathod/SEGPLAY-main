@@ -39,6 +39,7 @@ const Home = () => {
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
   const [holdings, setHoldings] = useState(0);
+  const [disableOrders, setdisableOrders] = useState(true);
   const [cardReveal, setCardReveal] = useState(
     localStorage.getItem("SEG_CARD_REVEAL")
       ? localStorage.getItem("SEG_CARD_REVEAL")
@@ -97,9 +98,10 @@ const Home = () => {
       var round;
       if (data.round === 1 || data.round === 2 || data.round === 3) {
         round = data.round;
+        setdisableOrders(false);
       } else if (data.round === 4) {
-        setShowVeto(true);
         round = "Veto Round";
+        setShowVeto(true);
       } else if (data.round === 5) {
         round = "Special round";
       }
@@ -171,6 +173,8 @@ const Home = () => {
                 <Order
                   stockDetails={stockExchangeDetails}
                   getWalletDetails={getWalletDetails}
+                  setdisableOrders={() => setdisableOrders(true)}
+                  disableOrders={disableOrders}
                 />
               </div>
             </div>

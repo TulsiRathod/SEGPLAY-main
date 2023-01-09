@@ -234,6 +234,10 @@ h3 {
   border: 2px solid #63ca71;
   border-radius: 4px;
 }
+
+.bn.bn-green:disabled {
+  cursor: not-allowed;
+}
 .bn.bn-green:hover {
   background-color: #65b770;
   border: 2px solid #65b770;
@@ -248,6 +252,11 @@ h3 {
   background-color: #f15454e7;
   border: 2px solid #f15454e7;
 }
+
+.bn.bn-red:disabled {
+  cursor: not-allowed;
+}
+
 .bn.bn-clear {
   color: white;
   background-color: transparent;
@@ -256,6 +265,9 @@ h3 {
 }
 .bn.bn-clear:hover {
   background-color: rgba(128, 128, 128, 0.096);
+}
+.bn.bn-clear:disabled {
+  cursor: not-allowed;
 }
 
 /************************** Card Section ******************************/

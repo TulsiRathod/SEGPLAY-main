@@ -117,7 +117,11 @@ const VetoModal = ({
                       </span>
                       {bidAmount}
                     </p>
-                    <button type="button" class="btn_veto_order">
+                    <button
+                      type="button"
+                      class="btn_veto_order"
+                      onClick={handleVeto}
+                    >
                       Veto Order
                     </button>
                   </div>
