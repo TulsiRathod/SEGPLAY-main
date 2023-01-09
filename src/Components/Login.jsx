@@ -15,15 +15,15 @@ const Login = () => {
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/login`,
-      headers: {}, 
+      headers: {},
       data: {
-        "username": teamId,
-        "password":password,
-      }
+        username: teamId,
+        password: password,
+      },
     })
       .then((response) => {
         toast.success(response.data.message);
-        localStorage.setItem('SEG_TEAM_ID',response.data.data.id);
+        localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
         setRulesModal(true);
       })
       .catch((error) => {
@@ -56,6 +56,7 @@ const Login = () => {
       <div class="container inner_container">
         <div class="row">
           <div class="col-md-7">
+            {/* <h1>THE FINSHARP LOGIN</h1> */}
             <img
               src="../assets/Login illustrator.png"
               alt="Login illustrator"
@@ -118,7 +119,7 @@ const Login = () => {
         </div>
       </div>
       <RulesModal
-      HandleAccept={HandleAccept}
+        HandleAccept={HandleAccept}
         rulesModal={rulesModal}
         closeModal={closeModal}
       />

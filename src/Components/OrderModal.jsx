@@ -15,7 +15,7 @@ const OrderModal = ({ orderModal, closeModal }) => {
       .then((response) => {
         console.log("order history aa gai", response.data.data);
         setOrderHistory(response.data.data);
-        toast.success(response.data.message);
+        // toast.success(response.data.message);
       })
       .catch((error) => {
         console.log(error);
