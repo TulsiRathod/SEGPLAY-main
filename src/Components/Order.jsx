@@ -41,7 +41,7 @@ const Order = (props) => {
       },
     })
       .then((response) => {
-        console.log("order ho gaya", response);
+        // console.log("order ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
       })
@@ -67,7 +67,7 @@ const Order = (props) => {
       },
     })
       .then((response) => {
-        console.log("Sell ho gaya", response);
+        // console.log("Sell ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
       })
@@ -94,7 +94,7 @@ const Order = (props) => {
       },
     })
       .then((response) => {
-        console.log("Short Sell ho gaya", response);
+        // console.log("Short Sell ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
       })

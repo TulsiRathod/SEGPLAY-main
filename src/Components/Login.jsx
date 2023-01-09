@@ -47,8 +47,15 @@ const Login = () => {
   };
 
   const HandleAccept = () => {
+    localStorage.setItem("SEG_RULES_ACEEPT",true);
     nav("/Home");
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem("SEG_RULES_ACEEPT")){
+      nav('/Home');
+    }
+  },[]);
 
   return (
     <>

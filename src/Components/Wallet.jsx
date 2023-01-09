@@ -26,13 +26,13 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Available balance</p>
             <h4>
-              Rs. <span>{balance?balance:0}</span>
+              Rs. <span>{balance?Math.round(balance):0}</span>
             </h4>
           </div>
           <div className="balance">
             <p>Holdings</p>
             <h4>
-              Rs. <span>{holdings?holdings:0}</span>
+              Rs. <span>{holdings?Math.round(holdings):0}</span>
             </h4>
           </div>
           <hr
@@ -45,7 +45,7 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Total Networth</p>
             <h4>
-              Rs. <span>{(balance+holdings)?(balance+holdings):0}</span>
+              Rs. <span>{(balance+holdings)?Math.round(balance+holdings):0}</span>
             </h4>
           </div>
         </div>

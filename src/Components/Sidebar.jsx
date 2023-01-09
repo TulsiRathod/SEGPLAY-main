@@ -73,6 +73,10 @@ const Sidebar = ({
     }
   }, [day]);
 
+  useEffect(()=>{
+    showNews();
+  },[]);
+
   return (
     <>
       <div className="sidebar">
