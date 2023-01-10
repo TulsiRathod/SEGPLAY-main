@@ -81,6 +81,8 @@ const CardSection = ({
         return "#CEC2EB";
       default:
         return "#808080";
+    }
+  };
   const handleCurPlus = (elem) => {
     if (round === 5) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -128,8 +130,6 @@ const CardSection = ({
       })
         .then((response) => {
           localStorage.setItem("SEG_CARD_REVEAL", false);
-          localStorage.setItem("SEG_CURRENT_ROUND", 0);
-          window.location.reload(false);
         })
         .catch((error) => {
           console.log("error", error);
@@ -301,9 +301,12 @@ const CardSection = ({
             )}
             {cards.map((elem) =>
               elem.type === 4 ? (
-                <div className="seg_card" onClick={() => {
-                  handleRightIs(elem);
-                }}>
+                <div
+                  className="seg_card"
+                  onClick={() => {
+                    handleRightIs(elem);
+                  }}
+                >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
                   >
@@ -401,9 +404,12 @@ const CardSection = ({
             )}
             {cards.map((elem) =>
               elem.type === 7 ? (
-                <div className="seg_card"  onClick={() => {
-                  handleShareSus(elem);
-                }}>
+                <div
+                  className="seg_card"
+                  onClick={() => {
+                    handleShareSus(elem);
+                  }}
+                >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
                   >
@@ -415,7 +421,7 @@ const CardSection = ({
                         <p className="special_card_head ">Share Suspended</p>
                         <p
                           className="special_card_detail"
-                          style="color: rgb(54, 54, 54);"
+                          style={{ color: "rgb(54, 54, 54)" }}
                         >
                           Suspend the price of any one company at it's previous
                           level

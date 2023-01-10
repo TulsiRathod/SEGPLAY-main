@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-const DayNews = ({ news,day,cardReveal }) => {
+const DayNews = ({ news, day, cardReveal }) => {
   const [days, setDays] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     let temp_day = [];
     for (var i = 1; i <= day; i++) {
       temp_day.push(i);
     }
     setDays(temp_day);
-   },[news]);
+  }, [news]);
   return (
     <>
       {days &&

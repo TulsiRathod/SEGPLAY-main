@@ -4,8 +4,13 @@ import { toast } from "react-hot-toast";
 import { SERVER_URL } from "../Baseurl";
 
 const Order = (props) => {
-  const { stockDetails, getWalletDetails, setdisableOrders, disableOrders } =
-    props;
+  const {
+    stockDetails,
+    getWalletDetails,
+    setdisableOrders,
+    disableOrders,
+    getOrderHistory,
+  } = props;
   const [quantity, setQuantity] = useState(500);
   const [maxQ, setMaxQ] = useState();
   const [price, setPrice] = useState();
@@ -48,6 +53,7 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
+        getOrderHistory();
         setQuantity(500);
         setPrice(0);
       })
@@ -77,6 +83,7 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
+        getOrderHistory();
       })
       .catch((error) => {
         console.log(error);
@@ -105,6 +112,7 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
+        getOrderHistory();
       })
       .catch((error) => {
         console.log(error);

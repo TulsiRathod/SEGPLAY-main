@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { useNavigate } from "react-router-dom";
-import { SERVER_URL } from "../Baseurl";
+import { ROUND_DELAY, SERVER_URL } from "../Baseurl";
 import ExchangeModal from "./ExchangeModal";
 import OrderModal from "./OrderModal";
 import PortfolioModal from "./PortfolioModal";
@@ -16,12 +16,15 @@ import axios from "axios";
 import StockHistory from "./StockHistory";
 import VetoModal from "./VetoModal";
 import { useNavigate } from "react-router-dom";
+import Countdown from "react-countdown";
+import Timer from "./Timer";
+
 const socket = io(SERVER_URL);
 
 const Home = () => {
   const [rulesModal, setRulesModal] = useState(false);
   const [showVeto, setShowVeto] = useState(false);
-  const nav =useNavigate();
+  const nav = useNavigate();
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
@@ -46,6 +49,8 @@ const Home = () => {
       ? localStorage.getItem("SEG_CARD_REVEAL")
       : false
   );
+  const [isRoundStart, setIsRoundStart] = useState(false);
+  const [orderHistory, setOrderHistory] = useState([]);
 
   const closeModal = () => {
     setRulesModal(false);
@@ -84,12 +89,30 @@ const Home = () => {
       });
   };
 
+  const getOrderHistory = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/team-order-history?team_id=${teamId}`,
+      headers: {},
+    })
+      .then((response) => {
+        // console.log("order history aa gai", response.data.data);
+        setOrderHistory(response.data.data);
+        // toast.success(response.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
+
   useEffect(() => {
-    if(!localStorage.getItem("SEG_RULES_ACEEPT")){
-      nav('/');
+    if (!localStorage.getItem("SEG_RULES_ACEEPT")) {
+      nav("/");
     }
 
-    if(localStorage.getItem("SEG_CARD_REVEAL")){
+    if (localStorage.getItem("SEG_CARD_REVEAL")) {
       setCardReveal(true);
     }
 
@@ -114,7 +137,11 @@ const Home = () => {
       } else if (data.round === 5) {
         round = "Special round";
       }
-
+      setIsRoundStart(true);
+      setTimeout(() => {
+        setIsRoundStart(false);
+        setdisableOrders(true);
+      }, ROUND_DELAY * 1000);
       toast.success(`Round ${round} Started`);
       setRound(data.round);
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
@@ -144,6 +171,7 @@ const Home = () => {
   useEffect(() => {
     getWalletDetails();
     getStockExchange();
+    getOrderHistory();
   }, [day]);
 
   return (
@@ -156,7 +184,14 @@ const Home = () => {
               className="col-lg-4"
               style={{ fontSize: "18px", fontWeight: "500" }}
             >
-              00:00
+              {isRoundStart ? (
+                <Timer
+                  seconds={ROUND_DELAY}
+                  setIsRoundStart={() => setIsRoundStart(false)}
+                />
+              ) : (
+                "00:00"
+              )}
             </div>
             <div className="col-lg-4">Round-{round}</div>
           </div>
@@ -176,8 +211,13 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-9">
                 <Portfolio portfolioDetails={portfolioDetails} />
-                <CardSection day={day} round={round} cardReveal={cardReveal} stockExchangeDetails={stockExchangeDetails}
-        getWalletDetails={getWalletDetails}/>
+                <CardSection
+                  day={day}
+                  round={round}
+                  cardReveal={cardReveal}
+                  stockExchangeDetails={stockExchangeDetails}
+                  getWalletDetails={getWalletDetails}
+                />
               </div>
               <div className="col-lg-3 p-0">
                 <Wallet balance={balance} portfolioDetails={portfolioDetails} />
@@ -186,6 +226,7 @@ const Home = () => {
                   getWalletDetails={getWalletDetails}
                   setdisableOrders={() => setdisableOrders(true)}
                   disableOrders={disableOrders}
+                  getOrderHistory={getOrderHistory}
                 />
               </div>
             </div>
@@ -193,7 +234,11 @@ const Home = () => {
         </div>
       </div>
       <RulesModal rulesModal={rulesModal} closeModal={closeModal} />
-      <OrderModal orderModal={orderModal} closeModal={closeModal} />
+      <OrderModal
+        orderModal={orderModal}
+        closeModal={closeModal}
+        orderHistory={orderHistory}
+      />
       <PortfolioModal
         portfolioModal={portfolioModal}
         closeModal={closeModal}

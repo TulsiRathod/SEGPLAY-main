@@ -73,9 +73,9 @@ const Sidebar = ({
     }
   }, [day]);
 
-  useEffect(()=>{
+  useEffect(() => {
     showNews();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -84,7 +84,11 @@ const Sidebar = ({
           <nav className="d-flex flex-column h-100">
             <div className="mb-5">
               <ul className="list-unstyled text-center mb-5">
-                <li>
+                <li
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Tooltip on top"
+                >
                   <a>
                     <i className="fa-solid fa-screen-users"></i>
                   </a>
@@ -95,7 +99,12 @@ const Sidebar = ({
                   }}
                 >
                   <a>
-                    <i className="fa-solid fa-right-left"></i>
+                    <i
+                      className="fa-solid fa-right-left"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="Stock Exchnage"
+                    ></i>
                   </a>
                 </li>
                 <li
@@ -106,6 +115,9 @@ const Sidebar = ({
                   <a>
                     <i
                       className="fa-regular fa-id-card-clip "
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="Portfolio"
                       style={{ fontSize: "16px" }}
                     ></i>
                   </a>
@@ -118,6 +130,9 @@ const Sidebar = ({
                   <a>
                     <i
                       className="fa-solid fa-chart-line "
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="Order History"
                       style={{ fontSize: "15px" }}
                     ></i>
                   </a>
@@ -130,6 +145,9 @@ const Sidebar = ({
                   <a>
                     <i
                       className="fa fa-history"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="Stock Exchnage History"
                       style={{ fontSize: "16px" }}
                     ></i>
                   </a>
@@ -142,12 +160,15 @@ const Sidebar = ({
                   <a>
                     <i
                       className="fa-solid fa-square-info mb-0"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="Rules"
                       style={{ fontSize: "18px" }}
                     ></i>
                   </a>
                 </li>
 
-                <li
+                {/* <li
                   onClick={() => {
                     setShowVeto(true);
                   }}
@@ -160,7 +181,7 @@ const Sidebar = ({
                       V
                     </b>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
 
@@ -179,6 +200,9 @@ const Sidebar = ({
                   <a onClick={logout}>
                     <i
                       className="fa-solid fa-power-off"
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="Logout"
                       style={{ fontSize: "18px" }}
                     ></i>
                   </a>
