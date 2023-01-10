@@ -15,12 +15,13 @@ import Order from "./Order";
 import axios from "axios";
 import StockHistory from "./StockHistory";
 import VetoModal from "./VetoModal";
+import { useNavigate } from "react-router-dom";
 const socket = io(SERVER_URL);
 
 const Home = () => {
   const [rulesModal, setRulesModal] = useState(false);
   const [showVeto, setShowVeto] = useState(false);
-
+  const nav =useNavigate();
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
@@ -84,6 +85,14 @@ const Home = () => {
   };
 
   useEffect(() => {
+    if(!localStorage.getItem("SEG_RULES_ACEEPT")){
+      nav('/');
+    }
+
+    if(localStorage.getItem("SEG_CARD_REVEAL")){
+      setCardReveal(true);
+    }
+
     socket.on("connect", () => {
       // console.log(socket.id, "socketID");
     });
@@ -114,6 +123,7 @@ const Home = () => {
     socket.on("reveal", (data) => {
       setCardReveal(true);
       toast.success(`Card Reveal`);
+      localStorage.setItem("SEG_CARD_REVEAL", true);
     });
 
     return () => {
@@ -166,7 +176,8 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-9">
                 <Portfolio portfolioDetails={portfolioDetails} />
-                <CardSection day={day} round={round} cardReveal={cardReveal} />
+                <CardSection day={day} round={round} cardReveal={cardReveal} stockExchangeDetails={stockExchangeDetails}
+        getWalletDetails={getWalletDetails}/>
               </div>
               <div className="col-lg-3 p-0">
                 <Wallet balance={balance} portfolioDetails={portfolioDetails} />

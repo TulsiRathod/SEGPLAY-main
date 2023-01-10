@@ -30,12 +30,14 @@ const Wallet = ({ balance, portfolioDetails }) => {
             <p>Available balance</p>
             <h4>
               Rs. <span>{balance ? nf.format(balance) : 0}</span>
+
             </h4>
           </div>
           <div className="balance">
             <p>Holdings</p>
             <h4>
               Rs. <span>{holdings ? nf.format(holdings) : 0}</span>
+
             </h4>
           </div>
           <hr
@@ -52,6 +54,7 @@ const Wallet = ({ balance, portfolioDetails }) => {
               <span>
                 {balance + holdings ? nf.format(balance + holdings) : 0}
               </span>
+
             </h4>
           </div>
         </div>

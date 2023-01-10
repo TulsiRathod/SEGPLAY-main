@@ -13,7 +13,7 @@ const OrderModal = ({ orderModal, closeModal }) => {
       headers: {},
     })
       .then((response) => {
-        console.log("order history aa gai", response.data.data);
+        // console.log("order history aa gai", response.data.data);
         setOrderHistory(response.data.data);
         // toast.success(response.data.message);
       })
