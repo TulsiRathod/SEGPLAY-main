@@ -4,12 +4,15 @@ import { toast } from "react-hot-toast";
 import { SERVER_URL } from "../Baseurl";
 
 const Order = (props) => {
-  const { stockDetails, getWalletDetails } = props;
+  const { stockDetails, getWalletDetails, setdisableOrders, disableOrders } =
+    props;
   const [quantity, setQuantity] = useState(500);
   const [maxQ, setMaxQ] = useState();
   const [price, setPrice] = useState();
   const [companyName, setCompanyName] = useState();
   const [companyId, setCompanyId] = useState();
+  const nf = new Intl.NumberFormat();
+
   useEffect(() => {
     // console.log(stockDetails);
     calMaxLot();
@@ -44,6 +47,9 @@ const Order = (props) => {
         // console.log("order ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
+        setdisableOrders();
+        setQuantity(500);
+        setPrice(0);
       })
       .catch((error) => {
         console.log(error);
@@ -70,6 +76,7 @@ const Order = (props) => {
         // console.log("Sell ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
+        setdisableOrders();
       })
       .catch((error) => {
         console.log(error);
@@ -97,6 +104,7 @@ const Order = (props) => {
         // console.log("Short Sell ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
+        setdisableOrders();
       })
       .catch((error) => {
         console.log(error);
@@ -126,7 +134,17 @@ const Order = (props) => {
               <option value={company.name}>{company.company_name}</option>
             ))}
           </select>
-
+          <p
+            className={`m-0 text-light d-${companyName ? "block" : "none"}`}
+            style={{ fontSize: "10px", fontWeight: "700" }}
+          >
+            Max Quantity:{" "}
+            <span className="text-warning me-2">
+              {nf.format(maxQ - (maxQ % 500))}
+            </span>{" "}
+            Share Price:{" "}
+            <span className="text-warning">{nf.format(price)}</span>
+          </p>
           <input
             type="number"
             value={quantity}
@@ -140,13 +158,14 @@ const Order = (props) => {
             name=""
             id=""
           />
+
           <input
             className="form-control"
             style={{
               marginBottom: "calc(14vh - 46px)",
               backgroundColor: "#d2f9f7",
             }}
-            value={companyName ? price * quantity : ""}
+            value={companyName ? nf.format(price * quantity) : ""}
             type="text"
             name="Total"
             id="Totala"
@@ -155,19 +174,33 @@ const Order = (props) => {
           />
           <div className="row">
             <div className="col-lg-7 mb-1">
-              <button type="button" className="bn bn-red" onClick={handleSell}>
+              <button
+                type="button"
+                className="bn bn-red"
+                onClick={handleSell}
+                disabled={disableOrders}
+              >
                 SELL
               </button>
             </div>
             <div className="col-lg-5 ps-0 mb-1">
-              <button type="button" className="bn bn-green" onClick={handleBuy}>
+              <button
+                type="button"
+                className="bn bn-green"
+                onClick={handleBuy}
+                disabled={disableOrders}
+              >
                 BUY
               </button>
             </div>
           </div>
           <div className="row">
             <div className="col-lg-5 mt-1">
-              <button type="button" className="bn bn-clear">
+              <button
+                type="button"
+                className="bn bn-clear"
+                disabled={disableOrders}
+              >
                 PASS
               </button>
             </div>
@@ -176,6 +209,7 @@ const Order = (props) => {
                 type="button"
                 className="bn bn-red"
                 onClick={handleShortSell}
+                disabled={disableOrders}
               >
                 SORT SELL
               </button>

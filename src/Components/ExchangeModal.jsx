@@ -2,6 +2,8 @@ import React from "react";
 
 const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
   // console.log(stockExchangeDetails);
+  const nf = new Intl.NumberFormat();
+
   return (
     <>
       <div
@@ -39,10 +41,10 @@ const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
                           {elem.company_name}
                         </td>
                         <td style={{ textAlign: "center" }}>
-                          <p>{elem.price}</p>
+                          <p>{nf.format(elem.price)}</p>
                         </td>
                         <td style={{ textAlign: "center" }}>
-                          <p>{elem.quantity}</p>
+                          <p>{nf.format(elem.quantity)}</p>
                         </td>
                         <td style={{ textAlign: "center" }}>
                           <p>{elem.sector}</p>

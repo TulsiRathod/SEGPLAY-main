@@ -65,6 +65,22 @@ const CardSection = ({
     }
   };
 
+  const cardColor = (elem) => {
+    switch (elem) {
+      case "PDFC":
+        return "#004888";
+      case "TMZN":
+        return "#f29100";
+      case "MCS":
+        return "#5a63b9";
+      case "TOOG":
+        return "#de4032";
+      case "JSL":
+        return "#45454e";
+      case "SP":
+        return "#CEC2EB";
+      default:
+        return "#808080";
   const handleCurPlus = (elem) => {
     if (round === 5) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -208,6 +224,7 @@ const CardSection = ({
                           }`}
                         ></i>
                         <span>Rs. {elem.price}/-</span>
+                        <span>{elem.company_ticker}</span>
                         <p>{elem.news}</p>
                       </div>
                     </div>

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-const Wallet = ({balance,portfolioDetails}) => {
-  const [holdings,setHoldings]=useState(0);
-  useEffect(()=>{
-    var temp=0;
-    portfolioDetails.map((elem)=>{
-      temp+=elem.current_stock_price*elem.total_stock;
-    })
-  setHoldings(temp);
-  },[portfolioDetails]);
+const Wallet = ({ balance, portfolioDetails }) => {
+  const [holdings, setHoldings] = useState(0);
+  useEffect(() => {
+    var temp = 0;
+    portfolioDetails.map((elem) => {
+      temp += elem.current_stock_price * elem.total_stock;
+    });
+    setHoldings(temp);
+  }, [portfolioDetails]);
+
+  const nf = new Intl.NumberFormat();
+
   return (
     <>
       <div className="wallet">
@@ -26,13 +29,15 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Available balance</p>
             <h4>
-              Rs. <span>{balance?Math.round(balance):0}</span>
+              Rs. <span>{balance ? nf.format(balance) : 0}</span>
+
             </h4>
           </div>
           <div className="balance">
             <p>Holdings</p>
             <h4>
-              Rs. <span>{holdings?Math.round(holdings):0}</span>
+              Rs. <span>{holdings ? nf.format(holdings) : 0}</span>
+
             </h4>
           </div>
           <hr
@@ -45,7 +50,11 @@ const Wallet = ({balance,portfolioDetails}) => {
           <div className="balance">
             <p>Total Networth</p>
             <h4>
-              Rs. <span>{(balance+holdings)?Math.round(balance+holdings):0}</span>
+              Rs.{" "}
+              <span>
+                {balance + holdings ? nf.format(balance + holdings) : 0}
+              </span>
+
             </h4>
           </div>
         </div>
