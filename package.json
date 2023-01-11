@@ -15,7 +15,7 @@
     "react-hot-toast": "^2.4.0",
     "react-qty-picker": "^1.0.6",
     "react-router-dom": "^6.6.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "socket.io-client": "^4.5.4",
     "web-vitals": "^2.1.4"
   },

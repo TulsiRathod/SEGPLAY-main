@@ -21,7 +21,7 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
             <table class="table table-striped">
               <thead style={{ backgroundColor: "#20958f", color: "#fff" }}>
                 <tr>
-                  <th scope="col">Date</th>
+                  <th scope="col">Day</th>
                   <th scope="col">Status</th>
                   <th scope="col">Script</th>
                   <th scope="col">Quantity</th>
@@ -32,7 +32,17 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
               </thead>
               <tbody>
                 {orderHistory.map((order) => (
+                  
                   <tr>
+                    {order.order_type === 3 ? 
+                    <>
+                    {/* <td>{order.day}</td>
+                    <td colSpan={6} style={{textAlign : "center"}}>
+                      Pass
+                    </td> */}
+                    </> 
+                    : 
+                    <>
                     <td>{order.day}</td>
                     <td>
                       {order.execution === 0 ? "Failed" : ""}
@@ -47,9 +57,11 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                       {order.order_type === 0 ? "Buy" : ""}
                       {order.order_type === 1 ? "Sell" : ""}
                       {order.order_type === 2 ? "ShortSell" : ""}
-                      {order.order_type === 3 ? "Pass" : ""}
+                      {/* {order.order_type === 3 ? "Pass" : ""} */}
                       {order.order_type === 4 ? "Veto" : ""}
                     </td>
+                    </>}
+                    
                   </tr>
                 ))}
               </tbody>
