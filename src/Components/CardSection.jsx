@@ -211,6 +211,10 @@ const CardSection = ({
                       <span
                         style={{
                           background: colorBG(elem.company_ticker),
+                          width: "40px",
+                          height: "40px",
+                          // margin: "auto",
+                          textAlign: "center",
                           padding: "7px 12px",
                           borderRadius: "50%",
                         }}

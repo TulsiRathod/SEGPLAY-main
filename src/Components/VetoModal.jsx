@@ -50,7 +50,7 @@ const VetoModal = ({
   return (
     <>
       <div
-        id="order_modal"
+        id="veto_modal"
         class="modal"
         style={vetoModal ? { display: "flex" } : { display: "none" }}
       >

@@ -168,7 +168,7 @@ const Sidebar = ({
                   </a>
                 </li>
 
-                {/* <li
+                <li
                   onClick={() => {
                     setShowVeto(true);
                   }}
@@ -181,7 +181,7 @@ const Sidebar = ({
                       V
                     </b>
                   </a>
-                </li> */}
+                </li>
               </ul>
             </div>
 
