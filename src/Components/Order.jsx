@@ -10,6 +10,8 @@ const Order = (props) => {
     setdisableOrders,
     disableOrders,
     getOrderHistory,
+    handlePass,
+    orderIsPlaced
   } = props;
   const [quantity, setQuantity] = useState(500);
   const [maxQ, setMaxQ] = useState();
@@ -56,6 +58,8 @@ const Order = (props) => {
         getOrderHistory();
         setQuantity(500);
         setPrice(0);
+        orderIsPlaced()
+        
       })
       .catch((error) => {
         console.log(error);
@@ -84,6 +88,7 @@ const Order = (props) => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
+        orderIsPlaced()
       })
       .catch((error) => {
         console.log(error);
@@ -113,12 +118,15 @@ const Order = (props) => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
+        orderIsPlaced()
       })
       .catch((error) => {
         console.log(error);
         toast.error(error.response.data.message);
       });
   };
+
+  
 
   return (
     <>
@@ -208,6 +216,7 @@ const Order = (props) => {
                 type="button"
                 className="bn bn-clear"
                 disabled={disableOrders}
+                onClick={()=>handlePass()}
               >
                 PASS
               </button>

@@ -51,6 +51,7 @@ const Home = () => {
   );
   const [isRoundStart, setIsRoundStart] = useState(false);
   const [orderHistory, setOrderHistory] = useState([]);
+  const [orderPlaced, setOrderPlaced] = useState(false)
 
   const closeModal = () => {
     setRulesModal(false);
@@ -128,6 +129,7 @@ const Home = () => {
 
     socket.on("round", (data) => {
       var round;
+      setOrderPlaced(false)
       if (data.round === 1 || data.round === 2 || data.round === 3) {
         round = data.round;
         setdisableOrders(false);
@@ -174,6 +176,32 @@ const Home = () => {
     getOrderHistory();
   }, [day]);
 
+  const handlePass = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/pass-order`,
+      headers: {},
+      data: {
+        team_id: teamId,
+        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
+        order_time: new Date().toJSON(),
+      },
+    })
+      .then((response) => {
+        // console.log("order ho gaya", response);
+        toast.success(response.data.message);
+        getWalletDetails();
+        setdisableOrders();
+        getOrderHistory();
+        setOrderPlaced(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  }
+
   return (
     <>
       <div className="container-fluid page-wrapper">
@@ -188,6 +216,8 @@ const Home = () => {
                 <Timer
                   seconds={ROUND_DELAY}
                   setIsRoundStart={() => setIsRoundStart(false)}
+                  handlePass={handlePass}
+                  orderPlaced={orderPlaced}
                 />
               ) : (
                 "00:00"
@@ -227,6 +257,8 @@ const Home = () => {
                   setdisableOrders={() => setdisableOrders(true)}
                   disableOrders={disableOrders}
                   getOrderHistory={getOrderHistory}
+                  handlePass = {handlePass}
+                  orderIsPlaced = {()=>{ setOrderPlaced(true)}}
                 />
               </div>
             </div>
