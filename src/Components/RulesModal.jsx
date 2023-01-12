@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-const RulesModal = ({rulesModal,closeModal,HandleAccept}) => {
-  const [checkBox,setCheckBox]=useState(false);
+const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
+  const [checkBox, setCheckBox] = useState(false);
   return (
     <>
-     {/* Rules Modal */}
-     <div
+      {/* Rules Modal */}
+      <div
         id="rule_modal"
         class="modal"
         style={rulesModal ? { display: "flex" } : { display: "none" }}
@@ -14,12 +14,12 @@ const RulesModal = ({rulesModal,closeModal,HandleAccept}) => {
           <span
             class="close"
             id="rules_modal_close"
-            onClick={closeModal}
+            // onClick={closeModal}
           >
-            &times;
+            &nbsp;
           </span>
-          <p class="modal_title">Rules</p>
-          <hr />
+          <p class="modal_title">Game Rules</p>
+          {/* <hr /> */}
           <div class="scroll_content">
             <p class="msg">
               What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
@@ -107,13 +107,39 @@ const RulesModal = ({rulesModal,closeModal,HandleAccept}) => {
               from repetition, injected humour, or non-characteristic words etc.
             </p>
           </div>
-                {HandleAccept?<>
-          <div style={{ display: "flex", width: "300px", height: "10px",margin:"15px",alignItems:"center"}}>
+          {HandleAccept ? (
+            <>
+              <div className="d-flex justify-content-between pt-4">
+                <div className="d-flex px-3 my-auto">
+                  <input
+                    className="me-2"
+                    style={{ width: "20px", height: "20px" }}
+                    type="checkbox"
+                    checked={checkBox ? "checked" : ""}
+                    onClick={() => {
+                      setCheckBox(checkBox ? false : true);
+                    }}
+                    id="rules-chk"
+                  />
+                  <label htmlFor="rules-chk">
+                    <b>I agree with above rules.</b>
+                  </label>
+                </div>
+                <button
+                  id="agree"
+                  class="modal-btn"
+                  disabled={!checkBox}
+                  onClick={HandleAccept}
+                >
+                  Agree
+                </button>
+              </div>
+              {/* <div className="rule_chk_area">
             <div style={{margin:"10px"}}>
-              <input type="checkbox" checked={checkBox?'checked':''} onClick={()=>{setCheckBox(checkBox?false:true)}}/>
+              <input style={{width : "20px", height : "20px"}} type="checkbox" checked={checkBox?'checked':''} onClick={()=>{setCheckBox(checkBox?false:true)}} id="rules-chk"/>
             </div>{" "}
             <div>
-              <label>I agree with above rules.</label>
+              <label htmlFor='rules-chk' style={{fontWeigth : "500"}}>I agree with above rules.</label>
             </div>
           </div>
       
@@ -121,20 +147,20 @@ const RulesModal = ({rulesModal,closeModal,HandleAccept}) => {
             <button id="agree" class="modal-btn" disabled={!checkBox} onClick={HandleAccept}>
               Agree
             </button>
-          </div>
-          </>
-          :
-          <div class="row" style={{ margin: "20px auto" }}>
-          <button id="agree" class="modal-btn" onClick={closeModal}>
-            Close
-          </button>
+          </div> */}
+            </>
+          ) : (
+            // <div class="row" style={{ margin: "20px auto" }}>
+            // <button id="agree" class="modal-btn" onClick={closeModal}>
+            //   Close
+            // </button>
+            // </div>
+            <></>
+          )}
         </div>
-          }
-          
-        </div>
-      </div> 
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default RulesModal
+export default RulesModal;

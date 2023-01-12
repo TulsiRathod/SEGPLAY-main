@@ -119,32 +119,32 @@
   left: 1230px;
 }
 
-.close:hover,
+/* .close:hover,
 .close:focus {
   color: #000000;
   text-decoration: none;
   cursor: pointer;
-}
+} */
 
 /* Modal button */
 .modal-btn {
   background-color: #259b95;
   color: #ffffff;
-  width: 100px !important;
-  height: 35px;
+  width: 125px !important;
+  height: 40px;
   border-radius: 8px;
   border: none;
-  margin-top: 5px !important;
-  margin-bottom: -10px !important;
+  /* margin-top: 5px !important;
+  margin-bottom: -10px !important; */
   position: relative;
-  float: right;
-  left: 660px;
-  box-shadow: 10px 10px 20px #00000033;
+  /* float: right; */
+  /* left: 660px; */
+  /* box-shadow: 10px 10px 20px #00000033; */
   font-weight: 600;
   font-size: 14px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   letter-spacing: 1px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .modal-btn:hover {
@@ -154,9 +154,9 @@
 }
 
 .modal_title {
-  font-size: 23px;
+  font-size: 35px;
   font-weight: 700;
-  margin-top: -45px;
+  margin: -45px 0 0 7px;
 }
 
 .veto_title {
@@ -164,3 +164,12 @@
   font-weight: 700;
   color: #2d2d2db3;
 }
+
+.rule_chk_area{
+  display: flex;
+   width: 300px; 
+   height: 10px;
+   margin-top: 25px;
+   align-items:center;
+}
+
