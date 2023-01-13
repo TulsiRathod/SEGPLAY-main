@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RulesModal from "./RulesModal";
 import { SERVER_URL } from "../Baseurl";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
 const Login = () => {
-  const [rulesModal, setRulesModal] = useState(false);
   const [teamName, setTeamName] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState({
@@ -51,35 +49,12 @@ const Login = () => {
         .then((response) => {
           toast.success(response.data.message);
           localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
-          setRulesModal(true);
+          nav('/home');
         })
         .catch((error) => {
           console.log(error);
           toast.error(error.response.data.message);
         });
-    }
-  };
-
-  const [error, setError] = useState("");
-  const validate = () => {
-    let isvalid = true;
-    if (!teamName) {
-      setError("Please Enter TeamID");
-      isvalid = false;
-    }
-    return isvalid;
-  };
-
-  const closeModal = () => {
-    setRulesModal(false);
-  };
-
-  const HandleAccept = (checkBox) => {
-    if(checkBox){
-    localStorage.setItem("SEG_RULES_ACEEPT", true);
-    nav("/Home");
-    }else{
-      toast.error('Please check Terms & Condition!');
     }
   };
 
@@ -175,11 +150,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <RulesModal
-        HandleAccept={HandleAccept}
-        rulesModal={rulesModal}
-        closeModal={closeModal}
-      />
     </>
   );
 };

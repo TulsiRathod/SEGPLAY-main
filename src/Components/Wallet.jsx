@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 
 const Wallet = ({ balance, portfolioDetails }) => {
   const [holdings, setHoldings] = useState(0);
+
+  const toIndianCurrency = (num) => {
+    const curr = num.toLocaleString('en-IN', {
+       style: 'currency',
+       currency: 'INR'
+    });
+ return curr;
+ };
+
   useEffect(() => {
     var temp = 0;
     portfolioDetails.map((elem) => {
@@ -9,8 +18,6 @@ const Wallet = ({ balance, portfolioDetails }) => {
     });
     setHoldings(temp);
   }, [portfolioDetails]);
-
-  const nf = new Intl.NumberFormat();
 
   return (
     <>
@@ -27,17 +34,15 @@ const Wallet = ({ balance, portfolioDetails }) => {
         <hr />
         <div>
           <div className="balance">
-            <p>Available balance</p>
+            <p>Available Cash Balance</p>
             <h4>
-              Rs. <span>{balance ? nf.format(balance) : 0}</span>
-
+              <span>{balance ? toIndianCurrency(balance) : 0}</span>
             </h4>
           </div>
           <div className="balance">
-            <p>Holdings</p>
+            <p>Holding Value</p>
             <h4>
-              Rs. <span>{holdings ? nf.format(holdings) : 0}</span>
-
+            <span>{holdings ? toIndianCurrency(holdings) : 0}</span>
             </h4>
           </div>
           <hr
@@ -50,11 +55,9 @@ const Wallet = ({ balance, portfolioDetails }) => {
           <div className="balance">
             <p>Total Networth</p>
             <h4>
-              Rs.{" "}
               <span>
-                {balance + holdings ? nf.format(balance + holdings) : 0}
+                {balance + holdings ? toIndianCurrency(balance + holdings) : 0}
               </span>
-
             </h4>
           </div>
         </div>

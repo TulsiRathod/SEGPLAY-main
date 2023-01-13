@@ -16,6 +16,14 @@ const CardSection = ({
   const [ticker, setTicker] = useState("");
   const [showSpecial, setShowSpecial] = useState(false);
   const [el, setEl] = useState({});
+  const [cardCount,setCardCount]=useState({
+    GOOGL:0,
+    TESLA:0,
+    SUNPM:0,
+    ADANI:0,
+    YESBK:0,
+    SHELL:0,
+  })
   useEffect(() => {
     if (day != 0) {
       getCard();
@@ -39,50 +47,16 @@ const CardSection = ({
       .then((response) => {
         setCards(response.data.cards);
         setShow(true);
-        console.log(response);
+        // console.log(response);
+        response.data.cards.map((elem)=>{
+          setCardCount({...cardCount})
+        })
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
 
-  const colorBG = (elem) => {
-    switch (elem) {
-      case "PDFC":
-        return "#B0DDF2";
-      case "TMZN":
-        return "#FFEDBB";
-      case "MCS":
-        return "#FFC6C6";
-      case "TOOG":
-        return "#E8FFC6";
-      case "JSL":
-        return "#FFCDF7";
-      case "SP":
-        return "#CEC2EB";
-      default:
-        return "#808080";
-    }
-  };
-
-  const cardColor = (elem) => {
-    switch (elem) {
-      case "PDFC":
-        return "#004888";
-      case "TMZN":
-        return "#f29100";
-      case "MCS":
-        return "#5a63b9";
-      case "TOOG":
-        return "#de4032";
-      case "JSL":
-        return "#45454e";
-      case "SP":
-        return "#CEC2EB";
-      default:
-        return "#808080";
-    }
-  };
   const handleCurPlus = (elem) => {
     if (round === 5) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -208,19 +182,18 @@ const CardSection = ({
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div className="card__face back">
-                      <span
+                      <img src={`../assets/${elem.company_ticker}.png`}
+                      
                         style={{
-                          background: colorBG(elem.company_ticker),
                           width: "40px",
                           height: "40px",
-                          // margin: "auto",
-                          textAlign: "center",
-                          padding: "7px 12px",
+                          margin: "auto",
                           borderRadius: "50%",
+                          objectFit:"cover"
                         }}
                       >
-                        {elem.company_ticker[0]}
-                      </span>
+                        
+                      </img>
                       <div className="card_sign">
                         <i
                           className={`fa-sharp fa-solid fa-triangle ${
@@ -452,6 +425,13 @@ const CardSection = ({
             />
           </div>
         )}
+        <div className="card_count row" style={{border:"1px solid black",margin:'-20px 0px',borderRadius:'8px',height:'30px'}}>
+          {stockExchangeDetails.map((elem)=><>
+            <div className="col-1">{elem.company_ticker}</div>
+            <div className="col-1"></div>
+            </>
+          )}
+        </div>
       </div>
       <SpecialModal
         specialModal={showSpecial}

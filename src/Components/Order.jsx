@@ -13,7 +13,7 @@ const Order = (props) => {
     handlePass,
     orderIsPlaced
   } = props;
-  const [quantity, setQuantity] = useState(500);
+  const [quantity, setQuantity] = useState(1000);
   const [maxQ, setMaxQ] = useState();
   const [price, setPrice] = useState();
   const [companyName, setCompanyName] = useState();
@@ -56,7 +56,7 @@ const Order = (props) => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
-        setQuantity(500);
+        setQuantity(1000);
         setPrice(0);
         orderIsPlaced()
         
@@ -126,7 +126,21 @@ const Order = (props) => {
       });
   };
 
-  
+  const handleIncrease = () => {
+    if((quantity+1000)<maxQ){
+      setQuantity(quantity+1000);
+    }else{
+      toast("Can't Increase Quantity");
+    }
+  }
+
+  const handleDecrease = () => {
+    if((quantity-1000)>0){
+      setQuantity(quantity-1000);
+    }else{
+      toast("Quantity can't less than 0");
+    }
+  }
 
   return (
     <>
@@ -142,7 +156,7 @@ const Order = (props) => {
             id="company"
             onChange={(e) => {
               setCompanyName(e.target.value);
-              setQuantity(500);
+              setQuantity(1000);
             }}
           >
             <option value="0">Select company</option>
@@ -151,30 +165,34 @@ const Order = (props) => {
             ))}
           </select>
           <p
-            className={`m-0 text-light d-${companyName ? "block" : "none"}`}
-            style={{ fontSize: "10px", fontWeight: "700" }}
+            className={`mb-2 text-light d-${companyName ? "block" : "none"}`}
+            style={{ fontSize: "10px", fontWeight: "700"}}
           >
             Max Quantity:{" "}
             <span className="text-warning me-2">
-              {nf.format(maxQ - (maxQ % 500))}
+              {nf.format(maxQ - (maxQ % 1000))}
             </span>{" "}
             Share Price:{" "}
             <span className="text-warning">{nf.format(price)}</span>
           </p>
+          <div className="row">
+          <input type="button" value="-" className="col-2 mb-3" style={{margin:"0 10px"}}  onClick={handleDecrease}/>
           <input
             type="number"
             value={quantity}
             style={{ backgroundColor: "#d2f9f7" }}
-            className="mb-3"
+            className="col-6 mb-3"
             onChange={(e) => setQuantity(e.target.value)}
-            step={500}
-            min={500}
+            step={1000}
+            min={1000}
             max={maxQ}
             placeholder="Enter value in 500's figure"
             name=""
             id=""
+            disabled="true"
           />
-
+          <input type="button" value="+" className="col-2 mb-3" style={{margin:"0 10px"}} onClick={handleIncrease}/>
+          </div>
           <input
             className="form-control"
             style={{

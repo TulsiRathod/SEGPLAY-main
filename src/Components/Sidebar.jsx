@@ -84,15 +84,6 @@ const Sidebar = ({
           <nav className="d-flex flex-column h-100">
             <div className="mb-5">
               <ul className="list-unstyled text-center mb-5">
-                {/* <li
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Tooltip on top"
-                >
-                  <a>
-                    <i className="fa-solid fa-screen-users"></i>
-                  </a>
-                </li> */}
                 <li
                   onClick={() => {
                     setExchangeModal(true);
@@ -167,21 +158,6 @@ const Sidebar = ({
                     ></i>
                   </a>
                 </li>
-
-                <li
-                  onClick={() => {
-                    setShowVeto(true);
-                  }}
-                >
-                  <a>
-                    <b
-                      className="mt-2"
-                      style={{ fontSize: "18px", color: "white" }}
-                    >
-                      V
-                    </b>
-                  </a>
-                </li>
               </ul>
             </div>
 
@@ -216,6 +192,7 @@ const Sidebar = ({
             <h3 className="mt-1">News</h3>
             <hr style={{ width: "calc(100% - 10px)" }} />
             <div
+              style={{ overflowY: "hidden", height: " calc(100vh - 120px) " }}
               className="d-flex flex-column"
             >
               <div

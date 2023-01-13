@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { ROUND_DELAY, SERVER_URL } from "../Baseurl";
 import ExchangeModal from "./ExchangeModal";
 import OrderModal from "./OrderModal";
@@ -15,8 +14,6 @@ import Order from "./Order";
 import axios from "axios";
 import StockHistory from "./StockHistory";
 import VetoModal from "./VetoModal";
-import { useNavigate } from "react-router-dom";
-import Countdown from "react-countdown";
 import Timer from "./Timer";
 
 const socket = io(SERVER_URL);
@@ -24,7 +21,6 @@ const socket = io(SERVER_URL);
 const Home = () => {
   const [rulesModal, setRulesModal] = useState(false);
   const [showVeto, setShowVeto] = useState(false);
-  const nav = useNavigate();
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
@@ -98,7 +94,7 @@ const Home = () => {
       headers: {},
     })
       .then((response) => {
-        // console.log("order history aa gai", response.data.data);
+        // console.log(response.data.data);
         setOrderHistory(response.data.data);
         // toast.success(response.data.message);
       })
@@ -110,7 +106,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("SEG_RULES_ACEEPT")) {
-      nav("/");
+      setRulesModal(true);
     }
 
     if (localStorage.getItem("SEG_CARD_REVEAL")) {
@@ -149,7 +145,7 @@ const Home = () => {
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
 
-    socket.on("reveal", (data) => {
+    socket.on("market", (data) => {
       setCardReveal(true);
       toast.success(`Card Reveal`);
       localStorage.setItem("SEG_CARD_REVEAL", true);
@@ -189,7 +185,7 @@ const Home = () => {
       },
     })
       .then((response) => {
-        // console.log("order ho gaya", response);
+        // console.log(response);
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
@@ -209,7 +205,7 @@ const Home = () => {
         <div className="dynamic_island">
           <div className="row">
             <div className="col-lg-4">Day {day}</div>
-            <div 
+            <div
               className="col-lg-4"
               style={{ fontSize: "18px", fontWeight: "500" }}
             >
@@ -241,7 +237,7 @@ const Home = () => {
           <div className="main_section">
             <div className="row">
               <div className="col-lg-9">
-                <Portfolio portfolioDetails={portfolioDetails} />
+                <Portfolio portfolioDetails={portfolioDetails} stockExchangeDetails={stockExchangeDetails}/>
                 <CardSection
                   day={day}
                   round={round}

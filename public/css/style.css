@@ -28,7 +28,7 @@ body {
 /*************************dynamic island ****************************/
 .dynamic_island {
   width: 300px;
-  padding: 2px 8px;
+  padding: 5px 8px;
   border-radius: 10px;
   background-color: #2e837e;
   color: white;
@@ -147,9 +147,9 @@ h3 {
 
 /***************** Portfolio ********************/
 .portfolio {
-  min-height: calc(50vh - 30px);
+  min-height: calc(45vh - 30px);
   background-color: var(--greenapple);
-  padding: 20px 25px 5px;
+  padding: 25px 25px 5px;
   border-radius: 10px;
 }
 .portfolio h3 {

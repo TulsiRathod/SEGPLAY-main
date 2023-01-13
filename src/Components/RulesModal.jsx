@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
+const RulesModal = ({ rulesModal, closeModal }) => {
   const [checkBox, setCheckBox] = useState(false);
+  const accept = localStorage.getItem("SEG_RULES_ACEEPT");
   return (
     <>
-      {/* Rules Modal */}
       <div
         id="rule_modal"
         className="modal"
@@ -14,7 +14,6 @@ const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
           <span
             className="close"
             id="rules_modal_close"
-            // onClick={closeModal}
           >
             &nbsp;
           </span>
@@ -107,7 +106,7 @@ const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
               from repetition, injected humour, or non-characteristic words etc.
             </p>
           </div>
-          {HandleAccept ? (
+          {!accept ? (
             <>
               <div className="d-flex justify-content-between pt-4">
                 <div className="d-flex px-3 my-auto">
@@ -128,34 +127,18 @@ const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
                 <button
                   id="agree"
                   className="modal-btn"
-                  // disabled={!checkBox}
-                  onClick={()=>HandleAccept(checkBox)}
+                  onClick={()=>{localStorage.setItem("SEG_RULES_ACEEPT",true);closeModal();}}
                 >
                   Agree
                 </button>
               </div>
-              {/* <div className="rule_chk_area">
-            <div style={{margin:"10px"}}>
-              <input style={{width : "20px", height : "20px"}} type="checkbox" checked={checkBox?'checked':''} onClick={()=>{setCheckBox(checkBox?false:true)}} id="rules-chk"/>
-            </div>{" "}
-            <div>
-              <label htmlFor='rules-chk' style={{fontWeigth : "500"}}>I agree with above rules.</label>
-            </div>
-          </div>
-      
-          <div className="row" style={{ margin: "auto", marginBottom: " 30px" }}>
-            <button id="agree" className="modal-btn" disabled={!checkBox} onClick={HandleAccept}>
-              Agree
-            </button>
-          </div> */}
             </>
           ) : (
-            // <div className="row" style={{ margin: "20px auto" }}>
-            // <button id="agree" className="modal-btn" onClick={closeModal}>
-            //   Close
-            // </button>
-            // </div>
-            <></>
+            <div className="row" style={{ margin: "20px auto" }}>
+            <button id="agree" className="modal-btn" onClick={closeModal}>
+              Close
+            </button>
+            </div>    
           )}
         </div>
       </div>
