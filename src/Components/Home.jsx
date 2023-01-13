@@ -208,7 +208,7 @@ const Home = () => {
         <div className="dynamic_island">
           <div className="row">
             <div className="col-lg-4">Day {day}</div>
-            <div
+            <div 
               className="col-lg-4"
               style={{ fontSize: "18px", fontWeight: "500" }}
             >
