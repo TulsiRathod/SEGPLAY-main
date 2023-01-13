@@ -84,7 +84,7 @@ const Sidebar = ({
           <nav className="d-flex flex-column h-100">
             <div className="mb-5">
               <ul className="list-unstyled text-center mb-5">
-                <li
+                {/* <li
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Tooltip on top"
@@ -92,7 +92,7 @@ const Sidebar = ({
                   <a>
                     <i className="fa-solid fa-screen-users"></i>
                   </a>
-                </li>
+                </li> */}
                 <li
                   onClick={() => {
                     setExchangeModal(true);
@@ -212,10 +212,7 @@ const Sidebar = ({
           </nav>
         </div>
         <div className="newsbar">
-          <div class="accordion" id="accordionExample">
-            <DayNews news={news} day={day} cardReveal={cardReveal} />
-          </div>
-          {/* <section>
+          <section>
             <h3 className="mt-1">News</h3>
             <hr style={{ width: "calc(100% - 10px)" }} />
             <div
@@ -226,10 +223,12 @@ const Sidebar = ({
                 className="accordion accordion-flush pe-1"
                 id="accordionFlushExample "
               >
-                <DayNews news={news} day={day} />
+                <div className="accordion" id="accordionExample">
+                  <DayNews news={news} day={day} cardReveal={cardReveal} />
+                </div>
               </div>
             </div>
-          </section> */}
+          </section>
         </div>
       </div>
     </>

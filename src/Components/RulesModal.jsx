@@ -7,21 +7,21 @@ const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
       {/* Rules Modal */}
       <div
         id="rule_modal"
-        class="modal"
+        className="modal"
         style={rulesModal ? { display: "flex" } : { display: "none" }}
       >
-        <div class="modal-content" id="rules_modal">
+        <div className="modal-content" id="rules_modal">
           <span
-            class="close"
+            className="close"
             id="rules_modal_close"
             // onClick={closeModal}
           >
             &nbsp;
           </span>
-          <p class="modal_title">Game Rules</p>
+          <p className="modal_title">Game Rules</p>
           {/* <hr /> */}
-          <div class="scroll_content">
-            <p class="msg">
+          <div className="scroll_content">
+            <p className="msg">
               What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
               printing and typesetting industry. Lorem Ipsum has been the
               industry's standard dummy text ever since the 1500s, when an
@@ -127,9 +127,9 @@ const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
                 </div>
                 <button
                   id="agree"
-                  class="modal-btn"
-                  disabled={!checkBox}
-                  onClick={HandleAccept}
+                  className="modal-btn"
+                  // disabled={!checkBox}
+                  onClick={()=>HandleAccept(checkBox)}
                 >
                   Agree
                 </button>
@@ -143,15 +143,15 @@ const RulesModal = ({ rulesModal, closeModal, HandleAccept }) => {
             </div>
           </div>
       
-          <div class="row" style={{ margin: "auto", marginBottom: " 30px" }}>
-            <button id="agree" class="modal-btn" disabled={!checkBox} onClick={HandleAccept}>
+          <div className="row" style={{ margin: "auto", marginBottom: " 30px" }}>
+            <button id="agree" className="modal-btn" disabled={!checkBox} onClick={HandleAccept}>
               Agree
             </button>
           </div> */}
             </>
           ) : (
-            // <div class="row" style={{ margin: "20px auto" }}>
-            // <button id="agree" class="modal-btn" onClick={closeModal}>
+            // <div className="row" style={{ margin: "20px auto" }}>
+            // <button id="agree" className="modal-btn" onClick={closeModal}>
             //   Close
             // </button>
             // </div>

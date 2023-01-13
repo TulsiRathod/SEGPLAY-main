@@ -8,17 +8,17 @@ const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
     <>
       <div
         id="exchange_modal"
-        class="modal"
+        className="modal"
         style={exchangeModal ? { display: "flex" } : { display: "none" }}
       >
-        <div class="modal-content" id="exchange_modal_content">
-          <span class="close" id="exchange_close" onClick={closeModal}>
+        <div className="modal-content" id="exchange_modal_content">
+          <span className="close" id="exchange_close" onClick={closeModal}>
             &times;
           </span>
-          <p class="modal_title">Listed Stocks</p>
+          <p className="modal_title">Listed Stocks</p>
           <hr />
-          <div class="scroll_content">
-            <table class="table table-striped" id="exchange_tbl">
+          <div className="scroll_content">
+            <table className="table table-striped" id="exchange_tbl">
               <thead style={{ backgroundColor: "#20958f" }}>
                 <tr>
                   <th style={{ color: "#fff" }}>Stock Name</th>

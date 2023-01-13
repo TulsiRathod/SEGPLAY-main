@@ -228,7 +228,7 @@ const Order = (props) => {
                 onClick={handleShortSell}
                 disabled={disableOrders}
               >
-                SORT SELL
+                SHORT SELL
               </button>
             </div>
           </div>

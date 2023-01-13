@@ -5,17 +5,17 @@ const StockHistory = ({ stockHistoryModal, closeModal }) => {
     <>
       <div
         id="portfolio_modal"
-        class="modal"
+        className="modal"
         style={stockHistoryModal ? { display: "flex" } : { display: "none" }}
       >
-        <div class="modal-content" id="portfolio_modal_content">
-          <span class="close" id="portfolio_close" onClick={closeModal}>
+        <div className="modal-content" id="portfolio_modal_content">
+          <span className="close" id="portfolio_close" onClick={closeModal}>
             &times;
           </span>
-          <p class="modal_title">Stock Exchange History</p>
+          <p className="modal_title">Stock Exchange History</p>
           <hr />
-          <div class="scroll_content">
-            <table class="table table-striped" id="portfolio_tbl">
+          <div className="scroll_content">
+            <table className="table table-striped" id="portfolio_tbl">
               <thead style={{ backgroundColor: "#20958f" }}>
                 <tr>
                   <th style={{ color: "#fff" }}>Stock Name</th>

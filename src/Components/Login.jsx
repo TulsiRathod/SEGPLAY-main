@@ -74,9 +74,13 @@ const Login = () => {
     setRulesModal(false);
   };
 
-  const HandleAccept = () => {
+  const HandleAccept = (checkBox) => {
+    if(checkBox){
     localStorage.setItem("SEG_RULES_ACEEPT", true);
     nav("/Home");
+    }else{
+      toast.error('Please check Terms & Condition!');
+    }
   };
 
   useEffect(() => {
@@ -87,26 +91,26 @@ const Login = () => {
 
   return (
     <>
-      <div class="backdesign"></div>
-      <div class="container inner_container">
-        <div class="row">
-          <div class="col-md-7">
+      <div className="backdesign"></div>
+      <div className="container inner_container">
+        <div className="row">
+          <div className="col-md-7">
             {/* <h1>THE FINSHARP LOGIN</h1> */}
             <img
               src="../assets/Login illustrator.png"
               alt="Login illustrator"
-              class="login_illu"
+              className="login_illu"
             />
           </div>
-          <div class="col-md-5 m-auto">
-            <div class="form">
-              <p class="log_title">Log In</p>
-              <p class="log_desc">Login to The Fin Sharp</p>
+          <div className="col-md-5 m-auto">
+            <div className="form">
+              <p className="log_title">Log In</p>
+              <p className="log_desc">Login to The Fin Sharp</p>
 
               <form action="">
-                <div class="floating mt-5 m-0">
+                <div className="floating mt-5 m-0">
                   <input
-                    class="floating_input"
+                    className="floating_input"
                     name="username"
                     type="text"
                     placeholder="Team ID"
@@ -121,20 +125,20 @@ const Login = () => {
                   />
                   <label
                     for="input_teamName"
-                    class="floating_label"
+                    className="floating_label"
                     data-content="TEAM NAME"
                   >
-                    <span class="hidden--visually">TEAM NAME</span>
+                    <span className="hidden--visually">TEAM NAME</span>
                   </label>
                 </div>
                 <p className="error-text">
                   {err.teamNameError ? "Team name can't be empty!" : ""}
                 </p>
 
-                <div class="floating mt-4 m-0">
+                <div className="floating mt-4 m-0">
                   <input
                     type="password"
-                    class="floating_input"
+                    className="floating_input"
                     name="password"
                     placeholder="Password"
                     value={password}
@@ -148,10 +152,10 @@ const Login = () => {
                   />
                   <label
                     for="input_password"
-                    class="floating_label"
+                    className="floating_label"
                     data-content="PASSWORD"
                   >
-                    <span class="hidden--visually">PASSWORD</span>
+                    <span className="hidden--visually">PASSWORD</span>
                   </label>
                 </div>
                 <p className="error-text">
@@ -160,7 +164,7 @@ const Login = () => {
 
                 <button
                   type="button"
-                  class="button"
+                  className="button"
                   id="login_btn"
                   onClick={handleLogin}
                 >

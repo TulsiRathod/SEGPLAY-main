@@ -194,6 +194,7 @@ const Home = () => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
+        setdisableOrders(true)
         setOrderPlaced(true);
       })
       .catch((error) => {

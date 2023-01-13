@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-const Timer = ({ seconds, setIsRoundStart }) => {
+const Timer = ({ seconds, setIsRoundStart, orderPlaced, handlePass }) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
     // exit early when we reach 0
+    if(timeLeft === 1 && orderPlaced === false){
+      handlePass()
+    }
     if (!timeLeft) return;
 
     // save intervalId to clear the interval when the
