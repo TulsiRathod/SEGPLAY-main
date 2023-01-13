@@ -216,7 +216,6 @@ const Sidebar = ({
             <h3 className="mt-1">News</h3>
             <hr style={{ width: "calc(100% - 10px)" }} />
             <div
-              style={{ overflowY: "hidden", height: " calc(100vh - 120px) " }}
               className="d-flex flex-column"
             >
               <div
