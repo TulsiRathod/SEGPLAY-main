@@ -130,39 +130,39 @@ const SpecialModal = ({
     <>
       <div
         id="order_modal"
-        class="modal"
+        className="modal"
         style={specialModal ? { display: "flex" } : { display: "none" }}
       >
-        <div class="modal-content" id="veto_modal_content">
+        <div className="modal-content" id="veto_modal_content">
           {/* <!-- <p>Veto order</p> --> */}
-          <span class="close" id="table_order_close" onClick={closeModal}>
+          <span className="close" id="table_order_close" onClick={closeModal}>
             &times;
           </span>
-          <p class="veto_title">{cardType(type)}</p>
+          <p className="veto_title">{cardType(type)}</p>
           <hr />
-          <div class="scroll_content">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-7">
-                  <form class="Company_form">
-                    <p class="company_title">Company List</p>
+          <div className="scroll_content">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-7">
+                  <form className="Company_form">
+                    <p className="company_title">Company List</p>
                     {stockExchangeDetails.map((stock, i) => (
                       <div
-                        class="inputGroup"
+                        className="inputGroup"
                         onClick={() => setMinBidAmount(stock)}
                       >
                         <input id={`radio${i}`} name="radio" type="radio" />
                         <label for={`radio${i}`}>{stock.company_name}</label>
                       </div>
                     ))}
-                     {type===3?<button type="button" class="btn_veto_order" onClick={handleDebenture}>
+                     {type===3?<button type="button" className="btn_veto_order" onClick={handleDebenture}>
                       Submit
                     </button>:''}
                     
-                    {type===4?<button type="button" class="btn_veto_order" onClick={handleRightIs}>
+                    {type===4?<button type="button" className="btn_veto_order" onClick={handleRightIs}>
                       Submit
                     </button>:''}
-                    {type===7?<button type="button" class="btn_veto_order" onClick={handleShareSus}>
+                    {type===7?<button type="button" className="btn_veto_order" onClick={handleShareSus}>
                       Submit
                     </button>:''}
                   </form>

@@ -51,25 +51,25 @@ const VetoModal = ({
     <>
       <div
         id="veto_modal"
-        class="modal"
+        className="modal"
         style={vetoModal ? { display: "flex" } : { display: "none" }}
       >
-        <div class="modal-content" id="veto_modal_content">
+        <div className="modal-content" id="veto_modal_content">
           {/* <!-- <p>Veto order</p> --> */}
-          <span class="close" id="table_order_close" onClick={closeModal}>
+          <span className="close" id="table_order_close" onClick={closeModal}>
             &times;
           </span>
-          <p class="veto_title">Veto order</p>
+          <p className="veto_title">Veto order</p>
           <hr />
-          <div class="scroll_content">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-7">
-                  <form class="Company_form">
-                    <p class="company_title">Company List</p>
+          <div className="scroll_content">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-7">
+                  <form className="Company_form">
+                    <p className="company_title">Company List</p>
                     {stockExchangeDetails.map((stock, i) => (
                       <div
-                        class="inputGroup"
+                        className="inputGroup"
                         onClick={() => setMinBidAmount(stock)}
                       >
                         <input id={`radio${i}`} name="radio" type="radio" />
@@ -79,9 +79,9 @@ const VetoModal = ({
                   </form>
                 </div>
 
-                <div class="col-md-5">
-                  <div class="veto_select">
-                    <p class="input_title">Quantity</p>
+                <div className="col-md-5">
+                  <div className="veto_select">
+                    <p className="input_title">Quantity</p>
                     <input
                       type="number"
                       value={quantity}
@@ -99,7 +99,7 @@ const VetoModal = ({
                       {maxQ}
                     </p>
 
-                    <p class="input_title">Amount</p>
+                    <p className="input_title">Amount</p>
                     <input
                       className=""
                       onChange={(e) => setUserBid(e.target.value)}
@@ -119,7 +119,7 @@ const VetoModal = ({
                     </p>
                     <button
                       type="button"
-                      class="btn_veto_order"
+                      className="btn_veto_order"
                       onClick={handleVeto}
                     >
                       Veto Order

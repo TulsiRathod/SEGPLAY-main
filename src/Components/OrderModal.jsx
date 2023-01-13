@@ -8,17 +8,17 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
     <>
       <div
         id="order_modal"
-        class="modal"
+        className="modal"
         style={orderModal ? { display: "flex" } : { display: "none" }}
       >
-        <div class="modal-content" id="order_modal_content">
-          <span class="close" id="table_order_close" onClick={closeModal}>
+        <div className="modal-content" id="order_modal_content">
+          <span className="close" id="table_order_close" onClick={closeModal}>
             &times;
           </span>
-          <p class="modal_title">Order History</p>
+          <p className="modal_title">Order History</p>
           <hr />
-          <div class="scroll_content">
-            <table class="table table-striped">
+          <div className="scroll_content">
+            <table className="table table-striped">
               <thead style={{ backgroundColor: "#20958f", color: "#fff" }}>
                 <tr>
                   <th scope="col">Day</th>
