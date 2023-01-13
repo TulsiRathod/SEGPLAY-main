@@ -9,27 +9,23 @@ const Portfolio = (props) => {
   },[props]);
 
   const colorBG = (e1,e2) => {
-    var diff = (e1-e2)/e2;
+    var diff = ((e1-e2)/e2)*100;
+    console.log(diff);
     if(diff<(-10)){
-      return "#8B0000";
+      return "#A30000";
     }else if(diff<(-5)){
-      return "#8B0000";
+      return "#D10000";
     }else if(diff<0){
-      // return "#138808";
+      return "#FF2E2E";
+    }else if(diff>10){
+      return "#004225";
+    }else if(diff>5){
+      return "#138808";
+    }else if(diff>0){
+      return "#32CD32";
+    }else{
+      return "#828282"
     }
-    // if(diff>10){
-    //   return "#004225";
-    // }else if(diff>5){
-    //   return "#299617";
-    // }else if(diff>0){
-    // }else if(diff<(-10)){
-    //   
-    // }else if(diff<(-5)){
-    // }else if(diff<0){
-    //   // return "F08080"
-    // }else{
-    //   return "#808080";
-    // }
   }
   return (
     <>
