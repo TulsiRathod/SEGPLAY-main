@@ -79,13 +79,7 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails }) => {
                       </p>
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>
-                        {Math.round(
-                          (elem.current_stock_price * elem.total_stock -
-                            elem.total_investment_amount) /
-                            elem.total_investment_amount
-                        )}
-                      </p>
+                      <p style={{color:`${elem.current_stock_price-elem.average_buying_price?'red':'green'}`}}>{((elem.current_stock_price-elem.average_buying_price)/elem.average_buying_price)*100}%</p>
                     </td>
                   </tr>
                 ))}
