@@ -1,8 +1,18 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const RulesModal = ({ rulesModal, closeModal }) => {
   const [checkBox, setCheckBox] = useState(false);
   const accept = localStorage.getItem("SEG_RULES_ACEEPT");
+
+  const handleAgreement = () => {
+    if(checkBox){
+      localStorage.setItem("SEG_RULES_ACEEPT",true);
+      closeModal();
+    }else{
+      toast.error('Please Check Terms & Conditions!')
+    }
+  }
   return (
     <>
       <div
@@ -127,7 +137,7 @@ const RulesModal = ({ rulesModal, closeModal }) => {
                 <button
                   id="agree"
                   className="modal-btn"
-                  onClick={()=>{localStorage.setItem("SEG_RULES_ACEEPT",true);closeModal();}}
+                  onClick={handleAgreement}
                 >
                   Agree
                 </button>
