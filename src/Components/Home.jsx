@@ -147,14 +147,14 @@ const Home = () => {
 
     socket.on("market", (data) => {
       setCardReveal(true);
-      toast.success(`Card Reveal`);
+      toast.success(`Market Start`);
       localStorage.setItem("SEG_CARD_REVEAL", true);
     });
 
     return () => {
       socket.off("day");
       socket.off("round");
-      socket.off("reveal");
+      socket.off("market");
     };
   }, []);
 

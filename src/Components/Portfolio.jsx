@@ -9,22 +9,23 @@ const Portfolio = (props) => {
   },[props]);
 
   const colorBG = (e1,e2) => {
-    var diff = ((e1-e2)/e2)*100;
-    console.log(diff);
-    if(diff<(-10)){
-      return "#A30000";
-    }else if(diff<(-5)){
-      return "#D10000";
-    }else if(diff<0){
-      return "#FF2E2E";
-    }else if(diff>10){
-      return "#004225";
-    }else if(diff>5){
-      return "#138808";
-    }else if(diff>0){
-      return "#32CD32";
+    if(e2==0){
+      return "#828282";
     }else{
-      return "#828282"
+      var diff = ((e1-e2)/e2)*100;
+      if(diff<(-10)){
+        return "#A30000";
+      }else if(diff<(-5)){
+        return "#D10000";
+      }else if(diff<0){
+        return "#FF2E2E";
+      }else if(diff>10){
+        return "#004225";
+      }else if(diff>5){
+        return "#138808";
+      }else if(diff>0){
+        return "#32CD32";
+      }
     }
   }
   return (
@@ -51,6 +52,7 @@ const Portfolio = (props) => {
                   <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                       <img src={`../assets/${stockDetails[0].company_ticker}.png`} style={{height:'50px',borderRadius:'50%',objectFit:'cover'}}/>
                     <div style={{color:"white"}}>{stockDetails[0].company_ticker}</div>
+                    <div style={{color:"white"}}>{stockDetails[0].previous_day_price!==0?(((stockDetails[0].price-stockDetails[0].previous_day_price)*100)/stockDetails[0].previous_day_price).toPrecision(4):0}%</div>
                     </div>
                 </div>
                     </>:''}
@@ -59,6 +61,7 @@ const Portfolio = (props) => {
                 <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                 <img src={`../assets/${stockDetails[1].company_ticker}.png`} style={{height:'40px',borderRadius:'50%',objectFit:'cover'}}/>
                      <div style={{color:"white"}}>{stockDetails[1].company_ticker}</div>
+                     <div style={{color:"white"}}>{stockDetails[1].previous_day_price!==0?(((stockDetails[1].price-stockDetails[1].previous_day_price)*100)/stockDetails[1].previous_day_price).toPrecision(4):0}%</div>
                   </div>
                 </div>
                     </>:''}
@@ -67,8 +70,9 @@ const Portfolio = (props) => {
               {stockDetails.length>0?<>
               <div className="row" style={{backgroundColor:`${colorBG(stockDetails[2].price,stockDetails[2].previous_day_price)}`,border:"1px solid white",height:"30%",borderRadius:"0 16px 0 0"}}>
               <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-              <img src={`../assets/${stockDetails[2].company_ticker}.png`} style={{height:'35px',borderRadius:'50%',objectFit:'cover'}}/>  
-                     <div style={{color:"white"}}>{stockDetails[2].company_ticker}</div>
+              <img src={`../assets/${stockDetails[2].company_ticker}.png`} style={{height:'30px',borderRadius:'50%',objectFit:'cover'}}/>  
+                     <div style={{color:"white",fontSize:"12px"}}>{stockDetails[2].company_ticker}</div>
+                     <div style={{color:"white",fontSize:"12px"}}>{stockDetails[2].previous_day_price!==0?(((stockDetails[2].price-stockDetails[2].previous_day_price)*100)/stockDetails[2].previous_day_price).toPrecision(4):0}%</div>
                 </div>
               </div>
                     </>:''}
@@ -78,6 +82,7 @@ const Portfolio = (props) => {
                   <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",height:"100%"}}>
                   <img src={`../assets/${stockDetails[3].company_ticker}.png`} style={{height:'40px',borderRadius:'50%',objectFit:'cover'}}/> 
                      <div style={{color:"white"}}>{stockDetails[3].company_ticker}</div>
+                     <div style={{color:"white"}}>{stockDetails[3].previous_day_price!==0?(((stockDetails[3].price-stockDetails[3].previous_day_price)*100)/stockDetails[3].previous_day_price).toPrecision(4):0}%</div>
                     </div>
                   </div>
                     </>:''}
@@ -85,8 +90,9 @@ const Portfolio = (props) => {
                     {stockDetails.length>0?<>
                     <div className="row" style={{height:'40%',backgroundColor:`${colorBG(stockDetails[4].price,stockDetails[4].previous_day_price)}`,border:"1px solid white"}}>
                     <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-                    <img src={`../assets/${stockDetails[4].company_ticker}.png`} style={{height:'35px',borderRadius:'50%',objectFit:'cover'}}/>
-                     <div style={{color:"white"}}>{stockDetails[4].company_ticker}</div>
+                    <img src={`../assets/${stockDetails[4].company_ticker}.png`} style={{height:'30px',borderRadius:'50%',objectFit:'cover'}}/>
+                     <div style={{color:"white",fontSize:"10px"}}>{stockDetails[4].company_ticker}</div>
+                     <div style={{color:"white",fontSize:"10px"}}>{stockDetails[4].previous_day_price!==0?(((stockDetails[4].price-stockDetails[4].previous_day_price)*100)/stockDetails[4].previous_day_price).toPrecision(4):0}%</div>
                       </div>
                     </div>
                     </>
@@ -94,8 +100,9 @@ const Portfolio = (props) => {
                     {stockDetails.length>0?<>
                     <div className="row" style={{height:'60%',backgroundColor:`${colorBG(stockDetails[5].price,stockDetails[5].previous_day_price)}`,border:"1px solid white",borderRadius:"0 0 16px 0"}}>
                     <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-                    <img src={`../assets/${stockDetails[5].company_ticker}.png`} style={{height:'40px',borderRadius:'50%',objectFit:'cover'}}/>
-                     <div style={{color:"white"}}>{stockDetails[5].company_ticker}</div>
+                    <img src={`../assets/${stockDetails[5].company_ticker}.png`} style={{height:'35px',borderRadius:'50%',objectFit:'cover'}}/>
+                     <div style={{color:"white",fontSize:"12px"}}>{stockDetails[5].company_ticker}</div>
+                     <div style={{color:"white",fontSize:"12px"}}>{stockDetails[5].previous_day_price!==0?(((stockDetails[5].price-stockDetails[5].previous_day_price)*100)/stockDetails[5].previous_day_price).toPrecision(4):0}%</div>
                     </div>
                     </div>
                     </>
@@ -113,7 +120,7 @@ const Portfolio = (props) => {
                 <tr>
                   <th>Company</th>
                   <th style={{ textAlign: "center" }}>Last Price</th>
-                  <th>Status</th>
+                  <th style={{ textAlign: "center" }}>P&L</th>
                   <th style={{ textAlign: "end" }}>Quantity</th>
                 </tr>
                 {portfolio.map((elem) => (
@@ -123,6 +130,9 @@ const Portfolio = (props) => {
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>{elem.current_stock_price}</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p style={{color:`${elem.current_stock_price-elem.average_buying_price?'red':'green'}`}}>{((elem.current_stock_price-elem.average_buying_price)/elem.average_buying_price)*100}%</p>
                     </td>
                     <td style={{ textAlign: "end" }}>
                       <p>{elem.total_stock}</p>
