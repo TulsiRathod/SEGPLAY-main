@@ -15,16 +15,20 @@ import axios from "axios";
 import StockHistory from "./StockHistory";
 import VetoModal from "./VetoModal";
 import Timer from "./Timer";
+import { Offcanvas } from "react-bootstrap";
 
 const socket = io(SERVER_URL);
 
 const Home = () => {
   const [rulesModal, setRulesModal] = useState(false);
+  const [show, setShow] = useState(false);
+
   const [showVeto, setShowVeto] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
   const [stockHistoryModal, setStockHistoryModal] = useState(false);
+  const [loggedInUsers, setLoggedInUsers] = useState([]);
   const [day, setDay] = useState(
     localStorage.getItem("SEG_CURRENT_DAY")
       ? localStorage.getItem("SEG_CURRENT_DAY")
@@ -47,7 +51,23 @@ const Home = () => {
   );
   const [isRoundStart, setIsRoundStart] = useState(false);
   const [orderHistory, setOrderHistory] = useState([]);
-  const [orderPlaced, setOrderPlaced] = useState(false)
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [companyName, setCompanyName] = useState();
+  const [quantity, setQuantity] = useState(1000);
+  const [maxQ, setMaxQ] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [companyId, setCompanyId] = useState();
+  const [bidAmount, setBidAmount] = useState();
+  const [userBid, setUserBid] = useState();
+
+  const toIndianCurrency = (num) => {
+    console.log(num, "in currency");
+    const curr = num.toLocaleString("en-IN", {
+      style: "currency",
+      currency: "INR",
+    });
+    return curr;
+  };
 
   const closeModal = () => {
     setRulesModal(false);
@@ -104,6 +124,65 @@ const Home = () => {
       });
   };
 
+  const calMaxLot = () => {
+    stockExchangeDetails.map((stock) => {
+      if (companyName === stock.company_name) {
+        setCompanyId(stock.id);
+        setMaxQ(parseInt(stock.quantity / loggedInUsers.length));
+        setPrice(parseInt(stock.price));
+      }
+    });
+  };
+
+  const handleIncrease = () => {
+    if (quantity + 1000 < maxQ) {
+      setQuantity(quantity + 1000);
+    } else {
+      toast("Can't Increase Quantity");
+    }
+  };
+
+  const handleDecrease = () => {
+    if (quantity - 1000 > 0) {
+      setQuantity(quantity - 1000);
+    } else {
+      toast("Quantity can't less than 0");
+    }
+  };
+
+  const setMinBidAmount = (e) => {
+    setBidAmount(e.price);
+    setMaxQ(e.quantity);
+    setCompanyId(e.id);
+  };
+
+  const handleVeto = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/place-veto-order`,
+      headers: {},
+      data: {
+        team_id: teamId,
+        company_id: companyId,
+        stock_quantity: parseInt(quantity),
+        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
+        bidding_price: userBid,
+        round_type: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
+        order_time: new Date().toJSON(),
+      },
+    })
+      .then((response) => {
+        console.log("veto ho gaya", response);
+        toast.success(response.data.message);
+        getWalletDetails();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("SEG_RULES_ACEEPT")) {
       setRulesModal(true);
@@ -125,13 +204,13 @@ const Home = () => {
 
     socket.on("round", (data) => {
       var round;
-      setOrderPlaced(false)
+      setOrderPlaced(false);
       if (data.round === 1 || data.round === 2 || data.round === 3) {
         round = data.round;
         setdisableOrders(false);
       } else if (data.round === 4) {
         round = "Veto Round";
-        setShowVeto(true);
+        handleShow(true);
       } else if (data.round === 5) {
         round = "Special round";
       }
@@ -149,6 +228,10 @@ const Home = () => {
       setCardReveal(true);
       toast.success(`Market Start`);
       localStorage.setItem("SEG_CARD_REVEAL", true);
+    });
+    socket.on("change", (data) => {
+      console.log(data, "loggedin Teams");
+      setLoggedInUsers(data);
     });
 
     return () => {
@@ -172,6 +255,11 @@ const Home = () => {
     getOrderHistory();
   }, [day]);
 
+  useEffect(() => {
+    // console.log(stockDetails);
+    calMaxLot();
+  }, [companyName]);
+
   const handlePass = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
@@ -190,25 +278,25 @@ const Home = () => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
-        setdisableOrders(true)
+        setdisableOrders(true);
         setOrderPlaced(true);
       })
       .catch((error) => {
         console.log(error);
         toast.error(error.response.data.message);
       });
-  }
+  };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
       <div className="container-fluid page-wrapper">
         <div className="dynamic_island">
-          <div className="row">
-            <div className="col-lg-4">Day {day}</div>
-            <div
-              className="col-lg-4"
-              style={{ fontSize: "18px", fontWeight: "500" }}
-            >
+          <div className="d-flex justify-content-between">
+            <div className="">Day {day}</div>
+            <div className="" style={{ fontSize: "18px", fontWeight: "500" }}>
               {isRoundStart ? (
                 <Timer
                   seconds={ROUND_DELAY}
@@ -220,9 +308,10 @@ const Home = () => {
                 "00:00"
               )}
             </div>
-            <div className="col-lg-4">Round-{round}</div>
+            <div className="">Round-{round}</div>
           </div>
         </div>
+
         <Sidebar
           setOrderModal={setOrderModal}
           setPortfolioModal={setPortfolioModal}
@@ -237,7 +326,10 @@ const Home = () => {
           <div className="main_section">
             <div className="row">
               <div className="col-lg-9">
-                <Portfolio portfolioDetails={portfolioDetails} stockExchangeDetails={stockExchangeDetails}/>
+                <Portfolio
+                  portfolioDetails={portfolioDetails}
+                  stockExchangeDetails={stockExchangeDetails}
+                />
                 <CardSection
                   day={day}
                   round={round}
@@ -254,8 +346,11 @@ const Home = () => {
                   setdisableOrders={() => setdisableOrders(true)}
                   disableOrders={disableOrders}
                   getOrderHistory={getOrderHistory}
-                  handlePass = {handlePass}
-                  orderIsPlaced = {()=>{ setOrderPlaced(true)}}
+                  handlePass={handlePass}
+                  loggedInUsers={loggedInUsers}
+                  orderIsPlaced={() => {
+                    setOrderPlaced(true);
+                  }}
                 />
               </div>
             </div>
@@ -288,6 +383,103 @@ const Home = () => {
         stockExchangeDetails={stockExchangeDetails}
         getWalletDetails={getWalletDetails}
       />
+
+      <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+            <b>Veto Order</b>{" "}
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div id="order_share" action="#">
+            <select
+              className="form-select mb-3"
+              style={{ backgroundColor: "#d2f9f7" }}
+              name="company"
+              id="company"
+              onChange={(e) => {
+                setCompanyName(e.target.value);
+                setQuantity(1000);
+                setMinBidAmount(e);
+              }}
+            >
+              <option value="0" selected>
+                Select company
+              </option>
+              {stockExchangeDetails.map((company) => (
+                <option value={company.name}>{company.company_name}</option>
+              ))}
+            </select>
+            <p
+              className={`mb-2 text-dark d-${companyName ? "block" : "none"}`}
+              style={{ fontSize: "10px", fontWeight: "700" }}
+            >
+              Max Quantity:{" "}
+              <span className="text-warning me-2">
+                {toIndianCurrency(maxQ)}
+              </span>{" "}
+              Share Price:{" "}
+              <span className="text-warning">{toIndianCurrency(price)}</span>
+            </p>
+            <div className="row">
+              <input
+                type="button"
+                value="-"
+                className="col-2 mb-3"
+                style={{ margin: "0 10px" }}
+                onClick={handleDecrease}
+              />
+              <input
+                type="number"
+                value={quantity}
+                style={{ backgroundColor: "#d2f9f7" }}
+                className="col-6 mb-3"
+                onChange={(e) => setQuantity(e.target.value)}
+                step={1000}
+                min={1000}
+                max={maxQ}
+                placeholder="Enter value in 500's figure"
+                name=""
+                id=""
+                disabled="true"
+              />
+              <input
+                type="button"
+                value="+"
+                className="col-2 mb-3"
+                style={{ margin: "0 10px" }}
+                onClick={handleIncrease}
+              />
+            </div>
+            <input
+              className="form-control"
+              style={{
+                marginBottom: "calc(14vh - 46px)",
+                backgroundColor: "#d2f9f7",
+              }}
+              onChange={(e) => setUserBid(e.target.value)}
+              value={companyName ? toIndianCurrency(price * quantity) : 0}
+              // min={}
+              type="number"
+              name="Total"
+              id="Totala"
+              placeholder="Total Amount"
+            />
+          </div>
+          <div
+            className="btn btn-success"
+            // onClick={}
+            style={{
+              position: "absolute",
+              width: "94%",
+              left: "10px",
+              bottom: "10px",
+            }}
+          >
+            Place Order
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 };

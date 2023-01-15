@@ -4,12 +4,12 @@ const Wallet = ({ balance, portfolioDetails }) => {
   const [holdings, setHoldings] = useState(0);
 
   const toIndianCurrency = (num) => {
-    const curr = num.toLocaleString('en-IN', {
-       style: 'currency',
-       currency: 'INR'
+    const curr = num.toLocaleString("en-IN", {
+      style: "currency",
+      currency: "INR",
     });
- return curr;
- };
+    return curr;
+  };
 
   useEffect(() => {
     var temp = 0;
@@ -42,7 +42,7 @@ const Wallet = ({ balance, portfolioDetails }) => {
           <div className="balance">
             <p>Holding Value</p>
             <h4>
-            <span>{holdings ? toIndianCurrency(holdings) : 0}</span>
+              <span>{holdings ? toIndianCurrency(holdings) : 0}</span>
             </h4>
           </div>
           <hr

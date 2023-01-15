@@ -16,14 +16,14 @@ const CardSection = ({
   const [ticker, setTicker] = useState("");
   const [showSpecial, setShowSpecial] = useState(false);
   const [el, setEl] = useState({});
-  const [cardCount,setCardCount]=useState({
-    GOOGL:0,
-    TESLA:0,
-    SUNPM:0,
-    ADANI:0,
-    YESBK:0,
-    SHELL:0,
-  })
+  const [cardCount, setCardCount] = useState({
+    GOOGL: 0,
+    TESLA: 0,
+    SUNPM: 0,
+    ADANI: 0,
+    YESBK: 0,
+    SHELL: 0,
+  });
   useEffect(() => {
     if (day != 0) {
       getCard();
@@ -48,9 +48,9 @@ const CardSection = ({
         setCards(response.data.cards);
         setShow(true);
         // console.log(response);
-        response.data.cards.map((elem)=>{
-          setCardCount({...cardCount})
-        })
+        response.data.cards.map((elem) => {
+          setCardCount({ ...cardCount });
+        });
       })
       .catch((error) => {
         console.log("error", error);
@@ -182,18 +182,16 @@ const CardSection = ({
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div className="card__face back">
-                      <img src={`../assets/${elem.company_ticker}.png`}
-                      
+                      <img
+                        src={`../assets/${elem.company_ticker}.png`}
                         style={{
                           width: "40px",
                           height: "40px",
                           margin: "auto",
                           borderRadius: "50%",
-                          objectFit:"cover"
+                          objectFit: "cover",
                         }}
-                      >
-                        
-                      </img>
+                      ></img>
                       <div className="card_sign">
                         <i
                           className={`fa-sharp fa-solid fa-triangle ${
@@ -202,7 +200,7 @@ const CardSection = ({
                         ></i>
                         <span>Rs. {elem.price}/-</span>
                         <span>{elem.company_ticker}</span>
-                        <p>{elem.news}</p>
+                        <p>{elem.news.toLowerCase()}</p>
                       </div>
                     </div>
                   </div>
@@ -417,20 +415,29 @@ const CardSection = ({
             )}
           </div>
         ) : (
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center my-auto">
             <img
               src="../assets/no-card.png"
               alt=""
-              style={{ height: "60%", width: "50%", opacity: "0.5" }}
+              style={{
+                height: "200px",
+                width: "250px",
+                opacity: "0.3",
+                margin: "10%",
+              }}
             />
           </div>
         )}
-        <div className="card_count row" style={{border:"1px solid black",margin:'-20px 0px',borderRadius:'8px',height:'30px'}}>
-          {stockExchangeDetails.map((elem)=><>
-            <div className="col-1">{elem.company_ticker}</div>
-            <div className="col-1"></div>
-            </>
-          )}
+      </div>
+      <div className="card_count">
+        <div className="count-block">
+          <p>hello</p>
+        </div>
+        <div className="count-block">
+          <p>hello</p>
+        </div>
+        <div className="count-block">
+          <p>hello</p>
         </div>
       </div>
       <SpecialModal

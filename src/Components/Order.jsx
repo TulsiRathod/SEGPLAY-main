@@ -11,7 +11,8 @@ const Order = (props) => {
     disableOrders,
     getOrderHistory,
     handlePass,
-    orderIsPlaced
+    orderIsPlaced,
+    loggedInUsers,
   } = props;
   const [quantity, setQuantity] = useState(1000);
   const [maxQ, setMaxQ] = useState();
@@ -29,7 +30,7 @@ const Order = (props) => {
     stockDetails.map((stock) => {
       if (companyName === stock.company_name) {
         setCompanyId(stock.id);
-        setMaxQ(parseInt(stock.quantity / 12));
+        setMaxQ(parseInt(stock.quantity / loggedInUsers.length));
         setPrice(parseInt(stock.price));
       }
     });
@@ -58,8 +59,7 @@ const Order = (props) => {
         getOrderHistory();
         setQuantity(1000);
         setPrice(0);
-        orderIsPlaced()
-        
+        orderIsPlaced();
       })
       .catch((error) => {
         console.log(error);
@@ -88,7 +88,7 @@ const Order = (props) => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
-        orderIsPlaced()
+        orderIsPlaced();
       })
       .catch((error) => {
         console.log(error);
@@ -118,7 +118,7 @@ const Order = (props) => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
-        orderIsPlaced()
+        orderIsPlaced();
       })
       .catch((error) => {
         console.log(error);
@@ -127,25 +127,25 @@ const Order = (props) => {
   };
 
   const handleIncrease = () => {
-    if((quantity+1000)<maxQ){
-      setQuantity(quantity+1000);
-    }else{
+    if (quantity + 1000 < maxQ) {
+      setQuantity(quantity + 1000);
+    } else {
       toast("Can't Increase Quantity");
     }
-  }
+  };
 
   const handleDecrease = () => {
-    if((quantity-1000)>0){
-      setQuantity(quantity-1000);
-    }else{
+    if (quantity - 1000 > 0) {
+      setQuantity(quantity - 1000);
+    } else {
       toast("Quantity can't less than 0");
     }
-  }
+  };
 
   return (
     <>
       <div className="order">
-        <h3 className="mt-1" style={{ marginBottom: "calc(15vh - 75px)" }}>
+        <h3 className="mt-1" style={{ marginBottom: "calc(15vh - 85px)" }}>
           Order
         </h3>
         <div id="order_share" action="#">
@@ -166,7 +166,7 @@ const Order = (props) => {
           </select>
           <p
             className={`mb-2 text-light d-${companyName ? "block" : "none"}`}
-            style={{ fontSize: "10px", fontWeight: "700"}}
+            style={{ fontSize: "10px", fontWeight: "700" }}
           >
             Max Quantity:{" "}
             <span className="text-warning me-2">
@@ -176,22 +176,34 @@ const Order = (props) => {
             <span className="text-warning">{nf.format(price)}</span>
           </p>
           <div className="row">
-          <input type="button" value="-" className="col-2 mb-3" style={{margin:"0 10px"}}  onClick={handleDecrease}/>
-          <input
-            type="number"
-            value={quantity}
-            style={{ backgroundColor: "#d2f9f7" }}
-            className="col-6 mb-3"
-            onChange={(e) => setQuantity(e.target.value)}
-            step={1000}
-            min={1000}
-            max={maxQ}
-            placeholder="Enter value in 500's figure"
-            name=""
-            id=""
-            disabled="true"
-          />
-          <input type="button" value="+" className="col-2 mb-3" style={{margin:"0 10px"}} onClick={handleIncrease}/>
+            <input
+              type="button"
+              value="-"
+              className="col-2 mb-3"
+              style={{ margin: "0 10px" }}
+              onClick={handleDecrease}
+            />
+            <input
+              type="number"
+              value={quantity}
+              style={{ backgroundColor: "#d2f9f7" }}
+              className="col-6 mb-3"
+              onChange={(e) => setQuantity(e.target.value)}
+              step={1000}
+              min={1000}
+              max={maxQ}
+              placeholder="Enter value in 500's figure"
+              name=""
+              id=""
+              disabled="true"
+            />
+            <input
+              type="button"
+              value="+"
+              className="col-2 mb-3"
+              style={{ margin: "0 10px" }}
+              onClick={handleIncrease}
+            />
           </div>
           <input
             className="form-control"
@@ -234,7 +246,7 @@ const Order = (props) => {
                 type="button"
                 className="bn bn-clear"
                 disabled={disableOrders}
-                onClick={()=>handlePass()}
+                onClick={() => handlePass()}
               >
                 PASS
               </button>

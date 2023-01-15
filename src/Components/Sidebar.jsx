@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../Baseurl";
@@ -15,6 +16,7 @@ const Sidebar = ({
   setShowVeto,
 }) => {
   const nav = useNavigate();
+
   const [news, setNews] = useState({});
   const day = localStorage.getItem("SEG_CURRENT_DAY");
   const logout = () => {
@@ -37,6 +39,7 @@ const Sidebar = ({
         toast.error(error.response.data.message);
       });
   };
+
   const showNews = () => {
     let arr = [];
     for (let i = 1; i <= day; i++) {
@@ -195,13 +198,16 @@ const Sidebar = ({
         <div className="newsbar">
           <section>
             <h3 className="mt-1">News</h3>
-            <hr style={{ width: "calc(100% - 10px)" }} />
+            {/* <hr style={{ width: "calc(100% - 10px)" }} /> */}
             <div
-              style={{ overflowY: "hidden", height: " calc(100vh - 120px) " }}
-              className="d-flex flex-column"
+              style={{
+                overflowY: "scroll",
+                overflowX: "hidden",
+                height: " calc(100vh - 120px) ",
+              }}
             >
               <div
-                className="accordion accordion-flush pe-1"
+                className="accordion accordion-flush w-100"
                 id="accordionFlushExample "
               >
                 <div className="accordion" id="accordionExample">
