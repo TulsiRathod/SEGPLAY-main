@@ -85,6 +85,7 @@ const Sidebar = ({
             <div className="mb-5">
               <ul className="list-unstyled text-center mb-5">
                 <li
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     setExchangeModal(true);
                   }}
@@ -99,6 +100,7 @@ const Sidebar = ({
                   </a>
                 </li>
                 <li
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     setPortfolioModal(true);
                   }}
@@ -114,6 +116,7 @@ const Sidebar = ({
                   </a>
                 </li>
                 <li
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     setOrderModal(true);
                   }}
@@ -129,6 +132,7 @@ const Sidebar = ({
                   </a>
                 </li>
                 <li
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     setStockHistoryModal(true);
                   }}
@@ -144,6 +148,7 @@ const Sidebar = ({
                   </a>
                 </li>
                 <li
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     setRulesModal(true);
                   }}
@@ -163,7 +168,7 @@ const Sidebar = ({
 
             <div className="bottom_menu d-flex h-100">
               <ul className="list-unstyled text-center align-self-start mt-auto mb-0">
-                <li>
+                <li style={{ cursor: "pointer" }}>
                   <a>
                     <img
                       src="../assets/man.png"
@@ -172,7 +177,7 @@ const Sidebar = ({
                     />
                   </a>
                 </li>
-                <li style={{ paddingTop: "20px" }}>
+                <li style={{ paddingTop: "20px", cursor: "pointer" }}>
                   <a onClick={logout}>
                     <i
                       className="fa-solid fa-power-off"
