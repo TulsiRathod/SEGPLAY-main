@@ -12,7 +12,6 @@ const SpecialModal = ({
   card_no,
   description,
 }) => {
-
   const [companyTick, setCompanyTick] = useState();
 
   const setMinBidAmount = (e) => {
@@ -44,7 +43,7 @@ const SpecialModal = ({
     }
   };
 
-  const handleDebenture = () =>{
+  const handleDebenture = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -52,27 +51,26 @@ const SpecialModal = ({
       method: "post",
       url: `${SERVER_URL}api/main/debenture`,
       data: {
-          team_id : teamId,
-          card_no : card_no,
-          card_used_time : new Date().toJSON(),
-          day : day,
-          round : round,
-          description : description,
-          type : type,
-          company_ticker:companyTick,
-          order_time:""
+        team_id: teamId,
+        card_no: card_no,
+        card_used_time: new Date().toJSON(),
+        day: day,
+        round: round,
+        description: description,
+        type: type,
+        company_ticker: companyTick,
+        order_time: "",
       },
     })
       .then((response) => {
         closeModal();
-        window.location.reload(false);
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }
-  
-  const handleRightIs = () =>{
+  };
+
+  const handleRightIs = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -80,26 +78,25 @@ const SpecialModal = ({
       method: "post",
       url: `${SERVER_URL}api/main/right-issue`,
       data: {
-          team_id : teamId,
-          card_no : card_no,
-          card_used_time : new Date().toJSON(),
-          day : day,
-          round : round,
-          description : description,
-          type : type,
-          company_ticker:companyTick,
+        team_id: teamId,
+        card_no: card_no,
+        card_used_time: new Date().toJSON(),
+        day: day,
+        round: round,
+        description: description,
+        type: type,
+        company_ticker: companyTick,
       },
     })
       .then((response) => {
         closeModal();
-        window.location.reload(false);
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }
+  };
 
-  const handleShareSus = () =>{
+  const handleShareSus = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -107,24 +104,23 @@ const SpecialModal = ({
       method: "post",
       url: `${SERVER_URL}api/main/share-suspended`,
       data: {
-          team_id : teamId,
-          card_no : card_no,
-          card_used_time : new Date().toJSON(),
-          day : day,
-          round : round,
-          description : description,
-          type : type,
-          company_ticker:companyTick,
+        team_id: teamId,
+        card_no: card_no,
+        card_used_time: new Date().toJSON(),
+        day: day,
+        round: round,
+        description: description,
+        type: type,
+        company_ticker: companyTick,
       },
     })
       .then((response) => {
         closeModal();
-        window.location.reload(false);
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }
+  };
 
   return (
     <>
@@ -155,16 +151,40 @@ const SpecialModal = ({
                         <label for={`radio${i}`}>{stock.company_name}</label>
                       </div>
                     ))}
-                     {type===3?<button type="button" className="btn_veto_order" onClick={handleDebenture}>
-                      Submit
-                    </button>:''}
-                    
-                    {type===4?<button type="button" className="btn_veto_order" onClick={handleRightIs}>
-                      Submit
-                    </button>:''}
-                    {type===7?<button type="button" className="btn_veto_order" onClick={handleShareSus}>
-                      Submit
-                    </button>:''}
+                    {type === 3 ? (
+                      <button
+                        type="button"
+                        className="btn_veto_order"
+                        onClick={handleDebenture}
+                      >
+                        Submit
+                      </button>
+                    ) : (
+                      ""
+                    )}
+
+                    {type === 4 ? (
+                      <button
+                        type="button"
+                        className="btn_veto_order"
+                        onClick={handleRightIs}
+                      >
+                        Submit
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                    {type === 7 ? (
+                      <button
+                        type="button"
+                        className="btn_veto_order"
+                        onClick={handleShareSus}
+                      >
+                        Submit
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </form>
                 </div>
               </div>

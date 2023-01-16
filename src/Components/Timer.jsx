@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-const Timer = ({ seconds, setIsRoundStart, orderPlaced, handlePass }) => {
+const Timer = ({
+  seconds,
+  setIsRoundStart,
+  orderPlaced,
+  handlePass,
+  round,
+}) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
     // exit early when we reach 0
-    if(timeLeft === 1 && orderPlaced === false){
-      handlePass()
+    if (timeLeft === 1 && orderPlaced === false && round !== 4 && round !== 5) {
+      handlePass();
     }
     if (!timeLeft) return;
 

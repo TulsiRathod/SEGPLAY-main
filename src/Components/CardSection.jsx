@@ -431,13 +431,13 @@ const CardSection = ({
       </div>
       <div className="card_count">
         <div className="count-block">
-          <p>hello</p>
+          <p>Google: +300</p>
         </div>
         <div className="count-block">
-          <p>hello</p>
+          <p>Adani: -150</p>
         </div>
         <div className="count-block">
-          <p>hello</p>
+          <p>Tesla: +800</p>
         </div>
       </div>
       <SpecialModal

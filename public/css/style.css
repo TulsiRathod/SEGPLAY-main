@@ -413,7 +413,7 @@ h3 {
   font-size: 15px;
   padding: 0 20px;
   margin: 0 10px;
-  background-color: rgba(255, 255, 255, 0.4);
+  /* background-color: rgba(255, 255, 255, 0.4); */
 }
 /************media query *********************/
 @media screen and (min-height: 900px) {

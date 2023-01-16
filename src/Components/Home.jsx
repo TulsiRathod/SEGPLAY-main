@@ -303,6 +303,7 @@ const Home = () => {
                   setIsRoundStart={() => setIsRoundStart(false)}
                   handlePass={handlePass}
                   orderPlaced={orderPlaced}
+                  round={round}
                 />
               ) : (
                 "00:00"
