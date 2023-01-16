@@ -58,10 +58,10 @@ const DayNews = ({ news, day, cardReveal }) => {
                             <div className="d-flex align-items-center justify-content-start">
                               <div>
                                 <img
-                                  src="../assets/profile.png"
-                                  alt=""
-                                  width="50px"
-                                  height="50px"
+                                  src={`../assets/${elem_news.company_ticker}.png`}
+                                  width="40px"
+                                  height="40px"
+                                  style={{borderRadius:'50%',border:'1px solid #828282'}}
                                 />
                               </div>
                               <div
