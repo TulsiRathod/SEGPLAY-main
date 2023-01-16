@@ -61,7 +61,6 @@ const Home = () => {
   const [userBid, setUserBid] = useState();
 
   const toIndianCurrency = (num) => {
-    console.log(num, "in currency");
     const curr = num.toLocaleString("en-IN", {
       style: "currency",
       currency: "INR",
@@ -173,7 +172,7 @@ const Home = () => {
       },
     })
       .then((response) => {
-        console.log("veto ho gaya", response);
+        // console.log("veto ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
       })
@@ -230,7 +229,7 @@ const Home = () => {
       localStorage.setItem("SEG_CARD_REVEAL", true);
     });
     socket.on("change", (data) => {
-      console.log(data, "loggedin Teams");
+      // console.log(data, "loggedin Teams");
       setLoggedInUsers(data);
     });
 
@@ -312,7 +311,6 @@ const Home = () => {
             <div className="">Round-{round}</div>
           </div>
         </div>
-
         <Sidebar
           setOrderModal={setOrderModal}
           setPortfolioModal={setPortfolioModal}

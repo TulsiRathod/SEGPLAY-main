@@ -377,7 +377,7 @@ const Portfolio = (props) => {
                       <p
                         style={{
                           color: `${
-                            elem.current_stock_price - elem.average_buying_price
+                            elem.current_stock_price - elem.average_buying_price<0
                               ? "red"
                               : "green"
                           }`,
