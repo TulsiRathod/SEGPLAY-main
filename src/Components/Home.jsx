@@ -54,11 +54,12 @@ const Home = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [companyName, setCompanyName] = useState();
   const [quantity, setQuantity] = useState(1000);
+  const [userAmount, setUserAmount] = useState(0);
   const [maxQ, setMaxQ] = useState(0);
+  const [maxVQ, setMaxVQ] = useState(0);
   const [price, setPrice] = useState(0);
   const [companyId, setCompanyId] = useState();
-  const [bidAmount, setBidAmount] = useState();
-  const [userBid, setUserBid] = useState();
+  const [bidAmount, setBidAmount] = useState(0);
 
   const toIndianCurrency = (num) => {
     console.log(num, "in currency");
@@ -130,6 +131,8 @@ const Home = () => {
         setCompanyId(stock.id);
         setMaxQ(parseInt(stock.quantity / loggedInUsers.length));
         setPrice(parseInt(stock.price));
+        setBidAmount(stock.price);
+        setMaxVQ(stock.quantity);
       }
     });
   };
@@ -151,7 +154,7 @@ const Home = () => {
   };
 
   const setMinBidAmount = (e) => {
-    setBidAmount(e.price);
+    console.log(e);
     setMaxQ(e.quantity);
     setCompanyId(e.id);
   };
@@ -167,15 +170,22 @@ const Home = () => {
         company_id: companyId,
         stock_quantity: parseInt(quantity),
         day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
-        bidding_price: userBid,
+        bidding_price: userAmount,
         round_type: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
         order_time: new Date().toJSON(),
       },
     })
       .then((response) => {
-        console.log("veto ho gaya", response);
-        toast.success(response.data.message);
-        getWalletDetails();
+        console.log("veto ho gaya", response.data);
+        if (response.data.success) {
+          toast.success(response.data.message);
+          getWalletDetails();
+          handleClose();
+          setCompanyId("");
+          setCompanyName("");
+          setQuantity(0);
+          setUserAmount(0);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -322,6 +332,7 @@ const Home = () => {
           day={day}
           cardReveal={cardReveal}
           setShowVeto={() => setShowVeto(true)}
+          handleShow={() => handleShow()}
         />
         <div className="containers  ">
           <div className="main_section">
@@ -401,7 +412,6 @@ const Home = () => {
               onChange={(e) => {
                 setCompanyName(e.target.value);
                 setQuantity(1000);
-                setMinBidAmount(e);
               }}
             >
               <option value="0" selected>
@@ -417,7 +427,7 @@ const Home = () => {
             >
               Max Quantity:{" "}
               <span className="text-warning me-2">
-                {toIndianCurrency(maxQ)}
+                {toIndianCurrency(maxVQ)}
               </span>{" "}
               Share Price:{" "}
               <span className="text-warning">{toIndianCurrency(price)}</span>
@@ -438,7 +448,7 @@ const Home = () => {
                 onChange={(e) => setQuantity(e.target.value)}
                 step={1000}
                 min={1000}
-                max={maxQ}
+                max={maxVQ}
                 placeholder="Enter value in 500's figure"
                 name=""
                 id=""
@@ -453,23 +463,47 @@ const Home = () => {
               />
             </div>
             <input
-              className="form-control"
+              className="form-control mb-2"
               style={{
-                marginBottom: "calc(14vh - 46px)",
                 backgroundColor: "#d2f9f7",
               }}
-              onChange={(e) => setUserBid(e.target.value)}
-              value={companyName ? toIndianCurrency(price * quantity) : 0}
-              // min={}
+              onChange={(e) => setUserAmount(e.target.value)}
+              value={userAmount}
+              min={(price * 90) / 100}
               type="number"
               name="Total"
               id="Totala"
-              placeholder="Total Amount"
+              placeholder="Enter Your Bidding Price"
             />
+            <p
+              className={`mb-2 text-dark d-${companyName ? "block" : "none"}`}
+              style={{ fontSize: "10px", fontWeight: "700" }}
+            >
+              Minimun Bid Amount:{" "}
+              <span className="text-warning me-2">
+                {toIndianCurrency((bidAmount * 90) / 100)}
+              </span>{" "}
+            </p>
+
+            <div
+              className={`mb-2 text-dark d-${
+                companyName ? "block" : "none"
+              } mt-3 pt-2`}
+              style={{
+                fontSize: "18px",
+                fontWeight: "700",
+                borderTop: "2px dashed grey",
+              }}
+            >
+              Total Amount:{" "}
+              <span className="text-warning me-2">
+                {toIndianCurrency(((userAmount * 90) / 100) * quantity)}
+              </span>{" "}
+            </div>
           </div>
           <div
             className="btn btn-success"
-            // onClick={}
+            onClick={handleVeto}
             style={{
               position: "absolute",
               width: "94%",

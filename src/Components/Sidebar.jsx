@@ -13,7 +13,7 @@ const Sidebar = ({
   setRulesModal,
   setStockHistoryModal,
   cardReveal,
-  setShowVeto,
+  handleShow,
 }) => {
   const nav = useNavigate();
 
@@ -165,6 +165,15 @@ const Sidebar = ({
                       style={{ fontSize: "18px" }}
                     ></i>
                   </a>
+                </li>
+
+                <li
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    handleShow();
+                  }}
+                >
+                  <a>V</a>
                 </li>
               </ul>
             </div>
