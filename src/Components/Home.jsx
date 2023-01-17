@@ -13,7 +13,6 @@ import Wallet from "./Wallet";
 import Order from "./Order";
 import axios from "axios";
 import StockHistory from "./StockHistory";
-import VetoModal from "./VetoModal";
 import Timer from "./Timer";
 import { Offcanvas } from "react-bootstrap";
 
@@ -22,8 +21,6 @@ const socket = io(SERVER_URL);
 const Home = () => {
   const [rulesModal, setRulesModal] = useState(false);
   const [show, setShow] = useState(false);
-
-  const [showVeto, setShowVeto] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
@@ -265,7 +262,6 @@ const Home = () => {
   }, [day]);
 
   useEffect(() => {
-    // console.log(stockDetails);
     calMaxLot();
   }, [companyName]);
 
@@ -329,7 +325,6 @@ const Home = () => {
           setStockHistoryModal={setStockHistoryModal}
           day={day}
           cardReveal={cardReveal}
-          setShowVeto={() => setShowVeto(true)}
           handleShow={() => handleShow()}
         />
         <div className="containers  ">
@@ -387,12 +382,6 @@ const Home = () => {
         stockHistoryModal={stockHistoryModal}
         closeModal={closeModal}
         stockExchangeDetails={stockExchangeDetails}
-      />
-      <VetoModal
-        vetoModal={showVeto}
-        closeModal={() => setShowVeto(false)}
-        stockExchangeDetails={stockExchangeDetails}
-        getWalletDetails={getWalletDetails}
       />
 
       <Offcanvas show={show} onHide={handleClose}>

@@ -31,6 +31,9 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails }) => {
                     Average Buy Price
                   </th>
                   <th style={{ textAlign: "center", color: "#fff" }}>
+                    LTP
+                  </th>
+                  <th style={{ textAlign: "center", color: "#fff" }}>
                     Invested Amount
                   </th>
                   <th style={{ textAlign: "center", color: "#fff" }}>
@@ -61,6 +64,9 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails }) => {
                           elem.total_investment_amount / elem.total_stock
                         )}
                       </p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>{nf.format(elem.current_stock_price)}</p>
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>{nf.format(elem.total_investment_amount)}</p>

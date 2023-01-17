@@ -46,7 +46,7 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                     <td>{order.day}</td>
                     <td>
                       {order.execution === 0 ? "Failed" : ""}
-                      {order.execution === 1 ? "Pending" : ""}
+                      {order.execution === 1 ? "Settled" : ""}
                       {order.execution === 2 ? "Executed" : ""}
                     </td>
                     <td>{order.company_name}</td>
