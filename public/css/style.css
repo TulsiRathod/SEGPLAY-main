@@ -401,18 +401,31 @@ h3 {
   color: white;
   padding: 2px 5px;
   display: flex;
-  border-radius: 5px;
+  justify-content: center;
+  border-radius: 5px 5px 0px 0px;
   width: 870px;
-  height: 30px;
-  bottom: 10px;
+  height: 40px;
+  bottom: 0px;
   background-color: #2e837e;
 }
 
 .count-block {
   border-radius: 5px;
   font-size: 15px;
-  padding: 0 20px;
-  margin: 0 10px;
+  padding: 0 15px;
+  margin: 5px 10px;
+  display: flex;
+  align-items: baseline;
+  align-items: bottom;
+  /* background-color: rgba(255, 255, 255, 0.4); */
+}
+
+.count-block img {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  margin: 0 5px;
+  border: 1px solid white;
   /* background-color: rgba(255, 255, 255, 0.4); */
 }
 /************media query *********************/

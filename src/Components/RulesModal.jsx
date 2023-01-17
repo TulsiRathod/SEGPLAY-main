@@ -6,13 +6,13 @@ const RulesModal = ({ rulesModal, closeModal }) => {
   const accept = localStorage.getItem("SEG_RULES_ACEEPT");
 
   const handleAgreement = () => {
-    if(checkBox){
-      localStorage.setItem("SEG_RULES_ACEEPT",true);
+    if (checkBox) {
+      localStorage.setItem("SEG_RULES_ACEEPT", true);
       closeModal();
-    }else{
-      toast.error('Please Check Terms & Conditions!')
+    } else {
+      toast.error("Please Agree With Rules");
     }
-  }
+  };
   return (
     <>
       <div
@@ -21,10 +21,7 @@ const RulesModal = ({ rulesModal, closeModal }) => {
         style={rulesModal ? { display: "flex" } : { display: "none" }}
       >
         <div className="modal-content" id="rules_modal">
-          <span
-            className="close"
-            id="rules_modal_close"
-          >
+          <span className="close" id="rules_modal_close">
             &nbsp;
           </span>
           <p className="modal_title">Game Rules</p>
@@ -145,10 +142,10 @@ const RulesModal = ({ rulesModal, closeModal }) => {
             </>
           ) : (
             <div className="row" style={{ margin: "20px auto" }}>
-            <button id="agree" className="modal-btn" onClick={closeModal}>
-              Close
-            </button>
-            </div>    
+              <button id="agree" className="modal-btn" onClick={closeModal}>
+                Close
+              </button>
+            </div>
           )}
         </div>
       </div>

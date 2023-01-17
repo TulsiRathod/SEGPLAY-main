@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { SERVER_URL } from "../Baseurl";
-import SpecialModal from "./SpecialModal";
 
 const CardSection = ({
   day,
@@ -48,9 +47,14 @@ const CardSection = ({
         setCards(response.data.cards);
         setShow(true);
         // console.log(response);
+        let counts = cardCount;
         response.data.cards.map((elem) => {
-          setCardCount({ ...cardCount });
+          let count = cardCount[`${elem.company_ticker}`] + elem.price;
+          counts = { ...counts, [`${elem.company_ticker}`]: count };
+          // setCardCount({ ...cardCount, [`${elem.company_ticker}`]: count });
         });
+        setCardCount(counts);
+        console.log(counts);
       })
       .catch((error) => {
         console.log("error", error);
@@ -199,7 +203,10 @@ const CardSection = ({
                             elem.price < 0 ? "down" : ""
                           }`}
                         ></i>
-                        <span>Rs. {elem.price}/-</span>
+                        <span>
+                          Rs. {elem.price > 0 ? "+" : ""}
+                          {elem.price}/-
+                        </span>
                         <span>{elem.company_ticker}</span>
                         <p>{elem.news.toLowerCase()}</p>
                       </div>
@@ -432,13 +439,44 @@ const CardSection = ({
       </div>
       <div className="card_count">
         <div className="count-block">
-          <p>Google: +300</p>
+          <p>
+            {" "}
+            <img src="../assets/GOOGL.png" alt="" srcset="" />
+            {cardCount.GOOGL > 0 ? "+" : ""} {cardCount.GOOGL}
+          </p>
         </div>
         <div className="count-block">
-          <p>Adani: -150</p>
+          <p>
+            <img src="../assets/ADANI.png" />
+            {cardCount.ADANI > 0 ? "+" : ""} {cardCount.ADANI}
+          </p>
         </div>
         <div className="count-block">
-          <p>Tesla: +800</p>
+          <p>
+            <img src="../assets/TESLA.png" />
+            {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
+          </p>
+        </div>
+
+        <div className="count-block">
+          <p>
+            <img src="../assets/YESBK.png" />
+            {cardCount.YESBK > 0 ? "+" : ""} {cardCount.YESBK}
+          </p>
+        </div>
+
+        <div className="count-block">
+          <p>
+            <img src="../assets/SUNPM.png" />
+            {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
+          </p>
+        </div>
+
+        <div className="count-block">
+          <p>
+            <img src="../assets/SHELL.png" />
+            {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
+          </p>
         </div>
       </div>
       <SpecialModal
