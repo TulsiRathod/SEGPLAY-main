@@ -13,15 +13,15 @@ const Portfolio = (props) => {
       return "#828282";
     } else {
       var diff = ((e1 - e2) / e2) * 100;
-      if (diff < -10) {
+      if (diff < -20) {
         return "#A30000";
-      } else if (diff < -5) {
+      } else if (diff < -10) {
         return "#D10000";
       } else if (diff < 0) {
         return "#FF2E2E";
-      } else if (diff > 10) {
+      } else if (diff > 20) {
         return "#004225";
-      } else if (diff > 5) {
+      } else if (diff > 10) {
         return "#138808";
       } else if (diff > 0) {
         return "#32CD32";
@@ -255,7 +255,7 @@ const Portfolio = (props) => {
                         <div
                           className="row"
                           style={{
-                            height: "40%",
+                            height: "55%",
                             backgroundColor: `${colorBG(
                               stockDetails[4].price,
                               stockDetails[4].previous_day_price
@@ -274,15 +274,15 @@ const Portfolio = (props) => {
                             <img
                               src={`../assets/${stockDetails[4].company_ticker}.png`}
                               style={{
-                                height: "30px",
+                                height: "40px",
                                 borderRadius: "50%",
                                 objectFit: "cover",
                               }}
                             />
-                            <div style={{ color: "white", fontSize: "10px" }}>
+                            <div style={{ color: "white", fontSize: "12px" }}>
                               {stockDetails[4].company_ticker}
                             </div>
-                            <div style={{ color: "white", fontSize: "10px" }}>
+                            <div style={{ color: "white", fontSize: "12px" }}>
                               {stockDetails[4].previous_day_price !== 0
                                 ? (
                                     ((stockDetails[4].price -
@@ -304,7 +304,7 @@ const Portfolio = (props) => {
                         <div
                           className="row"
                           style={{
-                            height: "60%",
+                            height: "45%",
                             backgroundColor: `${colorBG(
                               stockDetails[5].price,
                               stockDetails[5].previous_day_price
@@ -329,10 +329,10 @@ const Portfolio = (props) => {
                                 objectFit: "cover",
                               }}
                             />
-                            <div style={{ color: "white", fontSize: "12px" }}>
+                            <div style={{ color: "white", fontSize: "11px" }}>
                               {stockDetails[5].company_ticker}
                             </div>
-                            <div style={{ color: "white", fontSize: "12px" }}>
+                            <div style={{ color: "white", fontSize: "11px" }}>
                               {stockDetails[5].previous_day_price !== 0
                                 ? (
                                     ((stockDetails[5].price -

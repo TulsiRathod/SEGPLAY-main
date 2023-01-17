@@ -319,7 +319,6 @@ const Home = () => {
           setStockHistoryModal={setStockHistoryModal}
           day={day}
           cardReveal={cardReveal}
-          setShowVeto={() => setShowVeto(true)}
         />
         <div className="containers  ">
           <div className="main_section">
@@ -375,6 +374,7 @@ const Home = () => {
       <StockHistory
         stockHistoryModal={stockHistoryModal}
         closeModal={closeModal}
+        stockExchangeDetails={stockExchangeDetails}
       />
       <VetoModal
         vetoModal={showVeto}
