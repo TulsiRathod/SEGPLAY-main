@@ -166,15 +166,6 @@ const Sidebar = ({
                     ></i>
                   </a>
                 </li>
-
-                <li
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    handleShow();
-                  }}
-                >
-                  <a>V</a>
-                </li>
               </ul>
             </div>
 
