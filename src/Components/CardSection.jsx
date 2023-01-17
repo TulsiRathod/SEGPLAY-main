@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { SERVER_URL } from "../Baseurl";
 
@@ -11,18 +12,22 @@ const CardSection = ({
   getWalletDetails,
 }) => {
   const [cards, setCards] = useState([]);
+  const [specialshow, setSpecialShow] = useState(false);
   const [show, setShow] = useState(false);
   const [ticker, setTicker] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [showSpecial, setShowSpecial] = useState(false);
   const [el, setEl] = useState({});
-  const [cardCount, setCardCount] = useState({
+  const handleClose = () => setSpecialShow(false);
+  const handleShow = () => setSpecialShow(true);
+  const cardTotal = {
     GOOGL: 0,
     TESLA: 0,
     SUNPM: 0,
     ADANI: 0,
     YESBK: 0,
     SHELL: 0,
-  });
+  };
   useEffect(() => {
     if (day != 0) {
       getCard();
@@ -33,9 +38,9 @@ const CardSection = ({
     cardReveal ? setShow(true) : setShow(false);
   }, [cardReveal]);
 
-  const getCard = () => {
+  const getCard = async () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
-    axios({
+    await axios({
       method: "post",
       url: `${SERVER_URL}api/main/getCards`,
       data: {
@@ -146,32 +151,124 @@ const CardSection = ({
   const handleDebenture = (elem) => {
     if (round < 4) {
       setEl(elem);
-      setShowSpecial(true);
-      toast("Debenture Card Used Successfully");
+      setSpecialShow(true);
     } else {
       toast("This Card will Use in Normal Round Only");
     }
+  };
+
+  const SubmitDebenture = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    const day = localStorage.getItem("SEG_CURRENT_DAY");
+    const round = localStorage.getItem("SEG_CURRENT_ROUND");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/debenture`,
+      data: {
+        team_id: teamId,
+        card_no: el.card_no,
+        card_used_time: new Date().toJSON(),
+        day: parseInt(day),
+        round: parseInt(round),
+        description: el.description,
+        type: el.type,
+        company_ticker: companyName,
+        order_time: "",
+      },
+    })
+      .then((response) => {
+        toast("Debenture Card Used Successfully!!");
+        setSpecialShow(false);
+      })
+      .catch((error) => {
+        toast("Something Went Wrong!!");
+        setSpecialShow(false);
+      });
   };
 
   const handleRightIs = (elem) => {
     if (round < 4) {
       setEl(elem);
-      setShowSpecial(true);
-      toast("Right Issue Card Used Successfully");
+      setSpecialShow(true);
     } else {
       toast("This Card will Use in Normal Round Only");
     }
   };
 
+  const SubmitRightIs = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    const day = localStorage.getItem("SEG_CURRENT_DAY");
+    const round = localStorage.getItem("SEG_CURRENT_ROUND");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/right-issue`,
+      data: {
+        team_id: teamId,
+        card_no: el.card_no,
+        card_used_time: new Date().toJSON(),
+        day: parseInt(day),
+        round: parseInt(round),
+        description: el.description,
+        type: el.type,
+        company_ticker: companyName,
+      },
+    })
+      .then((response) => {
+        toast("Right Issue Card Used Successfully!!");
+        setSpecialShow(false);
+      })
+      .catch((error) => {
+        toast("Something Went Wrong!!");
+        setSpecialShow(false);
+      });
+  };
+
   const handleShareSus = (elem) => {
     if (round === 5) {
       setEl(elem);
-      setShowSpecial(true);
+      setSpecialShow(true);
     } else {
       toast("This Card will Use in Special Round Only");
     }
   };
 
+  const SubmitShareSus = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    const day = localStorage.getItem("SEG_CURRENT_DAY");
+    const round = localStorage.getItem("SEG_CURRENT_ROUND");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/share-suspended`,
+      data: {
+        team_id: teamId,
+        card_no: el.card_no,
+        card_used_time: new Date().toJSON(),
+        day: parseInt(day),
+        round: parseInt(round),
+        description: el.description,
+        type: el.type,
+        company_ticker: companyName,
+      },
+    })
+      .then((response) => {
+        toast("Share Suspend Card Used Successfully!!");
+        setSpecialShow(false);
+      })
+      .catch((error) => {
+        toast("Something Went Wrong!!");
+        setSpecialShow(false);
+      });
+  };
+
+  useEffect(() => {
+    cards.map((elem) => {
+      if (elem.type === 1) {
+        cardTotal[elem.company_ticker] += elem.price;
+      }
+    });
+    // console.log(cardTotal);
+  }, [cards]);
+  // console.log(cardTotal);
   return (
     <>
       <div className="card-section">
@@ -224,6 +321,7 @@ const CardSection = ({
                   onClick={() => {
                     handleLoanStock(elem);
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
@@ -254,8 +352,9 @@ const CardSection = ({
                 <div
                   className="seg_card"
                   onClick={() => {
-                    handleDebenture(elem);
+                    // handleDebenture(elem);
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
@@ -263,7 +362,10 @@ const CardSection = ({
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div className="card__face back special_card2">
+                    <div
+                      className="card__face back special_card2"
+                      style={{ opacity: "0.7" }}
+                    >
                       <div className="card_sign">
                         <p className="special_card_head">Debenture</p>
                         <p className="special_card_detail">
@@ -289,6 +391,7 @@ const CardSection = ({
                   onClick={() => {
                     handleRightIs(elem);
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
@@ -297,7 +400,7 @@ const CardSection = ({
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div className="card__face back special_card2">
-                      <div className="card_sign">
+                      <div className="card_sign ">
                         <p className="special_card_head">Right Issue</p>
                         <p className="special_card_detail">
                           1 Additional share for every two held in any one
@@ -322,6 +425,7 @@ const CardSection = ({
                   onClick={() => {
                     handleCurPlus(elem);
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
@@ -361,6 +465,7 @@ const CardSection = ({
                   onClick={() => {
                     handleCurMinus(elem);
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
@@ -392,6 +497,7 @@ const CardSection = ({
                   onClick={() => {
                     handleShareSus(elem);
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
@@ -479,15 +585,80 @@ const CardSection = ({
           </p>
         </div>
       </div>
-      <SpecialModal
-        specialModal={showSpecial}
-        closeModal={() => setShowSpecial(false)}
-        stockExchangeDetails={stockExchangeDetails}
-        getWalletDetails={getWalletDetails}
-        type={el.type}
-        card_no={el.card_no}
-        description={el.description}
-      />
+      <Offcanvas show={specialshow} onHide={handleClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>
+            <b>Special Order</b>{" "}
+          </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div action="#">
+            <select
+              className="form-select"
+              onChange={(e) => {
+                setCompanyName(e.target.value);
+              }}
+            >
+              <option value="0" selected>
+                Select company
+              </option>
+              {stockExchangeDetails.map((company) => (
+                <option value={company.company_ticker}>
+                  {company.company_name}
+                </option>
+              ))}
+            </select>
+          </div>
+          {el.type === 3 ? (
+            <div
+              className="btn btn-success"
+              style={{
+                position: "absolute",
+                width: "94%",
+                left: "10px",
+                bottom: "10px",
+              }}
+              onClick={SubmitDebenture}
+            >
+              Submit
+            </div>
+          ) : (
+            ""
+          )}
+          {el.type === 4 ? (
+            <div
+              className="btn btn-success"
+              style={{
+                position: "absolute",
+                width: "94%",
+                left: "10px",
+                bottom: "10px",
+              }}
+              onClick={SubmitRightIs}
+            >
+              Submit
+            </div>
+          ) : (
+            ""
+          )}
+          {el.type === 7 ? (
+            <div
+              className="btn btn-success"
+              style={{
+                position: "absolute",
+                width: "94%",
+                left: "10px",
+                bottom: "10px",
+              }}
+              onClick={SubmitShareSus}
+            >
+              Submit
+            </div>
+          ) : (
+            ""
+          )}
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 };
