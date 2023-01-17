@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
-const StockHistory = ({ stockHistoryModal, closeModal }) => {
+const StockHistory = ({ stockExchangeDetails,stockHistoryModal, closeModal }) => {
+  const [day,setDay]=useState(0);
   return (
     <>
       <div
@@ -18,191 +19,23 @@ const StockHistory = ({ stockHistoryModal, closeModal }) => {
             <table className="table table-striped" id="portfolio_tbl">
               <thead style={{ backgroundColor: "#20958f" }}>
                 <tr>
-                  <th style={{ color: "#fff" }}>Stock Name</th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    Holding Quantity
-                  </th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    Average Buy Price
-                  </th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    Invested Amount
-                  </th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>LTP</th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    Current Amount
-                  </th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    Change Amount
-                  </th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    Change Percentage
-                  </th>
+                  <th style={{ color:"white" }}><p>DAY</p></th>
+                  {stockExchangeDetails.map((elem)=>
+                  <th style={{ textAlign: "center",color:"white" }}>
+                  <p>{elem.company_name}</p>
+                </th>
+                  )}
                 </tr>
               </thead>
 
               <tbody>
                 <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$2500.00</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>50K</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$25000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>8.00%</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$2500.00</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>50K</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$25000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>8.00%</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$2500.00</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>50K</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$25000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>8.00%</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$2500.00</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>50K</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$25000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>8.00%</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$2500.00</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>50K</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$25000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>8.00%</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h5>NFLX</h5>
-                    Netflix, Inc.
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>1000000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$2500.00</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>50K</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$25000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>$250000</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>8.00%</p>
-                  </td>
+                  <td>{day}</td>
+                {stockExchangeDetails.map((elem)=>
+                <td style={{ textAlign: "center"}}>
+                  <p>{elem.price}</p>
+                </td>
+                )}
                 </tr>
               </tbody>
             </table>

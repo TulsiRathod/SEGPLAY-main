@@ -76,7 +76,6 @@ const CardSection = ({
         .then((response) => {
           localStorage.setItem("SEG_CARD_REVEAL", false);
           localStorage.setItem("SEG_CURRENT_ROUND", 0);
-          window.location.reload(false);
         })
         .catch((error) => {
           console.log("error", error);
@@ -114,7 +113,7 @@ const CardSection = ({
   };
 
   const handleLoanStock = (elem) => {
-    if (round > 3) {
+    if (round < 4) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       axios({
         method: "post",
@@ -130,7 +129,7 @@ const CardSection = ({
         },
       })
         .then((response) => {
-          window.location.reload(false);
+          toast("Loan Mature Card Used Successfully");
         })
         .catch((error) => {
           console.log("error", error);
@@ -141,18 +140,20 @@ const CardSection = ({
   };
 
   const handleDebenture = (elem) => {
-    if (round > 3) {
+    if (round < 4) {
       setEl(elem);
       setShowSpecial(true);
+      toast("Debenture Card Used Successfully");
     } else {
       toast("This Card will Use in Normal Round Only");
     }
   };
 
   const handleRightIs = (elem) => {
-    if (round > 3) {
+    if (round < 4) {
       setEl(elem);
       setShowSpecial(true);
+      toast("Right Issue Card Used Successfully");
     } else {
       toast("This Card will Use in Normal Round Only");
     }
@@ -227,7 +228,7 @@ const CardSection = ({
                       <div className="card_sign">
                         <p className="special_card_head">loan stock matured</p>
                         <p className="special_card_detail">
-                          Collect Rs. xx,xxx from the stockvroker
+                          Collect Rs. 25,00,000 from the stockvroker
                         </p>
                         <img
                           src="../assets/loan.png"

@@ -62,7 +62,6 @@ const Home = () => {
   const [bidAmount, setBidAmount] = useState(0);
 
   const toIndianCurrency = (num) => {
-    console.log(num, "in currency");
     const curr = num.toLocaleString("en-IN", {
       style: "currency",
       currency: "INR",
@@ -240,7 +239,7 @@ const Home = () => {
       localStorage.setItem("SEG_CARD_REVEAL", true);
     });
     socket.on("change", (data) => {
-      console.log(data, "loggedin Teams");
+      // console.log(data, "loggedin Teams");
       setLoggedInUsers(data);
     });
 
@@ -322,7 +321,6 @@ const Home = () => {
             <div className="">Round-{round}</div>
           </div>
         </div>
-
         <Sidebar
           setOrderModal={setOrderModal}
           setPortfolioModal={setPortfolioModal}
@@ -388,6 +386,7 @@ const Home = () => {
       <StockHistory
         stockHistoryModal={stockHistoryModal}
         closeModal={closeModal}
+        stockExchangeDetails={stockExchangeDetails}
       />
       <VetoModal
         vetoModal={showVeto}
