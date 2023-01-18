@@ -20,14 +20,14 @@ const CardSection = ({
   const [el, setEl] = useState({});
   const handleClose = () => setSpecialShow(false);
   const handleShow = () => setSpecialShow(true);
-  const cardTotal = {
+  const [cardCount,setCardCount] = useState({
     GOOGL: 0,
     TESLA: 0,
     SUNPM: 0,
     ADANI: 0,
     YESBK: 0,
     SHELL: 0,
-  };
+  });
   useEffect(() => {
     if (day != 0) {
       getCard();
@@ -263,7 +263,7 @@ const CardSection = ({
   useEffect(() => {
     cards.map((elem) => {
       if (elem.type === 1) {
-        cardTotal[elem.company_ticker] += elem.price;
+        cardCount[elem.company_ticker] += elem.price;
       }
     });
     // console.log(cardTotal);
