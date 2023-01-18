@@ -161,7 +161,7 @@ h3 {
   width: 98%;
   font-size: 12px;
 }
-.portfolio_tbl{
+.portfolio_tbl {
   height: 28vh;
   overflow-y: scroll;
 }
@@ -435,6 +435,7 @@ h3 {
 
 .disable {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  cursor: not-allowed;
 }
 
 .lock-icon {

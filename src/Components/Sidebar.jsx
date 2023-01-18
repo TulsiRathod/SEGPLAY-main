@@ -211,7 +211,7 @@ const Sidebar = ({
                 id="accordionFlushExample "
               >
                 <div className="accordion" id="accordionExample">
-                  <DayNews news={news} day={day} cardReveal={cardReveal} />
+                  {/* <DayNews news={news} day={day} cardReveal={cardReveal} /> */}
                 </div>
               </div>
             </div>

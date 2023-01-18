@@ -1,10 +1,21 @@
 import React, { useEffect } from "react";
 
-const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails, shortShellDetails }) => {
+const PortfolioModal = ({
+  portfolioModal,
+  closeModal,
+  portfolioDetails,
+  shortShellDetails,
+}) => {
   // useEffect(()=>{
   //   console.log(shortShellDetails);
   // },[]);
-  const nf = new Intl.NumberFormat();
+  const toIndianCurrency = (num) => {
+    const curr = num.toLocaleString("en-IN", {
+      style: "currency",
+      currency: "INR",
+    });
+    return curr;
+  };
 
   return (
     <>
@@ -14,7 +25,12 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails, shortShe
         style={portfolioModal ? { display: "flex" } : { display: "none" }}
       >
         <div className="modal-content" id="portfolio_modal_content">
-          <span className="close" id="portfolio_close" onClick={closeModal} style={{cursor:'pointer'}}>
+          <span
+            className="close"
+            id="portfolio_close"
+            onClick={closeModal}
+            style={{ cursor: "pointer" }}
+          >
             &times;
           </span>
           <p className="modal_title">Portfolio</p>
@@ -30,9 +46,7 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails, shortShe
                   <th style={{ textAlign: "center", color: "#fff" }}>
                     Average Buy Price
                   </th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    LTP
-                  </th>
+                  <th style={{ textAlign: "center", color: "#fff" }}>LTP</th>
                   <th style={{ textAlign: "center", color: "#fff" }}>
                     Invested Amount
                   </th>
@@ -56,24 +70,26 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails, shortShe
                       {elem.company_name}
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>{nf.format(elem.total_stock)}</p>
+                      <p>{toIndianCurrency(elem.total_stock)}</p>
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>
-                        {nf.format(
+                        {toIndianCurrency(
                           elem.total_investment_amount / elem.total_stock
                         )}
                       </p>
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>{nf.format(elem.current_stock_price)}</p>
+                      <p>{toIndianCurrency(elem.current_stock_price)}</p>
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>{nf.format(elem.total_investment_amount)}</p>
+                      <p>{toIndianCurrency(elem.total_investment_amount)}</p>
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>
-                        {nf.format(elem.current_stock_price * elem.total_stock)}
+                        {toIndianCurrency(
+                          elem.current_stock_price * elem.total_stock
+                        )}
                       </p>
                     </td>
                     <td style={{ textAlign: "center" }}>
@@ -85,47 +101,65 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails, shortShe
                       </p>
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p style={{color:`${elem.current_stock_price-elem.average_buying_price?'red':'green'}`}}>{((elem.current_stock_price-elem.average_buying_price)/elem.average_buying_price)*100}%</p>
+                      <p
+                        style={{
+                          color: `${
+                            elem.current_stock_price - elem.average_buying_price
+                              ? "red"
+                              : "green"
+                          }`,
+                        }}
+                      >
+                        {toIndianCurrency(
+                          (
+                            ((elem.current_stock_price -
+                              elem.average_buying_price) /
+                              elem.average_buying_price) *
+                            100
+                          ).toFixed(2)
+                        )}
+                        %
+                      </p>
                     </td>
                   </tr>
                 ))}
-                {shortShellDetails.map((elem)=>
+                {shortShellDetails.map((elem) => (
                   <tr>
-                  <td>
-                    <h5>{elem.company_ticker}</h5>
-                    {elem.company_name}(Short Shell)
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{nf.format(elem.stock_quantity)}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>
-                      {nf.format(
-                        elem.buying_price
-                      )}
-                    </p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{nf.format(elem.buying_price)}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{nf.format(elem.buying_price*elem.stock_quantity)}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>
-                      {nf.format(elem.stock_quantity * elem.buying_price)}
-                    </p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>
-                      0
-                    </p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                        <p>0%</p>
-                  </td>
-                </tr>
-                )}
+                    <td>
+                      <h5>{elem.company_ticker}</h5>
+                      {elem.company_name}(Short Shell)
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>{toIndianCurrency(elem.stock_quantity)}</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>{toIndianCurrency(elem.buying_price)}</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>{toIndianCurrency(elem.buying_price)}</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>
+                        {toIndianCurrency(
+                          elem.buying_price * elem.stock_quantity
+                        )}
+                      </p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>
+                        {toIndianCurrency(
+                          elem.stock_quantity * elem.buying_price
+                        )}
+                      </p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>0</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>0%</p>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

@@ -192,6 +192,13 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+    window.addEventListener("beforeunload", unloadCallback);
+
     if (!localStorage.getItem("SEG_RULES_ACEEPT")) {
       setRulesModal(true);
     }
@@ -246,6 +253,7 @@ const Home = () => {
       socket.off("day");
       socket.off("round");
       socket.off("market");
+      window.removeEventListener("beforeunload", unloadCallback);
     };
   }, []);
 
@@ -344,6 +352,7 @@ const Home = () => {
                   cardReveal={cardReveal}
                   stockExchangeDetails={stockExchangeDetails}
                   getWalletDetails={getWalletDetails}
+                  portfolioDetails={portfolioDetails}
                 />
               </div>
               <div className="col-lg-3 p-0">

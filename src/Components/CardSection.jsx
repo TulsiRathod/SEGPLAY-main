@@ -199,6 +199,9 @@ const CardSection = ({
   };
 
   const handleRightIs = (elem) => {
+    if (isRightUsed) {
+      return;
+    }
     if (round < 4) {
       setEl(elem);
       setSpecialShow(true);
@@ -228,7 +231,7 @@ const CardSection = ({
       })
         .then((response) => {
           toast("Right Issue Card Used Successfully!!");
-          isRightUsed(true);
+          setIsRightUsed(true);
           setSpecialShow(false);
         })
         .catch((error) => {
