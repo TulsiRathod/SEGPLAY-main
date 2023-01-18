@@ -10,6 +10,7 @@ const CardSection = ({
   cardReveal,
   stockExchangeDetails,
   getWalletDetails,
+  portfolioDetails,
 }) => {
   const [cards, setCards] = useState([]);
   const [specialshow, setSpecialShow] = useState(false);
@@ -37,7 +38,6 @@ const CardSection = ({
   useEffect(() => {
     cardReveal ? setShow(true) : setShow(false);
   }, [cardReveal]);
-
   const getCard = async () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     await axios({
@@ -59,7 +59,7 @@ const CardSection = ({
           // setCardCount({ ...cardCount, [`${elem.company_ticker}`]: count });
         });
         setCardCount(counts);
-        console.log(counts);
+        // console.log(counts);
       })
       .catch((error) => {
         console.log("error", error);
@@ -260,14 +260,20 @@ const CardSection = ({
       });
   };
 
-  useEffect(() => {
-    cards.map((elem) => {
-      if (elem.type === 1) {
-        cardCount[elem.company_ticker] += elem.price;
-      }
-    });
-    // console.log(cardTotal);
-  }, [cards]);
+  const handleSubmit = () =>{
+    if(el.type===3) SubmitDebenture();
+    else if(el.type===4) SubmitRightIs();
+    else if(el.type===7) SubmitShareSus();
+  }
+
+  // useEffect(() => {
+  //   cards.map((elem) => {
+  //     if (elem.type === 1) {
+  //       cardCount[elem.company_ticker] += elem.price;
+  //     }
+  //   });
+  //   // console.log(cardTotal);
+  // }, [cards]);
   // console.log(cardTotal);
   return (
     <>
@@ -352,7 +358,7 @@ const CardSection = ({
                 <div
                   className="seg_card"
                   onClick={() => {
-                    // handleDebenture(elem);
+                    handleDebenture(elem);
                   }}
                   style={{ cursor: "pointer" }}
                 >
@@ -364,7 +370,6 @@ const CardSection = ({
                     </div>
                     <div
                       className="card__face back special_card2"
-                      style={{ opacity: "0.7" }}
                     >
                       <div className="card_sign">
                         <p className="special_card_head">Debenture</p>
@@ -544,6 +549,7 @@ const CardSection = ({
         )}
       </div>
       <div className="card_count">
+      {cardReveal?(<>
         <div className="count-block">
           <p>
             {" "}
@@ -583,7 +589,7 @@ const CardSection = ({
             <img src="../assets/SHELL.png" />
             {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
           </p>
-        </div>
+        </div></>):''}
       </div>
       <Offcanvas show={specialshow} onHide={handleClose}>
         <Offcanvas.Header closeButton>
@@ -593,23 +599,39 @@ const CardSection = ({
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div action="#">
+            {el.type!==7?
             <select
-              className="form-select"
-              onChange={(e) => {
-                setCompanyName(e.target.value);
-              }}
-            >
-              <option value="0" selected>
-                Select company
+            className="form-select"
+            onChange={(e) => {
+              setCompanyName(e.target.value);
+            }}
+          >
+            <option value="0" selected>
+              Select company
+            </option>
+            {portfolioDetails.map((company) => (
+              <option value={company.company_ticker}>
+                {company.company_name}
               </option>
-              {stockExchangeDetails.map((company) => (
-                <option value={company.company_ticker}>
-                  {company.company_name}
-                </option>
-              ))}
-            </select>
+            ))}
+          </select>
+          :
+            <select
+            className="form-select"
+            onChange={(e) => {
+              setCompanyName(e.target.value);
+            }}
+          >
+            <option value="0" selected>
+              Select company
+            </option>
+            {stockExchangeDetails.map((company) => (
+              <option value={company.company_ticker}>
+                {company.company_name}
+              </option>
+            ))}
+          </select>}
           </div>
-          {el.type === 3 ? (
             <div
               className="btn btn-success"
               style={{
@@ -618,45 +640,10 @@ const CardSection = ({
                 left: "10px",
                 bottom: "10px",
               }}
-              onClick={SubmitDebenture}
+              onClick={handleSubmit}
             >
               Submit
             </div>
-          ) : (
-            ""
-          )}
-          {el.type === 4 ? (
-            <div
-              className="btn btn-success"
-              style={{
-                position: "absolute",
-                width: "94%",
-                left: "10px",
-                bottom: "10px",
-              }}
-              onClick={SubmitRightIs}
-            >
-              Submit
-            </div>
-          ) : (
-            ""
-          )}
-          {el.type === 7 ? (
-            <div
-              className="btn btn-success"
-              style={{
-                position: "absolute",
-                width: "94%",
-                left: "10px",
-                bottom: "10px",
-              }}
-              onClick={SubmitShareSus}
-            >
-              Submit
-            </div>
-          ) : (
-            ""
-          )}
         </Offcanvas.Body>
       </Offcanvas>
     </>
