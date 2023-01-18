@@ -10,6 +10,7 @@ const CardSection = ({
   cardReveal,
   stockExchangeDetails,
   getWalletDetails,
+  portfolioDetails,
 }) => {
   const [cards, setCards] = useState([]);
   const [specialshow, setSpecialShow] = useState(false);
@@ -41,7 +42,6 @@ const CardSection = ({
   useEffect(() => {
     cardReveal ? setShow(true) : setShow(false);
   }, [cardReveal]);
-
   const getCard = async () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     await axios({
@@ -275,6 +275,21 @@ const CardSection = ({
       });
   };
 
+  const handleSubmit = () => {
+    if (el.type === 3) SubmitDebenture();
+    else if (el.type === 4) SubmitRightIs();
+    else if (el.type === 7) SubmitShareSus();
+  };
+
+  // useEffect(() => {
+  //   cards.map((elem) => {
+  //     if (elem.type === 1) {
+  //       cardCount[elem.company_ticker] += elem.price;
+  //     }
+  //   });
+  //   // console.log(cardTotal);
+  // }, [cards]);
+  // console.log(cardTotal);
   return (
     <>
       <div className="card-section">
@@ -373,7 +388,7 @@ const CardSection = ({
                 <div
                   className="seg_card"
                   onClick={() => {
-                    // handleDebenture(elem);
+                    handleDebenture(elem);
                   }}
                   style={{ cursor: "pointer" }}
                 >
@@ -383,10 +398,7 @@ const CardSection = ({
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div
-                      className="card__face back special_card2"
-                      style={{ opacity: "0.7" }}
-                    >
+                    <div className="card__face back special_card2">
                       <div className="card_sign">
                         <p className="special_card_head">Debenture</p>
                         <p className="special_card_detail">
@@ -578,46 +590,52 @@ const CardSection = ({
         )}
       </div>
       <div className="card_count">
-        <div className="count-block">
-          <p>
-            {" "}
-            <img src="../assets/GOOGL.png" alt="" srcset="" />
-            {cardCount.GOOGL > 0 ? "+" : ""} {cardCount.GOOGL}
-          </p>
-        </div>
-        <div className="count-block">
-          <p>
-            <img src="../assets/ADANI.png" />
-            {cardCount.ADANI > 0 ? "+" : ""} {cardCount.ADANI}
-          </p>
-        </div>
-        <div className="count-block">
-          <p>
-            <img src="../assets/TESLA.png" />
-            {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
-          </p>
-        </div>
+        {cardReveal ? (
+          <>
+            <div className="count-block">
+              <p>
+                {" "}
+                <img src="../assets/GOOGL.png" alt="" srcset="" />
+                {cardCount.GOOGL > 0 ? "+" : ""} {cardCount.GOOGL}
+              </p>
+            </div>
+            <div className="count-block">
+              <p>
+                <img src="../assets/ADANI.png" />
+                {cardCount.ADANI > 0 ? "+" : ""} {cardCount.ADANI}
+              </p>
+            </div>
+            <div className="count-block">
+              <p>
+                <img src="../assets/TESLA.png" />
+                {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
+              </p>
+            </div>
 
-        <div className="count-block">
-          <p>
-            <img src="../assets/YESBK.png" />
-            {cardCount.YESBK > 0 ? "+" : ""} {cardCount.YESBK}
-          </p>
-        </div>
+            <div className="count-block">
+              <p>
+                <img src="../assets/YESBK.png" />
+                {cardCount.YESBK > 0 ? "+" : ""} {cardCount.YESBK}
+              </p>
+            </div>
 
-        <div className="count-block">
-          <p>
-            <img src="../assets/SUNPM.png" />
-            {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
-          </p>
-        </div>
+            <div className="count-block">
+              <p>
+                <img src="../assets/SUNPM.png" />
+                {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
+              </p>
+            </div>
 
-        <div className="count-block">
-          <p>
-            <img src="../assets/SHELL.png" />
-            {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
-          </p>
-        </div>
+            <div className="count-block">
+              <p>
+                <img src="../assets/SHELL.png" />
+                {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
+              </p>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
       <Offcanvas show={specialshow} onHide={handleClose}>
         <Offcanvas.Header closeButton>
@@ -627,70 +645,52 @@ const CardSection = ({
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div action="#">
-            <select
-              className="form-select"
-              onChange={(e) => {
-                setCompanyName(e.target.value);
-              }}
-            >
-              <option value="0" selected>
-                Select company
-              </option>
-              {stockExchangeDetails.map((company) => (
-                <option value={company.company_ticker}>
-                  {company.company_name}
+            {el.type !== 7 ? (
+              <select
+                className="form-select"
+                onChange={(e) => {
+                  setCompanyName(e.target.value);
+                }}
+              >
+                <option value="0" selected>
+                  Select company
                 </option>
-              ))}
-            </select>
+                {portfolioDetails.map((company) => (
+                  <option value={company.company_ticker}>
+                    {company.company_name}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <select
+                className="form-select"
+                onChange={(e) => {
+                  setCompanyName(e.target.value);
+                }}
+              >
+                <option value="0" selected>
+                  Select company
+                </option>
+                {stockExchangeDetails.map((company) => (
+                  <option value={company.company_ticker}>
+                    {company.company_name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
-          {el.type === 3 ? (
-            <div
-              className="btn btn-success"
-              style={{
-                position: "absolute",
-                width: "94%",
-                left: "10px",
-                bottom: "10px",
-              }}
-              onClick={SubmitDebenture}
-            >
-              Submit
-            </div>
-          ) : (
-            ""
-          )}
-          {el.type === 4 ? (
-            <div
-              className="btn btn-success"
-              style={{
-                position: "absolute",
-                width: "94%",
-                left: "10px",
-                bottom: "10px",
-              }}
-              onClick={SubmitRightIs}
-            >
-              Submit
-            </div>
-          ) : (
-            ""
-          )}
-          {el.type === 7 ? (
-            <div
-              className="btn btn-success"
-              style={{
-                position: "absolute",
-                width: "94%",
-                left: "10px",
-                bottom: "10px",
-              }}
-              onClick={SubmitShareSus}
-            >
-              Submit
-            </div>
-          ) : (
-            ""
-          )}
+          <div
+            className="btn btn-success"
+            style={{
+              position: "absolute",
+              width: "94%",
+              left: "10px",
+              bottom: "10px",
+            }}
+            onClick={handleSubmit}
+          >
+            Submit
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
     </>

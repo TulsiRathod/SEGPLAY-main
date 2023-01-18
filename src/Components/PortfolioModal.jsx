@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
-const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails }) => {
+const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails, shortShellDetails }) => {
   // useEffect(()=>{
-  //   console.log(portfolioDetails);
-  // })
+  //   console.log(shortShellDetails);
+  // },[]);
   const nf = new Intl.NumberFormat();
 
   return (
@@ -14,7 +14,7 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails }) => {
         style={portfolioModal ? { display: "flex" } : { display: "none" }}
       >
         <div className="modal-content" id="portfolio_modal_content">
-          <span className="close" id="portfolio_close" onClick={closeModal}>
+          <span className="close" id="portfolio_close" onClick={closeModal} style={{cursor:'pointer'}}>
             &times;
           </span>
           <p className="modal_title">Portfolio</p>
@@ -89,6 +89,43 @@ const PortfolioModal = ({ portfolioModal, closeModal, portfolioDetails }) => {
                     </td>
                   </tr>
                 ))}
+                {shortShellDetails.map((elem)=>
+                  <tr>
+                  <td>
+                    <h5>{elem.company_ticker}</h5>
+                    {elem.company_name}(Short Shell)
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <p>{nf.format(elem.stock_quantity)}</p>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <p>
+                      {nf.format(
+                        elem.buying_price
+                      )}
+                    </p>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <p>{nf.format(elem.buying_price)}</p>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <p>{nf.format(elem.buying_price*elem.stock_quantity)}</p>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <p>
+                      {nf.format(elem.stock_quantity * elem.buying_price)}
+                    </p>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <p>
+                      0
+                    </p>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                        <p>0%</p>
+                  </td>
+                </tr>
+                )}
               </tbody>
             </table>
           </div>
