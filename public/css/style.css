@@ -428,6 +428,19 @@ h3 {
   border: 1px solid white;
   /* background-color: rgba(255, 255, 255, 0.4); */
 }
+
+.disable {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+
+.lock-icon {
+  height: 70px;
+  width: 50px;
+  position: absolute;
+  /* margin: auto; */
+  left: 35%;
+  top: 40%;
+}
 /************media query *********************/
 @media screen and (min-height: 900px) {
   .portfolio_tbl_wrapper {

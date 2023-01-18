@@ -11,6 +11,8 @@ const DayNews = ({ news, day, cardReveal }) => {
     }
     setDays(temp_day);
   }, [news]);
+
+  console.log(news, "news");
   return (
     <>
       {news.length > 0 ? (
@@ -61,7 +63,10 @@ const DayNews = ({ news, day, cardReveal }) => {
                                   src={`../assets/${elem_news.company_ticker}.png`}
                                   width="40px"
                                   height="40px"
-                                  style={{borderRadius:'50%',border:'1px solid #828282'}}
+                                  style={{
+                                    borderRadius: "50%",
+                                    border: "1px solid #828282",
+                                  }}
                                 />
                               </div>
                               <div

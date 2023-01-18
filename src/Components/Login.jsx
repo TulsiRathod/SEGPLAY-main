@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../Baseurl";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { ThreeDots } from "react-loader-spinner";
 
 const Login = () => {
   const [teamName, setTeamName] = useState("");
@@ -10,17 +11,18 @@ const Login = () => {
   const [err, setErr] = useState({
     teamNameError: false,
     passwordError: false,
-   });
+  });
+  const [res, setRes] = useState(0);
   const nav = useNavigate();
 
   const validator = () => {
     let isErr = true;
     let errors = {
       teamNameError: false,
-    passwordError: false,
-    }
+      passwordError: false,
+    };
     if (teamName === "") {
-      errors.teamNameError = true
+      errors.teamNameError = true;
       isErr = false;
     }
 
@@ -35,6 +37,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    setRes(1);
     console.log(err);
     if (validator()) {
       axios({
@@ -49,7 +52,8 @@ const Login = () => {
         .then((response) => {
           toast.success(response.data.message);
           localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
-          nav('/home');
+          setRes(2);
+          nav("/home");
         })
         .catch((error) => {
           console.log(error);
@@ -117,12 +121,12 @@ const Login = () => {
                     name="password"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) =>{
+                    onChange={(e) => {
                       setErr({
                         ...err,
                         passwordError: false,
                       });
-                       setPassword(e.target.value)
+                      setPassword(e.target.value);
                     }}
                   />
                   <label
@@ -143,7 +147,21 @@ const Login = () => {
                   id="login_btn"
                   onClick={handleLogin}
                 >
-                  LOG IN
+                  {res === 0 ? "LOG IN" : ""}
+                  {res === 1 ? (
+                    <ThreeDots
+                      height="20"
+                      width="50"
+                      radius="9"
+                      color="#fff"
+                      wrapperStyle={{ margin: "0px" }}
+                      wrapperClassName="m-0"
+                      visible={true}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {res === 2 ? "LOG IN" : ""}
                 </button>
               </form>
             </div>

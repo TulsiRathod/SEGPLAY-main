@@ -20,14 +20,18 @@ const CardSection = ({
   const [el, setEl] = useState({});
   const handleClose = () => setSpecialShow(false);
   const handleShow = () => setSpecialShow(true);
-  const cardTotal = {
+  const [cardCount, setCardCount] = useState({
     GOOGL: 0,
     TESLA: 0,
-    SUNPM: 0,
     ADANI: 0,
-    YESBK: 0,
+    SUNPM: 0,
     SHELL: 0,
-  };
+    YESBK: 0,
+  });
+
+  const [isLoanUsed, setIsLoanUsed] = useState(false);
+  const [isRightUsed, setIsRightUsed] = useState(false);
+
   useEffect(() => {
     if (day != 0) {
       getCard();
@@ -49,17 +53,22 @@ const CardSection = ({
       },
     })
       .then((response) => {
+        setCardCount({
+          GOOGL: 0,
+          TESLA: 0,
+          ADANI: 0,
+          SUNPM: 0,
+          SHELL: 0,
+          YESBK: 0,
+        });
         setCards(response.data.cards);
         setShow(true);
-        // console.log(response);
+
         let counts = cardCount;
         response.data.cards.map((elem) => {
-          let count = cardCount[`${elem.company_ticker}`] + elem.price;
-          counts = { ...counts, [`${elem.company_ticker}`]: count };
-          // setCardCount({ ...cardCount, [`${elem.company_ticker}`]: count });
+          counts[elem.company_ticker] += elem.price;
         });
         setCardCount(counts);
-        console.log(counts);
       })
       .catch((error) => {
         console.log("error", error);
@@ -123,26 +132,29 @@ const CardSection = ({
 
   const handleLoanStock = (elem) => {
     if (round < 4) {
-      const teamId = localStorage.getItem("SEG_TEAM_ID");
-      axios({
-        method: "post",
-        url: `${SERVER_URL}api/main/loan-stock`,
-        data: {
-          team_id: teamId,
-          card_no: elem.card_no,
-          card_used_time: new Date().toJSON(),
-          day: day,
-          round: round,
-          description: elem.description,
-          type: elem.type,
-        },
-      })
-        .then((response) => {
-          toast("Loan Mature Card Used Successfully");
+      if (!isLoanUsed) {
+        const teamId = localStorage.getItem("SEG_TEAM_ID");
+        axios({
+          method: "post",
+          url: `${SERVER_URL}api/main/loan-stock`,
+          data: {
+            team_id: teamId,
+            card_no: elem.card_no,
+            card_used_time: new Date().toJSON(),
+            day: day,
+            round: round,
+            description: elem.description,
+            type: elem.type,
+          },
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+          .then((response) => {
+            toast("Loan Mature Card Used Successfully");
+            setIsLoanUsed(true);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }
     } else {
       toast("This Card will Use in Normal Round Only");
     }
@@ -196,31 +208,34 @@ const CardSection = ({
   };
 
   const SubmitRightIs = () => {
-    const teamId = localStorage.getItem("SEG_TEAM_ID");
-    const day = localStorage.getItem("SEG_CURRENT_DAY");
-    const round = localStorage.getItem("SEG_CURRENT_ROUND");
-    axios({
-      method: "post",
-      url: `${SERVER_URL}api/main/right-issue`,
-      data: {
-        team_id: teamId,
-        card_no: el.card_no,
-        card_used_time: new Date().toJSON(),
-        day: parseInt(day),
-        round: parseInt(round),
-        description: el.description,
-        type: el.type,
-        company_ticker: companyName,
-      },
-    })
-      .then((response) => {
-        toast("Right Issue Card Used Successfully!!");
-        setSpecialShow(false);
+    if (!isRightUsed) {
+      const teamId = localStorage.getItem("SEG_TEAM_ID");
+      const day = localStorage.getItem("SEG_CURRENT_DAY");
+      const round = localStorage.getItem("SEG_CURRENT_ROUND");
+      axios({
+        method: "post",
+        url: `${SERVER_URL}api/main/right-issue`,
+        data: {
+          team_id: teamId,
+          card_no: el.card_no,
+          card_used_time: new Date().toJSON(),
+          day: parseInt(day),
+          round: parseInt(round),
+          description: el.description,
+          type: el.type,
+          company_ticker: companyName,
+        },
       })
-      .catch((error) => {
-        toast("Something Went Wrong!!");
-        setSpecialShow(false);
-      });
+        .then((response) => {
+          toast("Right Issue Card Used Successfully!!");
+          isRightUsed(true);
+          setSpecialShow(false);
+        })
+        .catch((error) => {
+          toast("Something Went Wrong!!");
+          setSpecialShow(false);
+        });
+    }
   };
 
   const handleShareSus = (elem) => {
@@ -260,15 +275,6 @@ const CardSection = ({
       });
   };
 
-  useEffect(() => {
-    cards.map((elem) => {
-      if (elem.type === 1) {
-        cardTotal[elem.company_ticker] += elem.price;
-      }
-    });
-    // console.log(cardTotal);
-  }, [cards]);
-  // console.log(cardTotal);
   return (
     <>
       <div className="card-section">
@@ -321,15 +327,30 @@ const CardSection = ({
                   onClick={() => {
                     handleLoanStock(elem);
                   }}
-                  style={{ cursor: "pointer" }}
                 >
                   <div
-                    className={`card_content ${cardReveal ? "is-flipped" : ""}`}
+                    className={`card_content ${
+                      cardReveal ? "is-flipped" : ""
+                    } `}
+                    style={{ cursor: "pointer" }}
                   >
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div className="card__face back special_card2">
+                    <div
+                      className={`card__face back special_card2 ${
+                        isLoanUsed ? "disable" : ""
+                      }`}
+                    >
+                      {isLoanUsed ? (
+                        <img
+                          src="../assets/lock.png"
+                          className="lock-icon"
+                          alt=""
+                        />
+                      ) : (
+                        ""
+                      )}
                       <div className="card_sign">
                         <p className="special_card_head">loan stock matured</p>
                         <p className="special_card_detail">
@@ -399,7 +420,20 @@ const CardSection = ({
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div className="card__face back special_card2">
+                    <div
+                      className={`card__face back special_card2 ${
+                        isRightUsed ? "disable" : ""
+                      }`}
+                    >
+                      {isRightUsed ? (
+                        <img
+                          src="../assets/lock.png"
+                          className="lock-icon"
+                          alt=""
+                        />
+                      ) : (
+                        ""
+                      )}
                       <div className="card_sign ">
                         <p className="special_card_head">Right Issue</p>
                         <p className="special_card_detail">
