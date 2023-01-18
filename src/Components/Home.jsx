@@ -37,6 +37,7 @@ const Home = () => {
       : 0
   );
   const [portfolioDetails, setPortfolioDetails] = useState([]);
+  const [shortShellDetails, setshortShellDetails] = useState([]);
   const [balance, setBalance] = useState();
   const [stockExchangeDetails, setStockExchangeDetails] = useState([]);
   const [holdings, setHoldings] = useState(0);
@@ -83,6 +84,7 @@ const Home = () => {
       .then((response) => {
         setPortfolioDetails(response.data.data);
         setBalance(response.data.available_balance);
+        setshortShellDetails(response.data.short_sell);
       })
       .catch((error) => {
         console.log(error);
@@ -334,6 +336,7 @@ const Home = () => {
                 <Portfolio
                   portfolioDetails={portfolioDetails}
                   stockExchangeDetails={stockExchangeDetails}
+                  shortShellDetails={shortShellDetails}
                 />
                 <CardSection
                   day={day}
@@ -372,6 +375,7 @@ const Home = () => {
         portfolioModal={portfolioModal}
         closeModal={closeModal}
         portfolioDetails={portfolioDetails}
+        shortShellDetails={shortShellDetails}
       />
       <ExchangeModal
         exchangeModal={exchangeModal}

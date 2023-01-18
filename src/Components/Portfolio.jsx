@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 const Portfolio = (props) => {
   const [portfolio, setPortfolio] = useState([]);
   const [stockDetails, setStockDetaials] = useState([]);
+  const [shortShellDetails,setshortShellDetails]=useState([]);
   useEffect(() => {
     setPortfolio(props.portfolioDetails);
     setStockDetaials(props.stockExchangeDetails);
+    setshortShellDetails(props.shortShellDetails);
   }, [props]);
 
   const colorBG = (e1, e2) => {
-    if (e2 == 0) {
+    if (e2 === 0) {
       return "#828282";
     } else {
       var diff = ((e1 - e2) / e2) * 100;
@@ -25,6 +27,8 @@ const Portfolio = (props) => {
         return "#138808";
       } else if (diff > 0) {
         return "#32CD32";
+      }else{
+        return "#828282";
       }
     }
   };
@@ -358,6 +362,7 @@ const Portfolio = (props) => {
             <div className="px-3 portfolio_tbl_wrapper">
               <h3 className="mb-0">Portfolio</h3>
               <hr className="mt-2" />
+              <div  className="portfolio_tbl">
               <table id="portfolio_tbl">
                 <tr>
                   <th>Company</th>
@@ -398,7 +403,25 @@ const Portfolio = (props) => {
                     </td>
                   </tr>
                 ))}
+                {shortShellDetails.map((elem) => (
+                  <tr>
+                    <td>
+                      <h5>{elem.company_ticker}</h5>
+                      SHORT SHELL
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>{elem.buying_price}</p>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <p>0.00%</p>
+                    </td>
+                    <td style={{ textAlign: "end" }}>
+                      <p>{elem.stock_quantity}</p>
+                    </td>
+                  </tr>
+                ))}
               </table>
+              </div>
             </div>
           </div>
         </div>

@@ -161,6 +161,10 @@ h3 {
   width: 98%;
   font-size: 12px;
 }
+.portfolio_tbl{
+  height: 28vh;
+  overflow-y: scroll;
+}
 #portfolio_tbl th {
   color: var(--gray);
 }
