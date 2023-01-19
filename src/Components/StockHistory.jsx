@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toIndianCurrency } from "../Baseurl";
 
 const StockHistory = ({
   stockHistoryModal,
@@ -6,6 +7,8 @@ const StockHistory = ({
   stockExchangeDetails,
   closeModal,
 }) => {
+  console.log(stockHistoryDetails, "modal");
+
   return (
     <>
       <div
@@ -20,38 +23,28 @@ const StockHistory = ({
           <p className="modal_title">Stock Exchange History</p>
           <hr />
           <div className="scroll_content">
-            <table className="table table-striped" id="portfolio_tbl">
+            <table className="table table-striped">
               <thead style={{ backgroundColor: "#20958f" }}>
                 <tr>
-                  <th style={{ color: "white" }}>
-                    <p>DAY</p>
-                  </th>
-                  <th style={{ textAlign: "center", color: "white" }}>
-                    <p>ADANI</p>
-                  </th>
-                  <th style={{ textAlign: "center", color: "white" }}>
-                    <p>GOOGLE</p>
-                  </th>
-                  <th style={{ textAlign: "center", color: "white" }}>
-                    <p>SHELL</p>
-                  </th>
-                  <th style={{ textAlign: "center", color: "white" }}>
-                    <p>SUN PHARMA</p>
-                  </th>
-                  <th style={{ textAlign: "center", color: "white" }}>
-                    <p>TESLA</p>
-                  </th>
-                  <th style={{ textAlign: "center", color: "white" }}>
-                    <p>YES BANK</p>
-                  </th>
-                  <th style={{ textAlign: "center", color: "white" }}>
-                    <p>ADANI</p>
-                  </th>
+                  <th>DAY</th>
+                  <th>ADANI</th>
+                  <th>GOOGLE</th>
+                  <th>SHELL</th>
+                  <th>SUN PHARMA</th>
+                  <th>TESLA</th>
+                  <th>YES BANK</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr></tr>
+                {stockHistoryDetails.map((element, i) => (
+                  <tr>
+                    <td>{i + 1}</td>
+                    {element.map((e, i) => (
+                      <td>{toIndianCurrency(e.price)}</td>
+                    ))}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

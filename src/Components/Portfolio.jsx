@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toIndianCurrency } from "../Baseurl";
 
 const Portfolio = (props) => {
   const [portfolio, setPortfolio] = useState([]);
@@ -376,7 +377,7 @@ const Portfolio = (props) => {
                         <h5>{elem.company_name}</h5>
                       </td>
                       <td style={{ textAlign: "center" }}>
-                        <p>{elem.current_stock_price}</p>
+                        <p>{toIndianCurrency(elem.current_stock_price)}</p>
                       </td>
                       <td style={{ textAlign: "center" }}>
                         <p
@@ -422,7 +423,7 @@ const Portfolio = (props) => {
                         SHORT SHELL
                       </td>
                       <td style={{ textAlign: "center" }}>
-                        <p>{elem.buying_price}</p>
+                        <p>{toIndianCurrency(elem.buying_price)}</p>
                       </td>
                       <td style={{ textAlign: "center" }}>
                         <p>0.00%</p>

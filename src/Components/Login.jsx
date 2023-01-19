@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SERVER_URL } from "../Baseurl";
+import { SERVER_URL, socket } from "../Baseurl";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ThreeDots } from "react-loader-spinner";
@@ -8,6 +8,7 @@ import { ThreeDots } from "react-loader-spinner";
 const Login = () => {
   const [teamName, setTeamName] = useState("");
   const [password, setPassword] = useState("");
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const [err, setErr] = useState({
     teamNameError: false,
     passwordError: false,
@@ -42,35 +43,47 @@ const Login = () => {
 
   const handleLogin = () => {
     setRes(true);
-    console.log(err);
-    if (validator()) {
-      axios({
-        method: "post",
-        url: `${SERVER_URL}api/main/login`,
-        headers: {},
-        data: {
-          username: teamName,
-          password: password,
-        },
-      })
-        .then((response) => {
-          toast.success(response.data.message);
-          localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
-          setRes(false);
-          nav("/home");
+    if (!isGameStarted) {
+      if (validator()) {
+        axios({
+          method: "post",
+          url: `${SERVER_URL}api/main/login`,
+          headers: {},
+          data: {
+            username: teamName,
+            password: password,
+          },
         })
-        .catch((error) => {
-          console.log(error);
-          setRes(false);
-          toast.error(error.response.data.message);
-        });
+          .then((response) => {
+            toast.success(response.data.message);
+            localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
+            setRes(false);
+            nav("/home");
+          })
+          .catch((error) => {
+            console.log(error);
+            setRes(false);
+            toast.error(error.response.data.message);
+          });
+      }
+    } else {
+      setRes(false);
+      toast.error("Sorry! Game Is Already Started");
     }
   };
 
   useEffect(() => {
+    setIsGameStarted(false);
     if (localStorage.getItem("SEG_RULES_ACEEPT")) {
       nav("/Home");
     }
+
+    socket.on("day", (data) => {
+      console.log(data, "day");
+      if (data.day > 0) {
+        setIsGameStarted(true);
+      }
+    });
   }, []);
 
   return (

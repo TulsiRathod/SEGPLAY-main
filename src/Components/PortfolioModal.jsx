@@ -64,7 +64,7 @@ const PortfolioModal = ({
                       {elem.company_name}
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>{toIndianCurrency(elem.total_stock)}</p>
+                      <p>{elem.total_stock}</p>
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>

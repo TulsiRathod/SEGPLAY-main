@@ -32,8 +32,8 @@ const CardSection = ({
 
   const [isLoanUsed, setIsLoanUsed] = useState(false);
   const [isRightUsed, setIsRightUsed] = useState(false);
-  const [isDebUsed,setIsDebUsed]=useState(false);
-  const [specialCard,setSpecialCard]=useState(false);
+  const [isDebUsed, setIsDebUsed] = useState(false);
+  const [specialCard, setSpecialCard] = useState(false);
 
   useEffect(() => {
     if (day != 0) {
@@ -80,28 +80,28 @@ const CardSection = ({
 
   const handleCurPlus = (elem) => {
     if (round === 5) {
-      if(!specialCard){
-      const teamId = localStorage.getItem("SEG_TEAM_ID");
-      axios({
-        method: "post",
-        url: `${SERVER_URL}api/main/cash-flow-inc`,
-        data: {
-          team_id: teamId,
-          card_no: elem.card_no,
-          card_used_time: new Date().toJSON(),
-          day: day,
-          round: round,
-          description: elem.description,
-          type: elem.type,
-        },
-      })
-        .then((response) => {
-          toast("Cuurency Increament Card Used Successfully!!");
-          setSpecialCard(true);
+      if (!specialCard) {
+        const teamId = localStorage.getItem("SEG_TEAM_ID");
+        axios({
+          method: "post",
+          url: `${SERVER_URL}api/main/cash-flow-inc`,
+          data: {
+            team_id: teamId,
+            card_no: elem.card_no,
+            card_used_time: new Date().toJSON(),
+            day: day,
+            round: round,
+            description: elem.description,
+            type: elem.type,
+          },
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+          .then((response) => {
+            toast("Cuurency Increament Card Used Successfully!!");
+            setSpecialCard(true);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
       }
     } else {
       toast("This Card will Use in Special Round Only");
@@ -110,28 +110,29 @@ const CardSection = ({
 
   const handleCurMinus = (elem) => {
     if (round === 5) {
-      if(!specialCard){
-      const teamId = localStorage.getItem("SEG_TEAM_ID");
-      axios({
-        method: "post",
-        url: `${SERVER_URL}api/main/cash-flow-dec`,
-        data: {
-          team_id: teamId,
-          card_no: elem.card_no,
-          card_used_time: new Date().toJSON(),
-          day: day,
-          round: round,
-          description: elem.description,
-          type: elem.type,
-        },
-      })
-        .then((response) => {
-          toast("Cuurency Decreament Card Used Successfully!!");
-          setSpecialCard(true);
+      if (!specialCard) {
+        const teamId = localStorage.getItem("SEG_TEAM_ID");
+        axios({
+          method: "post",
+          url: `${SERVER_URL}api/main/cash-flow-dec`,
+          data: {
+            team_id: teamId,
+            card_no: elem.card_no,
+            card_used_time: new Date().toJSON(),
+            day: day,
+            round: round,
+            description: elem.description,
+            type: elem.type,
+          },
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+          .then((response) => {
+            toast("Cuurency Decreament Card Used Successfully!!");
+            setSpecialCard(true);
+            getWalletDetails();
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
       }
     } else {
       toast("This Card will Use in Special Round Only");
@@ -157,6 +158,7 @@ const CardSection = ({
         })
           .then((response) => {
             toast("Loan Mature Card Used Successfully");
+            getWalletDetails();
             setIsLoanUsed(true);
           })
           .catch((error) => {
@@ -169,7 +171,7 @@ const CardSection = ({
   };
 
   const handleDebenture = (elem) => {
-    if(isDebUsed){
+    if (isDebUsed) {
       return;
     }
     if (round < 4) {
@@ -181,34 +183,34 @@ const CardSection = ({
   };
 
   const SubmitDebenture = () => {
-    if(!isDebUsed){
-    const teamId = localStorage.getItem("SEG_TEAM_ID");
-    const day = localStorage.getItem("SEG_CURRENT_DAY");
-    const round = localStorage.getItem("SEG_CURRENT_ROUND");
-    axios({
-      method: "post",
-      url: `${SERVER_URL}api/main/debenture`,
-      data: {
-        team_id: teamId,
-        card_no: el.card_no,
-        card_used_time: new Date().toJSON(),
-        day: parseInt(day),
-        round: parseInt(round),
-        description: el.description,
-        type: el.type,
-        company_ticker: companyName,
-        order_time: "",
-      },
-    })
-      .then((response) => {
-        toast("Debenture Card Used Successfully!!");
-        setSpecialShow(false);
-        setIsDebUsed(true);
+    if (!isDebUsed) {
+      const teamId = localStorage.getItem("SEG_TEAM_ID");
+      const day = localStorage.getItem("SEG_CURRENT_DAY");
+      const round = localStorage.getItem("SEG_CURRENT_ROUND");
+      axios({
+        method: "post",
+        url: `${SERVER_URL}api/main/debenture`,
+        data: {
+          team_id: teamId,
+          card_no: el.card_no,
+          card_used_time: new Date().toJSON(),
+          day: parseInt(day),
+          round: parseInt(round),
+          description: el.description,
+          type: el.type,
+          company_ticker: companyName,
+          order_time: "",
+        },
       })
-      .catch((error) => {
-        toast("Something Went Wrong!!");
-        setSpecialShow(false);
-      });
+        .then((response) => {
+          toast("Debenture Card Used Successfully!!");
+          setSpecialShow(false);
+          setIsDebUsed(true);
+        })
+        .catch((error) => {
+          toast("Something Went Wrong!!");
+          setSpecialShow(false);
+        });
     }
   };
 
@@ -256,7 +258,7 @@ const CardSection = ({
   };
 
   const handleShareSus = (elem) => {
-    if(specialCard){
+    if (specialCard) {
       return;
     }
     if (round === 5) {
@@ -268,32 +270,32 @@ const CardSection = ({
   };
 
   const SubmitShareSus = () => {
-    if(!specialCard){
-    const teamId = localStorage.getItem("SEG_TEAM_ID");
-    const day = localStorage.getItem("SEG_CURRENT_DAY");
-    const round = localStorage.getItem("SEG_CURRENT_ROUND");
-    axios({
-      method: "post",
-      url: `${SERVER_URL}api/main/share-suspended`,
-      data: {
-        team_id: teamId,
-        card_no: el.card_no,
-        card_used_time: new Date().toJSON(),
-        day: parseInt(day),
-        round: parseInt(round),
-        description: el.description,
-        type: el.type,
-        company_ticker: companyName,
-      },
-    })
-      .then((response) => {
-        toast("Share Suspend Card Used Successfully!!");
-        setSpecialShow(false);
+    if (!specialCard) {
+      const teamId = localStorage.getItem("SEG_TEAM_ID");
+      const day = localStorage.getItem("SEG_CURRENT_DAY");
+      const round = localStorage.getItem("SEG_CURRENT_ROUND");
+      axios({
+        method: "post",
+        url: `${SERVER_URL}api/main/share-suspended`,
+        data: {
+          team_id: teamId,
+          card_no: el.card_no,
+          card_used_time: new Date().toJSON(),
+          day: parseInt(day),
+          round: parseInt(round),
+          description: el.description,
+          type: el.type,
+          company_ticker: companyName,
+        },
       })
-      .catch((error) => {
-        toast("Something Went Wrong!!");
-        setSpecialShow(false);
-      });
+        .then((response) => {
+          toast("Share Suspend Card Used Successfully!!");
+          setSpecialShow(false);
+        })
+        .catch((error) => {
+          toast("Something Went Wrong!!");
+          setSpecialShow(false);
+        });
     }
   };
 
@@ -360,7 +362,6 @@ const CardSection = ({
                     className={`card_content ${
                       cardReveal ? "is-flipped" : ""
                     } `}
-                    style={{ cursor: "pointer" }}
                   >
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
@@ -369,6 +370,7 @@ const CardSection = ({
                       className={`card__face back special_card2 ${
                         isLoanUsed ? "disable" : ""
                       }`}
+                      style={{ cursor: "pointer" }}
                     >
                       {isLoanUsed ? (
                         <img
@@ -509,6 +511,7 @@ const CardSection = ({
                       className={`card__face back special_card2 ${
                         specialCard ? "disable" : ""
                       }`}
+                      style={{ cursor: "pointer" }}
                     >
                       {specialCard ? (
                         <img
@@ -562,6 +565,7 @@ const CardSection = ({
                       className={`card__face back special_card2 ${
                         specialCard ? "disable" : ""
                       }`}
+                      style={{ cursor: "pointer" }}
                     >
                       {specialCard ? (
                         <img

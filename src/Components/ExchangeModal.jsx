@@ -1,4 +1,5 @@
 import React from "react";
+import { toIndianCurrency } from "../Baseurl";
 
 const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
   // console.log(stockExchangeDetails);
@@ -15,7 +16,7 @@ const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
           <span className="close" id="exchange_close" onClick={closeModal}>
             &times;
           </span>
-          <p className="modal_title">Listed Stocks</p>
+          <p className="modal_title">Stock Exchange</p>
           <hr />
           <div className="scroll_content">
             <table className="table table-striped" id="exchange_tbl">
@@ -41,7 +42,7 @@ const ExchangeModal = ({ exchangeModal, closeModal, stockExchangeDetails }) => {
                           {elem.company_name}
                         </td>
                         <td style={{ textAlign: "center" }}>
-                          <p>{nf.format(elem.price)}</p>
+                          <p>{toIndianCurrency(elem.price)}</p>
                         </td>
                         <td style={{ textAlign: "center" }}>
                           <p>{nf.format(elem.quantity)}</p>

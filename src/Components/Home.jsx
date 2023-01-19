@@ -172,8 +172,10 @@ const Home = () => {
       .then((response) => {
         console.log("veto ho gaya", response.data);
         if (response.data.success) {
+          localStorage.setItem("VETO_ORDER_ID", response.data.data.OrderId);
           toast.success(response.data.message);
           getWalletDetails();
+          getOrderHistory();
           handleClose();
           setCompanyId("");
           setCompanyName("");
@@ -185,6 +187,26 @@ const Home = () => {
         console.log(error);
         toast.error(error.response.data.message);
       });
+  };
+
+  const handleVitoWinner = () => {
+    if (localStorage.getItem("VETO_ORDER_ID")) {
+      axios({
+        method: "post",
+        url: `${SERVER_URL}api/main/winner-status`,
+        data: { order_id: localStorage.getItem("VETO_ORDER_ID") },
+      })
+        .then((response) => {
+          console.log("veto winner", response.data);
+          if (response.data.data.execution === 2) {
+            toast.success("You have won Veto");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    }
   };
 
   const handlePriceReveal = (day) => {
@@ -232,20 +254,20 @@ const Home = () => {
   };
 
   const getNews = () => {
-    if(day>0){
-    const teamId = localStorage.getItem("SEG_TEAM_ID");
-    axios({
-      method: "get",
-      url: `${SERVER_URL}api/main/getNews?day=${day}&teamid=${teamId}`,
-    })
-      .then((response) => {
-        setNews(response.data.news);
-        localStorage.setItem("SEG_NEWS",JSON.stringify(response.data.news));
-        // console.log(response.data.news);
+    if (day > 0) {
+      const teamId = localStorage.getItem("SEG_TEAM_ID");
+      axios({
+        method: "get",
+        url: `${SERVER_URL}api/main/getNews?day=${day}&teamid=${teamId}`,
       })
-      .catch((error) => {
-        console.log("fail", error);
-      });
+        .then((response) => {
+          setNews(response.data.news);
+          localStorage.setItem("SEG_NEWS", JSON.stringify(response.data.news));
+          // console.log(response.data.news);
+        })
+        .catch((error) => {
+          console.log("fail", error);
+        });
     }
   };
 
@@ -311,6 +333,7 @@ const Home = () => {
       }
       if (data.isStarted === 0 && data.priceReveal === true) {
         toast.success("price reveal");
+        handlePriceReveal(day + 1);
       }
       if (data.isStarted === 0 && data.priceReveal === false) {
         toast.success("Market Closed");
@@ -382,6 +405,7 @@ const Home = () => {
           cardReveal={cardReveal}
           handleShow={() => handleShow()}
           news={news}
+          handlePriceReveal={handlePriceReveal}
         />
         <div className="containers  ">
           <div className="main_section">

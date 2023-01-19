@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { SERVER_URL } from "../Baseurl";
+import { SERVER_URL, toIndianCurrency } from "../Baseurl";
 
 const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
   return (
@@ -32,36 +32,39 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
               </thead>
               <tbody>
                 {orderHistory.map((order) => (
-                  
                   <tr>
-                    {order.order_type === 3 ? 
-                    <>
-                    {/* <td>{order.day}</td>
-                    <td colSpan={6} style={{textAlign : "center"}}>
-                      Pass
-                    </td> */}
-                    </> 
-                    : 
-                    <>
-                    <td>{order.day}</td>
-                    <td>
-                      {order.execution === 0 ? "Failed" : ""}
-                      {order.execution === 1 ? "Settled" : ""}
-                      {order.execution === 2 ? "Executed" : ""}
-                    </td>
-                    <td>{order.company_name}</td>
-                    <td>{order.stock_quantity}</td>
-                    <td>{order.stock_price}</td>
-                    <td>{order.stock_price * order.stock_quantity}</td>
-                    <td>
-                      {order.order_type === 0 ? "Buy" : ""}
-                      {order.order_type === 1 ? "Sell" : ""}
-                      {order.order_type === 2 ? "ShortSell" : ""}
-                      {/* {order.order_type === 3 ? "Pass" : ""} */}
-                      {order.order_type === 4 ? "Veto" : ""}
-                    </td>
-                    </>}
-                    
+                    {order.order_type === 3 ? (
+                      <>
+                        <td>{order.day}</td>
+                        <td colSpan={6} style={{ textAlign: "center" }}>
+                          Pass
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>{order.day}</td>
+                        <td>
+                          {order.execution === 0 ? "Failed" : ""}
+                          {order.execution === 1 ? "Executed" : ""}
+                          {order.execution === 2 ? "Settled" : ""}
+                        </td>
+                        <td>{order.company_name}</td>
+                        <td>{order.stock_quantity}</td>
+                        <td>{toIndianCurrency(order.stock_price)}</td>
+                        <td>
+                          {toIndianCurrency(
+                            order.stock_price * order.stock_quantity
+                          )}
+                        </td>
+                        <td>
+                          {order.order_type === 0 ? "Buy" : ""}
+                          {order.order_type === 1 ? "Sell" : ""}
+                          {order.order_type === 2 ? "ShortSell" : ""}
+                          {/* {order.order_type === 3 ? "Pass" : ""} */}
+                          {order.order_type === 4 ? "Veto" : ""}
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>

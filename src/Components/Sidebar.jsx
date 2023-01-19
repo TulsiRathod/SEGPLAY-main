@@ -14,7 +14,9 @@ const Sidebar = ({
   setStockHistoryModal,
   day,
   cardReveal,
-  news
+  news,
+  handlePriceReveal,
+  handleShow,
 }) => {
   const nav = useNavigate();
   const logout = () => {
@@ -96,6 +98,7 @@ const Sidebar = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setStockHistoryModal(true);
+                    handlePriceReveal(localStorage.getItem("SEG_CURRENT_DAY"));
                   }}
                 >
                   <a>
@@ -123,6 +126,15 @@ const Sidebar = ({
                       style={{ fontSize: "18px" }}
                     ></i>
                   </a>
+                </li>
+
+                <li
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    handleShow();
+                  }}
+                >
+                  <a>V</a>
                 </li>
               </ul>
             </div>

@@ -69,6 +69,7 @@ const Order = (props) => {
         orderIsPlaced();
       })
       .catch((error) => {
+        setBuyRes(false);
         console.log(error);
         toast.error(error.response.data.message);
       });
@@ -101,6 +102,7 @@ const Order = (props) => {
         orderIsPlaced();
       })
       .catch((error) => {
+        setSellRes(false);
         console.log(error);
         toast.error(error.response.data.message);
       });
@@ -125,7 +127,6 @@ const Order = (props) => {
     })
       .then((response) => {
         setShortsellRes(false);
-        // console.log("Short Sell ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
@@ -133,6 +134,7 @@ const Order = (props) => {
         orderIsPlaced();
       })
       .catch((error) => {
+        setShortsellRes(false);
         console.log(error);
         toast.error(error.response.data.message);
       });
