@@ -59,6 +59,7 @@ const Home = () => {
   const [price, setPrice] = useState(0);
   const [companyId, setCompanyId] = useState();
   const [bidAmount, setBidAmount] = useState(0);
+  const [news, setNews] = useState({});
 
   const toIndianCurrency = (num) => {
     const curr = num.toLocaleString("en-IN", {
@@ -152,12 +153,6 @@ const Home = () => {
     }
   };
 
-  const setMinBidAmount = (e) => {
-    console.log(e);
-    setMaxQ(e.quantity);
-    setCompanyId(e.id);
-  };
-
   const handleVeto = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
@@ -209,6 +204,54 @@ const Home = () => {
       });
   };
 
+  const handlePass = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/pass-order`,
+      headers: {},
+      data: {
+        team_id: teamId,
+        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
+        order_time: new Date().toJSON(),
+      },
+    })
+      .then((response) => {
+        // console.log(response);
+        toast.success(response.data.message);
+        getWalletDetails();
+        setdisableOrders();
+        getOrderHistory();
+        setdisableOrders(true);
+        setOrderPlaced(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
+
+  const getNews = () => {
+    if(day>0){
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/getNews?day=${day}&teamid=${teamId}`,
+    })
+      .then((response) => {
+        setNews(response.data.news);
+        localStorage.setItem("SEG_NEWS",JSON.stringify(response.data.news));
+        // console.log(response.data.news);
+      })
+      .catch((error) => {
+        console.log("fail", error);
+      });
+    }
+  };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   useEffect(() => {
     const unloadCallback = (event) => {
       event.preventDefault();
@@ -225,19 +268,15 @@ const Home = () => {
       setCardReveal(true);
     }
 
-    socket.on("connect", () => {
-      // console.log(socket.id, "socketID");
-    });
-
     socket.on("day", (data) => {
       if (data.status === -1) {
         toast.success("Day Ended");
-        setRound(0);
       } else {
         toast.success(`Day ${data.day} Started`);
         setDay(data.day);
         localStorage.setItem("SEG_CURRENT_DAY", data.day);
       }
+      setRound(0);
     });
 
     socket.on("round", (data) => {
@@ -277,7 +316,6 @@ const Home = () => {
       }
     });
     socket.on("change", (data) => {
-      // console.log(data, "loggedin Teams");
       setLoggedInUsers(data);
     });
 
@@ -285,6 +323,7 @@ const Home = () => {
       socket.off("day");
       socket.off("round");
       socket.off("market");
+      socket.off("change");
       window.removeEventListener("beforeunload", unloadCallback);
     };
   }, []);
@@ -301,41 +340,12 @@ const Home = () => {
     getWalletDetails();
     getStockExchange();
     getOrderHistory();
+    setInterval(5000,getNews());
   }, [day]);
 
   useEffect(() => {
     calMaxLot();
   }, [companyName]);
-
-  const handlePass = () => {
-    const teamId = localStorage.getItem("SEG_TEAM_ID");
-    axios({
-      method: "post",
-      url: `${SERVER_URL}api/main/pass-order`,
-      headers: {},
-      data: {
-        team_id: teamId,
-        day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
-        order_time: new Date().toJSON(),
-      },
-    })
-      .then((response) => {
-        // console.log(response);
-        toast.success(response.data.message);
-        getWalletDetails();
-        setdisableOrders();
-        getOrderHistory();
-        setdisableOrders(true);
-        setOrderPlaced(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data.message);
-      });
-  };
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -351,6 +361,7 @@ const Home = () => {
                   handlePass={handlePass}
                   orderPlaced={orderPlaced}
                   round={round}
+                  setRound={setRound}
                 />
               ) : (
                 "00:00"
@@ -366,8 +377,10 @@ const Home = () => {
           setRulesModal={setRulesModal}
           setStockHistoryModal={setStockHistoryModal}
           day={day}
+          round={round}
           cardReveal={cardReveal}
           handleShow={() => handleShow()}
+          news={news}
         />
         <div className="containers  ">
           <div className="main_section">

@@ -12,13 +12,11 @@ const Sidebar = ({
   setExchangeModal,
   setRulesModal,
   setStockHistoryModal,
+  day,
   cardReveal,
-  handleShow,
+  news
 }) => {
   const nav = useNavigate();
-
-  const [news, setNews] = useState({});
-  const day = localStorage.getItem("SEG_CURRENT_DAY");
   const logout = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
@@ -39,30 +37,6 @@ const Sidebar = ({
         toast.error(error.response.data.message);
       });
   };
-
-  const getNews = () => {
-    const teamId = localStorage.getItem("SEG_TEAM_ID");
-    axios({
-      method: "get",
-      url: `${SERVER_URL}api/main/getNews?day=${day}&teamid=${teamId}`,
-    })
-      .then((response) => {
-        setNews(response.data.news);
-        localStorage.setItem("SEG_NEWS",JSON.stringify(response.data.news));
-        // console.log(response.data.news);
-      })
-      .catch((error) => {
-        console.log("fail", error);
-      });
-  };
-
-  useEffect(() => {
-    if ( day !== 0 ||
-      day !== null
-    ) {
-      getNews();
-    }
-  }, [day]);
 
   return (
     <>

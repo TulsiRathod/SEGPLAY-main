@@ -32,6 +32,8 @@ const CardSection = ({
 
   const [isLoanUsed, setIsLoanUsed] = useState(false);
   const [isRightUsed, setIsRightUsed] = useState(false);
+  const [isDebUsed,setIsDebUsed]=useState(false);
+  const [specialCard,setSpecialCard]=useState(false);
 
   useEffect(() => {
     if (day != 0) {
@@ -42,6 +44,7 @@ const CardSection = ({
   useEffect(() => {
     cardReveal ? setShow(true) : setShow(false);
   }, [cardReveal]);
+
   const getCard = async () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     await axios({
@@ -77,6 +80,7 @@ const CardSection = ({
 
   const handleCurPlus = (elem) => {
     if (round === 5) {
+      if(!specialCard){
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       axios({
         method: "post",
@@ -92,12 +96,13 @@ const CardSection = ({
         },
       })
         .then((response) => {
-          localStorage.setItem("SEG_CARD_REVEAL", false);
-          localStorage.setItem("SEG_CURRENT_ROUND", 0);
+          toast("Cuurency Increament Card Used Successfully!!");
+          setSpecialCard(true);
         })
         .catch((error) => {
           console.log("error", error);
         });
+      }
     } else {
       toast("This Card will Use in Special Round Only");
     }
@@ -105,6 +110,7 @@ const CardSection = ({
 
   const handleCurMinus = (elem) => {
     if (round === 5) {
+      if(!specialCard){
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       axios({
         method: "post",
@@ -120,11 +126,13 @@ const CardSection = ({
         },
       })
         .then((response) => {
-          localStorage.setItem("SEG_CARD_REVEAL", false);
+          toast("Cuurency Decreament Card Used Successfully!!");
+          setSpecialCard(true);
         })
         .catch((error) => {
           console.log("error", error);
         });
+      }
     } else {
       toast("This Card will Use in Special Round Only");
     }
@@ -161,6 +169,9 @@ const CardSection = ({
   };
 
   const handleDebenture = (elem) => {
+    if(isDebUsed){
+      return;
+    }
     if (round < 4) {
       setEl(elem);
       setSpecialShow(true);
@@ -170,6 +181,7 @@ const CardSection = ({
   };
 
   const SubmitDebenture = () => {
+    if(!isDebUsed){
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -191,11 +203,13 @@ const CardSection = ({
       .then((response) => {
         toast("Debenture Card Used Successfully!!");
         setSpecialShow(false);
+        setIsDebUsed(true);
       })
       .catch((error) => {
         toast("Something Went Wrong!!");
         setSpecialShow(false);
       });
+    }
   };
 
   const handleRightIs = (elem) => {
@@ -242,6 +256,9 @@ const CardSection = ({
   };
 
   const handleShareSus = (elem) => {
+    if(specialCard){
+      return;
+    }
     if (round === 5) {
       setEl(elem);
       setSpecialShow(true);
@@ -251,6 +268,7 @@ const CardSection = ({
   };
 
   const SubmitShareSus = () => {
+    if(!specialCard){
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -276,6 +294,7 @@ const CardSection = ({
         toast("Something Went Wrong!!");
         setSpecialShow(false);
       });
+    }
   };
 
   const handleSubmit = () => {
@@ -284,15 +303,6 @@ const CardSection = ({
     else if (el.type === 7) SubmitShareSus();
   };
 
-  // useEffect(() => {
-  //   cards.map((elem) => {
-  //     if (elem.type === 1) {
-  //       cardCount[elem.company_ticker] += elem.price;
-  //     }
-  //   });
-  //   // console.log(cardTotal);
-  // }, [cards]);
-  // console.log(cardTotal);
   return (
     <>
       <div className="card-section">
@@ -401,7 +411,20 @@ const CardSection = ({
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div className="card__face back special_card2">
+                    <div
+                      className={`card__face back special_card2 ${
+                        isDebUsed ? "disable" : ""
+                      }`}
+                    >
+                      {isDebUsed ? (
+                        <img
+                          src="../assets/lock.png"
+                          className="lock-icon"
+                          alt=""
+                        />
+                      ) : (
+                        ""
+                      )}
                       <div className="card_sign">
                         <p className="special_card_head">Debenture</p>
                         <p className="special_card_detail">
@@ -482,7 +505,20 @@ const CardSection = ({
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div className="card__face back special_card1">
+                    <div
+                      className={`card__face back special_card2 ${
+                        specialCard ? "disable" : ""
+                      }`}
+                    >
+                      {specialCard ? (
+                        <img
+                          src="../assets/lock.png"
+                          className="lock-icon"
+                          alt=""
+                        />
+                      ) : (
+                        ""
+                      )}
                       <img
                         src="../assets/increase.png"
                         className="increase"
@@ -522,7 +558,20 @@ const CardSection = ({
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div className="card__face back special_card1">
+                    <div
+                      className={`card__face back special_card2 ${
+                        specialCard ? "disable" : ""
+                      }`}
+                    >
+                      {specialCard ? (
+                        <img
+                          src="../assets/lock.png"
+                          className="lock-icon"
+                          alt=""
+                        />
+                      ) : (
+                        ""
+                      )}
                       <div className="card_sign">
                         <span className="currency_card">Currency</span>
                         <i className="fa-sharp fa-solid fa-triangle down"></i>
@@ -554,7 +603,20 @@ const CardSection = ({
                     <div className="card__face front">
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
-                    <div className="card__face back special_card1">
+                    <div
+                      className={`card__face back special_card2 ${
+                        specialCard ? "disable" : ""
+                      }`}
+                    >
+                      {specialCard ? (
+                        <img
+                          src="../assets/lock.png"
+                          className="lock-icon"
+                          alt=""
+                        />
+                      ) : (
+                        ""
+                      )}
                       <div className="card_sign">
                         <p className="special_card_head ">Share Suspended</p>
                         <p
