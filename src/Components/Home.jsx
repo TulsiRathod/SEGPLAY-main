@@ -271,6 +271,7 @@ const Home = () => {
     socket.on("day", (data) => {
       if (data.status === -1) {
         toast.success("Day Ended");
+        setCardReveal(false);
       } else {
         toast.success(`Day ${data.day} Started`);
         setDay(data.day);
@@ -340,7 +341,7 @@ const Home = () => {
     getWalletDetails();
     getStockExchange();
     getOrderHistory();
-    setInterval(5000,getNews());
+    getNews();
   }, [day]);
 
   useEffect(() => {
