@@ -40,26 +40,16 @@ const Sidebar = ({
       });
   };
 
-  const showNews = () => {
-    let arr = [];
-    for (let i = 1; i <= day; i++) {
-      arr.push(JSON.parse(localStorage.getItem(`SEG_NEWS_${i}`)));
-      // console.log("show",arr);
-    }
-    setNews(arr.reverse());
-  };
-
   const getNews = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
       method: "get",
-      url: `${SERVER_URL}api/main/getNews?day=${day}`,
+      url: `${SERVER_URL}api/main/getNews?day=${day}&teamid=${teamId}`,
     })
       .then((response) => {
-        localStorage.setItem(
-          `SEG_NEWS_${day}`,
-          JSON.stringify(response.data.news)
-        );
-        showNews();
+        setNews(response.data.news);
+        localStorage.setItem("SEG_NEWS",JSON.stringify(response.data.news));
+        // console.log(response.data.news);
       })
       .catch((error) => {
         console.log("fail", error);
@@ -67,18 +57,12 @@ const Sidebar = ({
   };
 
   useEffect(() => {
-    if (
-      localStorage.getItem(`SEG_NEWS_${day}`) === null ||
-      day !== 0 ||
+    if ( day !== 0 ||
       day !== null
     ) {
       getNews();
     }
   }, [day]);
-
-  useEffect(() => {
-    showNews();
-  }, []);
 
   return (
     <>
@@ -211,7 +195,7 @@ const Sidebar = ({
                 id="accordionFlushExample "
               >
                 <div className="accordion" id="accordionExample">
-                  {/* <DayNews news={news} day={day} cardReveal={cardReveal} /> */}
+                  <DayNews news={news} day={day} cardReveal={cardReveal} />
                 </div>
               </div>
             </div>
