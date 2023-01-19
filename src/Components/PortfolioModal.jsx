@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { toIndianCurrency } from "../Baseurl";
 
 const PortfolioModal = ({
   portfolioModal,
@@ -9,13 +10,6 @@ const PortfolioModal = ({
   // useEffect(()=>{
   //   console.log(shortShellDetails);
   // },[]);
-  const toIndianCurrency = (num) => {
-    const curr = num.toLocaleString("en-IN", {
-      style: "currency",
-      currency: "INR",
-    });
-    return curr;
-  };
 
   return (
     <>

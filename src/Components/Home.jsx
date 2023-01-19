@@ -25,6 +25,7 @@ const Home = () => {
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
   const [stockHistoryModal, setStockHistoryModal] = useState(false);
+  const [stockHistoryDetails, setStockHistoryDetails] = useState([]);
   const [loggedInUsers, setLoggedInUsers] = useState([]);
   const [day, setDay] = useState(
     localStorage.getItem("SEG_CURRENT_DAY")
@@ -191,6 +192,23 @@ const Home = () => {
       });
   };
 
+  const handlePriceReveal = (day) => {
+    setStockHistoryModal(true);
+    console.log(day, "PR day");
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/get-stock-price?day_no=${day}`,
+    })
+      .then((response) => {
+        setStockHistoryDetails(response.data.data);
+        console.log("stock exchange history", response);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
+
   useEffect(() => {
     const unloadCallback = (event) => {
       event.preventDefault();
@@ -212,9 +230,14 @@ const Home = () => {
     });
 
     socket.on("day", (data) => {
-      toast.success(`Day ${data.day} Started`);
-      setDay(data.day);
-      localStorage.setItem("SEG_CURRENT_DAY", data.day);
+      if (data.status === -1) {
+        toast.success("Day Ended");
+        setRound(0);
+      } else {
+        toast.success(`Day ${data.day} Started`);
+        setDay(data.day);
+        localStorage.setItem("SEG_CURRENT_DAY", data.day);
+      }
     });
 
     socket.on("round", (data) => {
@@ -240,9 +263,18 @@ const Home = () => {
     });
 
     socket.on("market", (data) => {
-      setCardReveal(true);
-      toast.success(`Market Start`);
-      localStorage.setItem("SEG_CARD_REVEAL", true);
+      if (data.isStarted === 1 && data.priceReveal === false) {
+        toast.success(`Market Start`);
+        setCardReveal(true);
+        localStorage.setItem("SEG_CARD_REVEAL", true);
+        handlePriceReveal(day);
+      }
+      if (data.isStarted === 0 && data.priceReveal === true) {
+        toast.success("price reveal");
+      }
+      if (data.isStarted === 0 && data.priceReveal === false) {
+        toast.success("Market Closed");
+      }
     });
     socket.on("change", (data) => {
       // console.log(data, "loggedin Teams");
@@ -393,6 +425,7 @@ const Home = () => {
       />
       <StockHistory
         stockHistoryModal={stockHistoryModal}
+        stockHistoryDetails={stockHistoryDetails}
         closeModal={closeModal}
         stockExchangeDetails={stockExchangeDetails}
       />

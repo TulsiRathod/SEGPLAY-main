@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Portfolio = (props) => {
   const [portfolio, setPortfolio] = useState([]);
   const [stockDetails, setStockDetaials] = useState([]);
-  const [shortShellDetails,setshortShellDetails]=useState([]);
+  const [shortShellDetails, setshortShellDetails] = useState([]);
   useEffect(() => {
     setPortfolio(props.portfolioDetails);
     setStockDetaials(props.stockExchangeDetails);
@@ -27,7 +27,7 @@ const Portfolio = (props) => {
         return "#138808";
       } else if (diff > 0) {
         return "#32CD32";
-      }else{
+      } else {
         return "#828282";
       }
     }
@@ -362,65 +362,77 @@ const Portfolio = (props) => {
             <div className="px-3 portfolio_tbl_wrapper">
               <h3 className="mb-0">Portfolio</h3>
               <hr className="mt-2" />
-              <div  className="portfolio_tbl">
-              <table id="portfolio_tbl">
-                <tr>
-                  <th>Company</th>
-                  <th style={{ textAlign: "center" }}>Last Price</th>
-                  <th style={{ textAlign: "center" }}>P&L</th>
-                  <th style={{ textAlign: "end" }}>Quantity</th>
-                </tr>
-                {portfolio.map((elem) => (
+              <div className="portfolio_tbl" style={{ overflowY: "scroll" }}>
+                <table id="portfolio_tbl">
                   <tr>
-                    <td>
-                      <h5>{elem.company_name}</h5>
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      <p>{elem.current_stock_price}</p>
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      <p
-                        style={{
-                          color: `${
-                            elem.current_stock_price - elem.average_buying_price<0
-                              ? "red"
-                              : "green"
-                          }`,
-                        }}
-                      >
-                        {(
-                          ((
-                            elem.current_stock_price - elem.average_buying_price
-                          ).toFixed(2) /
-                            elem.average_buying_price) *
-                          100
-                        ).toFixed(2)}
-                        %
-                      </p>
-                    </td>
-                    <td style={{ textAlign: "end" }}>
-                      <p>{elem.total_stock}</p>
-                    </td>
+                    <th>Company</th>
+                    <th style={{ textAlign: "center" }}>Last Price</th>
+                    <th style={{ textAlign: "center" }}>P&L</th>
+                    <th style={{ textAlign: "end" }}>Quantity</th>
                   </tr>
-                ))}
-                {shortShellDetails.map((elem) => (
-                  <tr>
-                    <td>
-                      <h5>{elem.company_ticker}</h5>
-                      SHORT SHELL
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      <p>{elem.buying_price}</p>
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      <p>0.00%</p>
-                    </td>
-                    <td style={{ textAlign: "end" }}>
-                      <p>{elem.stock_quantity}</p>
-                    </td>
-                  </tr>
-                ))}
-              </table>
+                  {portfolio.map((elem) => (
+                    <tr>
+                      <td>
+                        <h5>{elem.company_name}</h5>
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <p>{elem.current_stock_price}</p>
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <p
+                          style={{
+                            color: `${
+                              elem.current_stock_price -
+                                elem.average_buying_price <
+                              0
+                                ? "red"
+                                : "green"
+                            }`,
+                          }}
+                        >
+                          {(
+                            ((
+                              elem.current_stock_price -
+                              elem.average_buying_price
+                            ).toFixed(2) /
+                              elem.average_buying_price) *
+                            100
+                          ).toFixed(2) === "NaN"
+                            ? 0
+                            : (
+                                ((
+                                  elem.current_stock_price -
+                                  elem.average_buying_price
+                                ).toFixed(2) /
+                                  elem.average_buying_price) *
+                                100
+                              ).toFixed(2)}
+                          %
+                        </p>
+                      </td>
+                      <td style={{ textAlign: "end" }}>
+                        <p>{elem.total_stock}</p>
+                      </td>
+                    </tr>
+                  ))}
+                  {shortShellDetails.map((elem) => (
+                    <tr>
+                      <td>
+                        <h5>{elem.company_ticker}</h5>
+                        SHORT SHELL
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <p>{elem.buying_price}</p>
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <p>0.00%</p>
+                      </td>
+                      <td style={{ textAlign: "end" }}>
+                        <p>{elem.stock_quantity}</p>
+                      </td>
+                    </tr>
+                  ))}
+                </table>
               </div>
             </div>
           </div>

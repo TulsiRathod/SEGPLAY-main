@@ -12,7 +12,7 @@ const Login = () => {
     teamNameError: false,
     passwordError: false,
   });
-  const [res, setRes] = useState(0);
+  const [res, setRes] = useState(false);
   const nav = useNavigate();
 
   const validator = () => {
@@ -23,11 +23,15 @@ const Login = () => {
     };
     if (teamName === "") {
       errors.teamNameError = true;
+      setRes(false);
+
       isErr = false;
     }
 
     if (password === "") {
       errors.passwordError = true;
+      setRes(false);
+
       isErr = false;
     }
 
@@ -37,7 +41,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    setRes(1);
+    setRes(true);
     console.log(err);
     if (validator()) {
       axios({
@@ -52,7 +56,7 @@ const Login = () => {
         .then((response) => {
           toast.success(response.data.message);
           localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
-          setRes(2);
+          setRes(false);
           nav("/home");
         })
         .catch((error) => {
@@ -147,21 +151,7 @@ const Login = () => {
                   id="login_btn"
                   onClick={handleLogin}
                 >
-                  {res === 0 ? "LOG IN" : ""}
-                  {res === 1 ? (
-                    <ThreeDots
-                      height="20"
-                      width="50"
-                      radius="9"
-                      color="#fff"
-                      wrapperStyle={{ margin: "0px" }}
-                      wrapperClassName="m-0"
-                      visible={true}
-                    />
-                  ) : (
-                    ""
-                  )}
-                  {res === 2 ? "LOG IN" : ""}
+                  {res === false ? "LOG IN" : "Loading..."}
                 </button>
               </form>
             </div>

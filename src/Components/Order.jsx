@@ -19,6 +19,11 @@ const Order = (props) => {
   const [price, setPrice] = useState();
   const [companyName, setCompanyName] = useState();
   const [companyId, setCompanyId] = useState();
+  const [buyRes, setBuyRes] = useState(false);
+  const [sellRes, setSellRes] = useState(false);
+  const [shortsellRes, setShortsellRes] = useState(false);
+  const [passRes, setPassRes] = useState(false);
+
   const nf = new Intl.NumberFormat();
 
   useEffect(() => {
@@ -37,6 +42,7 @@ const Order = (props) => {
   };
 
   const handleBuy = () => {
+    setBuyRes(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
       method: "post",
@@ -53,6 +59,7 @@ const Order = (props) => {
     })
       .then((response) => {
         // console.log("order ho gaya", response);
+        setBuyRes(false);
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
@@ -68,6 +75,8 @@ const Order = (props) => {
   };
 
   const handleSell = () => {
+    setSellRes(true);
+
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
       method: "post",
@@ -84,6 +93,7 @@ const Order = (props) => {
     })
       .then((response) => {
         // console.log("Sell ho gaya", response);
+        setSellRes(false);
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
@@ -97,6 +107,7 @@ const Order = (props) => {
   };
 
   const handleShortSell = () => {
+    setShortsellRes(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
       method: "post",
@@ -113,6 +124,7 @@ const Order = (props) => {
       },
     })
       .then((response) => {
+        setShortsellRes(false);
         // console.log("Short Sell ho gaya", response);
         toast.success(response.data.message);
         getWalletDetails();
@@ -226,7 +238,7 @@ const Order = (props) => {
                 onClick={handleSell}
                 disabled={disableOrders}
               >
-                SELL
+                {sellRes === false ? "SELL" : "Loading.."}
               </button>
             </div>
             <div className="col-lg-5 ps-0 mb-1">
@@ -236,7 +248,7 @@ const Order = (props) => {
                 onClick={handleBuy}
                 disabled={disableOrders}
               >
-                BUY
+                {buyRes === false ? "BUY" : "Loading.."}
               </button>
             </div>
           </div>
@@ -258,7 +270,7 @@ const Order = (props) => {
                 onClick={handleShortSell}
                 disabled={disableOrders}
               >
-                SHORT SELL
+                {shortsellRes === false ? "SHORT SELL" : "Loading.."}
               </button>
             </div>
           </div>

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
-const StockHistory = ({ stockExchangeDetails,stockHistoryModal, closeModal }) => {
-  const [day,setDay]=useState(0);
+const StockHistory = ({
+  stockHistoryModal,
+  stockHistoryDetails,
+  stockExchangeDetails,
+  closeModal,
+}) => {
   return (
     <>
       <div
@@ -19,24 +23,35 @@ const StockHistory = ({ stockExchangeDetails,stockHistoryModal, closeModal }) =>
             <table className="table table-striped" id="portfolio_tbl">
               <thead style={{ backgroundColor: "#20958f" }}>
                 <tr>
-                  <th style={{ color:"white" }}><p>DAY</p></th>
-                  {stockExchangeDetails.map((elem)=>
-                  <th style={{ textAlign: "center",color:"white" }}>
-                  <p>{elem.company_name}</p>
-                </th>
-                  )}
+                  <th style={{ color: "white" }}>
+                    <p>DAY</p>
+                  </th>
+                  <th style={{ textAlign: "center", color: "white" }}>
+                    <p>ADANI</p>
+                  </th>
+                  <th style={{ textAlign: "center", color: "white" }}>
+                    <p>GOOGLE</p>
+                  </th>
+                  <th style={{ textAlign: "center", color: "white" }}>
+                    <p>SHELL</p>
+                  </th>
+                  <th style={{ textAlign: "center", color: "white" }}>
+                    <p>SUN PHARMA</p>
+                  </th>
+                  <th style={{ textAlign: "center", color: "white" }}>
+                    <p>TESLA</p>
+                  </th>
+                  <th style={{ textAlign: "center", color: "white" }}>
+                    <p>YES BANK</p>
+                  </th>
+                  <th style={{ textAlign: "center", color: "white" }}>
+                    <p>ADANI</p>
+                  </th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr>
-                  <td>{day}</td>
-                {stockExchangeDetails.map((elem)=>
-                <td style={{ textAlign: "center"}}>
-                  <p>{elem.price}</p>
-                </td>
-                )}
-                </tr>
+                <tr></tr>
               </tbody>
             </table>
           </div>

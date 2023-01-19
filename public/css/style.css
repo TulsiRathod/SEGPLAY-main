@@ -163,7 +163,6 @@ h3 {
 }
 .portfolio_tbl {
   height: 28vh;
-  overflow-y: scroll;
 }
 #portfolio_tbl th {
   color: var(--gray);
