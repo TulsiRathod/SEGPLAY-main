@@ -42,7 +42,7 @@ const CardSection = ({
   }, [day]);
 
   useEffect(() => {
-    cardReveal ? setShow(true) : setShow(false);
+    localStorage.getItem("SEG_CARD_REVEAL") ? setShow(true) : setShow(false);
   }, [cardReveal]);
 
   const getCard = async () => {
@@ -56,18 +56,17 @@ const CardSection = ({
       },
     })
       .then((response) => {
-        setCardCount({
+        setCards(response.data.cards);
+        setShow(true);
+
+        let counts = {
           GOOGL: 0,
           TESLA: 0,
           ADANI: 0,
           SUNPM: 0,
           SHELL: 0,
           YESBK: 0,
-        });
-        setCards(response.data.cards);
-        setShow(true);
-
-        let counts = cardCount;
+        };
         response.data.cards.map((elem) => {
           counts[elem.company_ticker] += elem.price;
         });
