@@ -96,7 +96,7 @@
 .close {
   color: #000000;
   position: relative;
-
+  cursor: pointer;
   bottom: 10px;
   float: right;
   font-size: 28px;
@@ -165,11 +165,10 @@
   color: #2d2d2db3;
 }
 
-.rule_chk_area{
+.rule_chk_area {
   display: flex;
-   width: 300px; 
-   height: 10px;
-   margin-top: 25px;
-   align-items:center;
+  width: 300px;
+  height: 10px;
+  margin-top: 25px;
+  align-items: center;
 }
-
