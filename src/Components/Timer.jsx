@@ -6,6 +6,7 @@ const Timer = ({
   orderPlaced,
   handlePass,
   round,
+  CardImpact,
 }) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
@@ -15,6 +16,10 @@ const Timer = ({
       handlePass();
     }
     if (!timeLeft) return;
+
+    if(timeLeft===1 && round===5){
+      CardImpact();
+    }
 
     // save intervalId to clear the interval when the
     // component re-renders

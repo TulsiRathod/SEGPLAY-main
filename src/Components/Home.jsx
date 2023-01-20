@@ -15,6 +15,7 @@ import axios from "axios";
 import StockHistory from "./StockHistory";
 import Timer from "./Timer";
 import { Offcanvas } from "react-bootstrap";
+import SpecialCardUsed from "./SpecialCardUsed";
 
 const socket = io(SERVER_URL);
 
@@ -60,6 +61,8 @@ const Home = () => {
   const [companyId, setCompanyId] = useState();
   const [bidAmount, setBidAmount] = useState(0);
   const [news, setNews] = useState({});
+  const [scModal, setScModal] = useState(true);
+  const [ImpactCards, setImpactCards] = useState([]);
 
   const toIndianCurrency = (num) => {
     const curr = num.toLocaleString("en-IN", {
@@ -75,6 +78,7 @@ const Home = () => {
     setPortfolioModal(false);
     setExchangeModal(false);
     setStockHistoryModal(false);
+    setScModal(false);
   };
 
   const getWalletDetails = () => {
@@ -101,6 +105,23 @@ const Home = () => {
       .then((response) => {
         // console.log("Stock Details", response.data.data);
         setStockExchangeDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const CardImpact = () => {
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/get-card-imapct?day_no=${day}&round_no=5`,
+    })
+      .then((response) => {
+        console.log(response.data.data);
+        setImpactCards(response.data.data);
+        if (response.data.data.length > 0) {
+          setScModal(true);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -211,14 +232,13 @@ const Home = () => {
 
   const handlePriceReveal = (day) => {
     setStockHistoryModal(true);
-    console.log(day, "PR day");
     axios({
       method: "get",
       url: `${SERVER_URL}api/main/get-stock-price?day_no=${day}`,
     })
       .then((response) => {
         setStockHistoryDetails(response.data.data);
-        console.log("stock exchange history", response);
+        // console.log("stock exchange history", response);
       })
       .catch((error) => {
         console.log(error);
@@ -290,15 +310,9 @@ const Home = () => {
     }
 
     socket.on("day", (data) => {
-      if (data.day === "end") {
-        toast.success("Day Ended");
-        setCardReveal(false);
-      } else {
-        toast.success(`Day ${data.day} Started`);
-        setDay(data.day);
-        localStorage.setItem("SEG_CURRENT_DAY", data.day);
-      }
-      setRound(0);
+      toast.success(`Day ${data.day} Started`);
+      setDay(data.day);
+      localStorage.setItem("SEG_CURRENT_DAY", data.day);
     });
 
     socket.on("round", (data) => {
@@ -345,9 +359,14 @@ const Home = () => {
     });
 
     socket.on("day_end_short_sell_settle", (data) => {
-      console.log(data);
       if (data.isDayEnd) {
-        toast.success("Day Ended");
+        setRound(0);
+        setCardReveal(false);
+        localStorage.setItem("SEG_CARD_REVEAL", false);
+      }
+      if (data.isShortSellSettled) {
+        getWalletDetails();
+        getStockExchange();
       }
     });
 
@@ -356,6 +375,7 @@ const Home = () => {
       socket.off("round");
       socket.off("market");
       socket.off("change");
+      socket.off("day_end_short_sell_settle");
       window.removeEventListener("beforeunload", unloadCallback);
     };
   }, []);
@@ -393,6 +413,7 @@ const Home = () => {
                   orderPlaced={orderPlaced}
                   round={round}
                   setRound={setRound}
+                  CardImpact={CardImpact}
                 />
               ) : (
                 "00:00"
@@ -476,6 +497,11 @@ const Home = () => {
         stockHistoryDetails={stockHistoryDetails}
         closeModal={closeModal}
         stockExchangeDetails={stockExchangeDetails}
+      />
+      <SpecialCardUsed
+        ImpactCards={ImpactCards}
+        scModal={scModal}
+        closeModal={closeModal}
       />
 
       <Offcanvas show={show} onHide={handleClose}>

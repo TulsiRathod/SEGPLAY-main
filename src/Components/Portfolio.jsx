@@ -3,11 +3,11 @@ import { toIndianCurrency } from "../Baseurl";
 
 const Portfolio = (props) => {
   const [portfolio, setPortfolio] = useState([]);
-  const [stockDetails, setStockDetaials] = useState([]);
+  const [stockDetails, setStockDetails] = useState([]);
   const [shortShellDetails, setshortShellDetails] = useState([]);
   useEffect(() => {
     setPortfolio(props.portfolioDetails);
-    setStockDetaials(props.stockExchangeDetails);
+    setStockDetails(props.stockExchangeDetails);
     setshortShellDetails(props.shortShellDetails);
   }, [props]);
 

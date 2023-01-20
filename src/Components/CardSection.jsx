@@ -63,7 +63,7 @@ const CardSection = ({
         getNews();
         setSpecialCard(false);
         setShow(true);
-
+        setSpecialCard(false);
         let counts = {
           GOOGL: 0,
           TESLA: 0,

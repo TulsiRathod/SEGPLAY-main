@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { toIndianCurrency } from "../Baseurl";
 
 const StockHistory = ({
@@ -7,7 +7,7 @@ const StockHistory = ({
   stockExchangeDetails,
   closeModal,
 }) => {
-  console.log(stockHistoryDetails, "modal");
+  // console.log(stockHistoryDetails);
 
   return (
     <>
