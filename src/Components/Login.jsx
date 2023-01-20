@@ -57,6 +57,8 @@ const Login = () => {
           .then((response) => {
             toast.success(response.data.message);
             localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
+            localStorage.setItem("VETO_ORDER_COUNT", 0);
+
             setRes(false);
             nav("/home");
           })
@@ -74,9 +76,9 @@ const Login = () => {
 
   useEffect(() => {
     setIsGameStarted(false);
-    if (localStorage.getItem("SEG_RULES_ACEEPT")) {
-      nav("/Home");
-    }
+    // if (localStorage.getItem("SEG_RULES_ACEEPT")) {
+    //   nav("/Home");
+    // }
 
     socket.on("day", (data) => {
       console.log(data, "day");

@@ -7,6 +7,9 @@ const Timer = ({
   handlePass,
   round,
   CardImpact,
+  setShowSpecial,
+  handleVetoClose,
+  handleVetoWinner,
 }) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
@@ -17,8 +20,12 @@ const Timer = ({
     }
     if (!timeLeft) return;
 
-    if(timeLeft===1 && round===5){
+    if (timeLeft === 1 && round === 5) {
       CardImpact();
+    }
+    if (timeLeft === 1 && round === 4) {
+      handleVetoClose();
+      handlePass();
     }
 
     // save intervalId to clear the interval when the

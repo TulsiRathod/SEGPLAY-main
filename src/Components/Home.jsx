@@ -16,6 +16,9 @@ import StockHistory from "./StockHistory";
 import Timer from "./Timer";
 import { Offcanvas } from "react-bootstrap";
 import SpecialCardUsed from "./SpecialCardUsed";
+import { get } from "jquery";
+import Swal from "sweetalert2";
+import ShortSellModal from "./ShortSellModal";
 
 const socket = io(SERVER_URL);
 
@@ -26,6 +29,7 @@ const Home = () => {
   const [portfolioModal, setPortfolioModal] = useState(false);
   const [exchangeModal, setExchangeModal] = useState(false);
   const [stockHistoryModal, setStockHistoryModal] = useState(false);
+  const [shortSellModal, setShortSellModal] = useState(false);
   const [stockHistoryDetails, setStockHistoryDetails] = useState([]);
   const [loggedInUsers, setLoggedInUsers] = useState([]);
   const [day, setDay] = useState(
@@ -61,7 +65,7 @@ const Home = () => {
   const [companyId, setCompanyId] = useState();
   const [bidAmount, setBidAmount] = useState(0);
   const [news, setNews] = useState({});
-  const [scModal, setScModal] = useState(true);
+  const [scModal, setScModal] = useState(false);
   const [ImpactCards, setImpactCards] = useState([]);
 
   const toIndianCurrency = (num) => {
@@ -79,6 +83,7 @@ const Home = () => {
     setExchangeModal(false);
     setStockHistoryModal(false);
     setScModal(false);
+    setShortSellModal(false);
   };
 
   const getWalletDetails = () => {
@@ -191,9 +196,14 @@ const Home = () => {
       },
     })
       .then((response) => {
-        console.log("veto ho gaya", response.data);
+        // console.log("veto ho gaya", response.data);
         if (response.data.success) {
           localStorage.setItem("VETO_ORDER_ID", response.data.data.OrderId);
+          localStorage.setItem(
+            "VETO_ORDER_COUNT",
+            localStorage.getItem("VETO_ORDER_COUNT") + 1
+          );
+
           toast.success(response.data.message);
           getWalletDetails();
           getOrderHistory();
@@ -210,7 +220,7 @@ const Home = () => {
       });
   };
 
-  const handleVitoWinner = () => {
+  const handleVetoWinner = () => {
     if (localStorage.getItem("VETO_ORDER_ID")) {
       axios({
         method: "post",
@@ -220,7 +230,12 @@ const Home = () => {
         .then((response) => {
           console.log("veto winner", response.data);
           if (response.data.data.execution === 2) {
-            toast.success("You have won Veto");
+            Swal.fire({
+              icon: "success",
+              title: "Congratulations",
+              text: "You Have Won The Veto Round.",
+              // timer: 1500,
+            });
           }
         })
         .catch((error) => {
@@ -230,11 +245,11 @@ const Home = () => {
     }
   };
 
-  const handlePriceReveal = (day) => {
+  const handlePriceReveal = () => {
     setStockHistoryModal(true);
     axios({
       method: "get",
-      url: `${SERVER_URL}api/main/get-stock-price?day_no=${day}`,
+      url: `${SERVER_URL}api/main/get-stock-price`,
     })
       .then((response) => {
         setStockHistoryDetails(response.data.data);
@@ -310,7 +325,13 @@ const Home = () => {
     }
 
     socket.on("day", (data) => {
-      toast.success(`Day ${data.day} Started`);
+      // toast.success(`Day ${data.day} Started`);
+      Swal.fire({
+        icon: "success",
+        title: `Day${data.day} is Started`,
+        text: "Hold Tight And Have Fun.",
+        timer: 1500,
+      });
       setDay(data.day);
       localStorage.setItem("SEG_CURRENT_DAY", data.day);
     });
@@ -323,7 +344,7 @@ const Home = () => {
         setdisableOrders(false);
       } else if (data.round === 4) {
         round = "Veto Round";
-        handleShow(true);
+        handleShow();
       } else if (data.round === 5) {
         round = "Special round";
       }
@@ -339,19 +360,40 @@ const Home = () => {
 
     socket.on("market", (data) => {
       if (data.isStarted === 1 && data.priceReveal === false) {
-        toast.success(`Market Start`);
+        // toast.success(`Market Start`);
+        Swal.fire({
+          title: "Sweet!",
+          text: "Modal with a custom image.",
+          imageUrl: "../assets/business-team.gif",
+          imageWidth: 200,
+          imageHeight: 200,
+          imageAlt: "Custom image",
+          timer: 2000,
+        });
+        setTimeout(() => {
+          handlePriceReveal(day);
+        }, 2000);
         setCardReveal(true);
         localStorage.setItem("SEG_CARD_REVEAL", true);
-        handlePriceReveal(day);
       }
       if (data.isStarted === 0 && data.priceReveal === true) {
         toast.success("price reveal");
+        handleVetoWinner();
         handlePriceReveal(day + 1);
         getWalletDetails();
         getStockExchange();
       }
       if (data.isStarted === 0 && data.priceReveal === false) {
-        toast.success("Market Closed");
+        Swal.fire({
+          icon: "error",
+          title: "Market Closed",
+          text: "Modal with a custom image.",
+          //  imageUrl: "../assets/business-team.gif",
+          //  imageWidth: 400,
+          //  imageHeight: 200,
+          //  imageAlt: "Custom image",
+          timer: 2000,
+        });
       }
     });
     socket.on("change", (data) => {
@@ -360,13 +402,21 @@ const Home = () => {
 
     socket.on("day_end_short_sell_settle", (data) => {
       if (data.isDayEnd) {
+        Swal.fire({
+          icon: "error",
+          title: `Times Up!! Day ${day} is Ended.`,
+          // text: "Hold Tight And Have Fun.",
+          // timer: 1500,
+        });
         setRound(0);
         setCardReveal(false);
         localStorage.setItem("SEG_CARD_REVEAL", false);
       }
       if (data.isShortSellSettled) {
+        setShortSellModal(true);
         getWalletDetails();
         getStockExchange();
+        getOrderHistory();
       }
     });
 
@@ -414,6 +464,7 @@ const Home = () => {
                   round={round}
                   setRound={setRound}
                   CardImpact={CardImpact}
+                  handleVetoClose={handleClose}
                 />
               ) : (
                 "00:00"
@@ -503,6 +554,8 @@ const Home = () => {
         scModal={scModal}
         closeModal={closeModal}
       />
+
+      <ShortSellModal shortSellModal={shortSellModal} closeModal={closeModal} />
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>

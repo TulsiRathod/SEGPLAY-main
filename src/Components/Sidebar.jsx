@@ -98,7 +98,7 @@ const Sidebar = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setStockHistoryModal(true);
-                    handlePriceReveal(localStorage.getItem("SEG_CURRENT_DAY"));
+                    handlePriceReveal();
                   }}
                 >
                   <a>

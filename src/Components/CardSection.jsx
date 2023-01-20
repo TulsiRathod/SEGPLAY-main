@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { SERVER_URL } from "../Baseurl";
+import Timer from "./Timer";
 
 const CardSection = ({
   day,
@@ -741,6 +742,7 @@ const CardSection = ({
           ""
         )}
       </div>
+
       <Offcanvas show={specialshow} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
@@ -797,6 +799,9 @@ const CardSection = ({
           </div>
         </Offcanvas.Body>
       </Offcanvas>
+      <div className="d-none">
+        <Timer setShowSpecial={(e) => setShowSpecial(e)} />
+      </div>
     </>
   );
 };
