@@ -211,14 +211,15 @@ const Home = () => {
 
   const handlePriceReveal = (day) => {
     setStockHistoryModal(true);
-    console.log(day, "PR day");
     axios({
       method: "get",
       url: `${SERVER_URL}api/main/get-stock-price?day_no=${day}`,
     })
       .then((response) => {
         setStockHistoryDetails(response.data.data);
-        console.log("stock exchange history", response);
+        getWalletDetails();
+        getStockExchange();
+        // console.log("stock exchange history", response);
       })
       .catch((error) => {
         console.log(error);
@@ -291,15 +292,9 @@ const Home = () => {
     }
 
     socket.on("day", (data) => {
-      if (data.day === "end") {
-        toast.success("Day Ended");
-        setCardReveal(false);
-      } else {
         toast.success(`Day ${data.day} Started`);
         setDay(data.day);
         localStorage.setItem("SEG_CURRENT_DAY", data.day);
-      }
-      setRound(0);
     });
 
     socket.on("round", (data) => {
@@ -334,8 +329,6 @@ const Home = () => {
       if (data.isStarted === 0 && data.priceReveal === true) {
         toast.success("price reveal");
         handlePriceReveal(day + 1);
-        getWalletDetails();
-        getStockExchange();
       }
       if (data.isStarted === 0 && data.priceReveal === false) {
         toast.success("Market Closed");
@@ -345,11 +338,24 @@ const Home = () => {
       setLoggedInUsers(data);
     });
 
+    socket.on("day_end_short_sell_settle", (data) => {
+      if (data.isDayEnd) {
+        setRound(0);
+        setCardReveal(false);
+        localStorage.setItem("SEG_CARD_REVEAL",false);
+      }
+      if (data.isShortSellSettled) {
+        getWalletDetails();
+        getStockExchange();
+      }
+    });
+
     return () => {
       socket.off("day");
       socket.off("round");
       socket.off("market");
       socket.off("change");
+      socket.off("day_end_short_sell_settle");
       window.removeEventListener("beforeunload", unloadCallback);
     };
   }, []);

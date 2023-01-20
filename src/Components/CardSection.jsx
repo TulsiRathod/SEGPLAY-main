@@ -60,7 +60,7 @@ const CardSection = ({
         setCards(response.data.cards);
         getNews();
         setShow(true);
-
+        setSpecialCard(false);
         let counts = {
           GOOGL: 0,
           TESLA: 0,

@@ -7,7 +7,7 @@ const StockHistory = ({
   stockExchangeDetails,
   closeModal,
 }) => {
-  console.log(stockHistoryDetails, "modal");
+  // console.log(stockHistoryDetails, "modal");
 
   return (
     <>
