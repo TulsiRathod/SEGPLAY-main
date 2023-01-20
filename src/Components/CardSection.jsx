@@ -11,6 +11,7 @@ const CardSection = ({
   stockExchangeDetails,
   getWalletDetails,
   portfolioDetails,
+  getNews,
 }) => {
   const [cards, setCards] = useState([]);
   const [specialshow, setSpecialShow] = useState(false);
@@ -57,6 +58,7 @@ const CardSection = ({
     })
       .then((response) => {
         setCards(response.data.cards);
+        getNews();
         setShow(true);
 
         let counts = {

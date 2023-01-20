@@ -128,14 +128,14 @@ const Sidebar = ({
                   </a>
                 </li>
 
-                <li
+                {/* <li
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     handleShow();
                   }}
                 >
                   <a>V</a>
-                </li>
+                </li> */}
               </ul>
             </div>
 

@@ -291,7 +291,7 @@ const Home = () => {
     }
 
     socket.on("day", (data) => {
-      if (data.status === -1) {
+      if (data.day === "end") {
         toast.success("Day Ended");
         setCardReveal(false);
       } else {
@@ -334,6 +334,8 @@ const Home = () => {
       if (data.isStarted === 0 && data.priceReveal === true) {
         toast.success("price reveal");
         handlePriceReveal(day + 1);
+        getWalletDetails();
+        getStockExchange();
       }
       if (data.isStarted === 0 && data.priceReveal === false) {
         toast.success("Market Closed");
@@ -364,7 +366,6 @@ const Home = () => {
     getWalletDetails();
     getStockExchange();
     getOrderHistory();
-    getNews();
   }, [day]);
 
   useEffect(() => {
@@ -423,6 +424,7 @@ const Home = () => {
                   stockExchangeDetails={stockExchangeDetails}
                   getWalletDetails={getWalletDetails}
                   portfolioDetails={portfolioDetails}
+                  getNews={getNews}
                 />
               </div>
               <div className="col-lg-3 p-0">
@@ -573,9 +575,24 @@ const Home = () => {
               </span>{" "}
             </div>
           </div>
-          <div
+          <button
             className="btn btn-success"
             onClick={handleVeto}
+            style={{
+              position: "absolute",
+              width: "94%",
+              left: "10px",
+              bottom: "60px",
+            }}
+          >
+            Place Order
+          </button>
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() => {
+              handlePass();
+              handleClose();
+            }}
             style={{
               position: "absolute",
               width: "94%",
@@ -583,8 +600,8 @@ const Home = () => {
               bottom: "10px",
             }}
           >
-            Place Order
-          </div>
+            Pass
+          </button>
         </Offcanvas.Body>
       </Offcanvas>
     </>
