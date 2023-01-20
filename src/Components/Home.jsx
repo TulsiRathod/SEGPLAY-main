@@ -242,7 +242,6 @@ const Home = () => {
         // console.log(response);
         toast.success(response.data.message);
         getWalletDetails();
-        setdisableOrders();
         getOrderHistory();
         setdisableOrders(true);
         setOrderPlaced(true);
@@ -345,6 +344,13 @@ const Home = () => {
       setLoggedInUsers(data);
     });
 
+    socket.on("day_end_short_sell_settle", (data) => {
+      console.log(data);
+      if (data.isDayEnd) {
+        toast.success("Day Ended");
+      }
+    });
+
     return () => {
       socket.off("day");
       socket.off("round");
@@ -425,6 +431,8 @@ const Home = () => {
                   getWalletDetails={getWalletDetails}
                   portfolioDetails={portfolioDetails}
                   getNews={getNews}
+                  disableOrders={disableOrders}
+                  setdisableOrders={setdisableOrders}
                 />
               </div>
               <div className="col-lg-3 p-0">

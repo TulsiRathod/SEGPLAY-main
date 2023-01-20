@@ -12,6 +12,8 @@ const CardSection = ({
   getWalletDetails,
   portfolioDetails,
   getNews,
+  setdisableOrders,
+  disableOrders,
 }) => {
   const [cards, setCards] = useState([]);
   const [specialshow, setSpecialShow] = useState(false);
@@ -59,6 +61,7 @@ const CardSection = ({
       .then((response) => {
         setCards(response.data.cards);
         getNews();
+        setSpecialCard(false);
         setShow(true);
 
         let counts = {
@@ -80,6 +83,10 @@ const CardSection = ({
   };
 
   const handleCurPlus = (elem) => {
+    // if (disableOrders) {
+    //   toast("Cant't Use Now");
+    //   return;
+    // }
     if (round === 5) {
       if (!specialCard) {
         const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -97,6 +104,7 @@ const CardSection = ({
           },
         })
           .then((response) => {
+            setdisableOrders(true);
             toast("Cuurency Increament Card Used Successfully!!");
             setSpecialCard(true);
           })
@@ -110,6 +118,10 @@ const CardSection = ({
   };
 
   const handleCurMinus = (elem) => {
+    // if (disableOrders) {
+    //   toast("Cant't Use Now");
+    //   return;
+    // }
     if (round === 5) {
       if (!specialCard) {
         const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -128,6 +140,8 @@ const CardSection = ({
         })
           .then((response) => {
             toast("Cuurency Decreament Card Used Successfully!!");
+            setdisableOrders(true);
+
             setSpecialCard(true);
             getWalletDetails();
           })
@@ -141,7 +155,11 @@ const CardSection = ({
   };
 
   const handleLoanStock = (elem) => {
-    if (round < 4) {
+    if (disableOrders) {
+      toast("Cant't Use Now");
+      return;
+    }
+    if (round < 4 && round > 0) {
       if (!isLoanUsed) {
         const teamId = localStorage.getItem("SEG_TEAM_ID");
         axios({
@@ -161,6 +179,7 @@ const CardSection = ({
             toast("Loan Mature Card Used Successfully");
             getWalletDetails();
             setIsLoanUsed(true);
+            setdisableOrders(true);
           })
           .catch((error) => {
             console.log("error", error);
@@ -175,7 +194,11 @@ const CardSection = ({
     if (isDebUsed) {
       return;
     }
-    if (round < 4) {
+    if (disableOrders) {
+      toast("Cant't Use Now");
+      return;
+    }
+    if (round < 4 && round > 0) {
       setEl(elem);
       setSpecialShow(true);
     } else {
@@ -205,6 +228,7 @@ const CardSection = ({
       })
         .then((response) => {
           toast("Debenture Card Used Successfully!!");
+          disableOrders(true);
           setSpecialShow(false);
           setIsDebUsed(true);
         })
@@ -219,7 +243,11 @@ const CardSection = ({
     if (isRightUsed) {
       return;
     }
-    if (round < 4) {
+    if (disableOrders) {
+      toast("Cant't Use Now");
+      return;
+    }
+    if (round < 4 && round > 0) {
       setEl(elem);
       setSpecialShow(true);
     } else {
@@ -248,6 +276,7 @@ const CardSection = ({
       })
         .then((response) => {
           toast("Right Issue Card Used Successfully!!");
+          disableOrders(true);
           setIsRightUsed(true);
           setSpecialShow(false);
         })
@@ -262,7 +291,11 @@ const CardSection = ({
     if (specialCard) {
       return;
     }
-    if (round === 5) {
+    // if (disableOrders) {
+    //   toast("Cant't Use Now");
+    //   return;
+    // }
+    if (round === 5 && !disableOrders) {
       setEl(elem);
       setSpecialShow(true);
     } else {
@@ -292,6 +325,7 @@ const CardSection = ({
         .then((response) => {
           toast("Share Suspend Card Used Successfully!!");
           setSpecialShow(false);
+          setdisableOrders(true);
         })
         .catch((error) => {
           toast("Something Went Wrong!!");
