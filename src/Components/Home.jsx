@@ -15,6 +15,7 @@ import axios from "axios";
 import StockHistory from "./StockHistory";
 import Timer from "./Timer";
 import { Offcanvas } from "react-bootstrap";
+import SpecialCardUsed from "./SpecialCardUsed";
 
 const socket = io(SERVER_URL);
 
@@ -60,6 +61,8 @@ const Home = () => {
   const [companyId, setCompanyId] = useState();
   const [bidAmount, setBidAmount] = useState(0);
   const [news, setNews] = useState({});
+  const [scModal,setScModal]=useState(true);
+  const [ImpactCards,setImpactCards]=useState([]);
 
   const toIndianCurrency = (num) => {
     const curr = num.toLocaleString("en-IN", {
@@ -75,6 +78,7 @@ const Home = () => {
     setPortfolioModal(false);
     setExchangeModal(false);
     setStockHistoryModal(false);
+    setScModal(false);
   };
 
   const getWalletDetails = () => {
@@ -106,6 +110,24 @@ const Home = () => {
         console.log(error);
       });
   };
+
+  const CardImpact = () => {
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/get-card-imapct?day_no=${day}&round_no=5`,
+    })
+      .then((response) => {
+        console.log(response.data.data);
+        setImpactCards(response.data.data);
+        if(response.data.data.length>0){
+          setScModal(true);
+        }        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   const getOrderHistory = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -217,8 +239,6 @@ const Home = () => {
     })
       .then((response) => {
         setStockHistoryDetails(response.data.data);
-        getWalletDetails();
-        getStockExchange();
         // console.log("stock exchange history", response);
       })
       .catch((error) => {
@@ -329,6 +349,8 @@ const Home = () => {
       if (data.isStarted === 0 && data.priceReveal === true) {
         toast.success("price reveal");
         handlePriceReveal(day + 1);
+        getWalletDetails();
+        getStockExchange();
       }
       if (data.isStarted === 0 && data.priceReveal === false) {
         toast.success("Market Closed");
@@ -393,6 +415,7 @@ const Home = () => {
                   orderPlaced={orderPlaced}
                   round={round}
                   setRound={setRound}
+                  CardImpact={CardImpact}
                 />
               ) : (
                 "00:00"
@@ -475,6 +498,7 @@ const Home = () => {
         closeModal={closeModal}
         stockExchangeDetails={stockExchangeDetails}
       />
+      <SpecialCardUsed ImpactCards={ImpactCards} scModal={scModal} closeModal={closeModal}/>
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
