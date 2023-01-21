@@ -2,32 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_URL, toIndianCurrency } from "../Baseurl";
 
-const ShortSellModal = ({ shortSellModal, closeModal }) => {
+const ShortSellModal = ({ shortSellModal, closeModal, shortSellDetail }) => {
   const nf = new Intl.NumberFormat();
-  const [shortSellDetail, setShortSellDetail] = useState([]);
 
-  const getShortSellDetails = () => {
-    const team_id = localStorage.getItem("SEG_TEAM_ID");
-    axios({
-      method: "post",
-      data: {
-        day_no: 1,
-        team_id: team_id,
-      },
-      url: `${SERVER_URL}api/main/get-current-day-short-sell`,
-    })
-      .then((response) => {
-        console.log(response, "shortSelldata");
-        setShortSellDetail(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    getShortSellDetails();
-  }, []);
+  // useEffect(() => {
+  //   getShortSellDetails();
+  // }, []);
 
   return (
     <>
@@ -47,14 +27,13 @@ const ShortSellModal = ({ shortSellModal, closeModal }) => {
               <thead style={{ backgroundColor: "#20958f" }}>
                 <tr>
                   <th style={{ color: "#fff" }}>No</th>
-                  <th style={{ color: "#fff" }}>Stock Name</th>
+                  <th style={{ color: "#fff" }}>Company Name</th>
 
-                  <th style={{ textAlign: "center", color: "#fff" }}>
-                    Stock Buying Price
-                  </th>
+                  <th style={{ textAlign: "center", color: "#fff" }}>Price</th>
                   <th style={{ textAlign: "center", color: "#fff" }}>
                     Quantity
                   </th>
+                  <th style={{ textAlign: "center", color: "#fff" }}>P&L</th>
                   <th style={{ textAlign: "center", color: "#fff" }}>
                     Total Amount
                   </th>
@@ -71,13 +50,16 @@ const ShortSellModal = ({ shortSellModal, closeModal }) => {
                           {elem.company_name}
                         </td>
                         <td style={{ textAlign: "center" }}>
-                          <p>{toIndianCurrency(elem.stock_price)}</p>
+                          <p>{toIndianCurrency(Number(elem.stock_price))}</p>
                         </td>
                         <td style={{ textAlign: "center" }}>
                           <p>{nf.format(elem.stock_quantity)}</p>
                         </td>
                         <td style={{ textAlign: "center" }}>
-                          <p>{elem.total_amount}</p>
+                          <p>{toIndianCurrency(Number(elem.profit_lost))}</p>
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          <p>{toIndianCurrency(Number(elem.total_amount))}</p>
                         </td>
                       </tr>
                     ))

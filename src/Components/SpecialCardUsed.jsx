@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-const SpecialCardUsed = ({ImpactCards,scModal,closeModal}) => {
+const SpecialCardUsed = ({ ImpactCards, scModal, closeModal }) => {
   console.log(ImpactCards);
   const cardType = (e) => {
     switch (e) {
@@ -28,40 +28,48 @@ const SpecialCardUsed = ({ImpactCards,scModal,closeModal}) => {
   };
   return (
     <div
-        id="exchange_modal"
-        className="modal"
-        style={scModal ? { display: "flex" } : { display: "none" }}
-      >
-        <div className="modal-content" id="exchange_modal_content">
-          <span className="close" id="exchange_close" onClick={closeModal}>
-            &times;
-          </span>
-          <p className="modal_title">Special Card Used</p>
-          <hr />
-          <div className="scroll_content">
-            <table className="table table-striped" id="exchange_tbl">
-              <thead style={{ backgroundColor: "#20958f" }}>
-                <tr>
-                  <th style={{ color: "#fff" }}>Card Type</th>
-                  <th style={{ color: "#fff" }}>
-                    Impact on Your Portfolio
-                  </th>
-                </tr>
-              </thead>
-
+      id="exchange_modal"
+      className="modal"
+      style={scModal ? { display: "flex" } : { display: "none" }}
+    >
+      <div className="modal-content" id="exchange_modal_content">
+        <span className="close" id="exchange_close" onClick={closeModal}>
+          &times;
+        </span>
+        <p className="modal_title">Special Card Used</p>
+        <hr />
+        <div className="scroll_content">
+          <table className="table table-striped" id="exchange_tbl">
+            <thead style={{ backgroundColor: "#20958f" }}>
+              <tr>
+                <th style={{ color: "#fff" }}>Card Type</th>
+                <th style={{ color: "#fff" }}>Impact on Your Portfolio</th>
+              </tr>
+            </thead>
+            {ImpactCards.length > 0 ? (
               <tbody>
-                {ImpactCards.map((elem)=>
-                <tr>
-                  <td>{cardType(elem.type)}</td>
-                  <td >{elem.type===7?`${elem.company_ticker}'s Share Suspended to Opening Price`:''}{elem.type===6?'Your Available Cash Balance Deducted to 10%':''}</td>
-                </tr>
-                )}
+                {ImpactCards.map((elem) => (
+                  <tr>
+                    <td>{cardType(elem.type)}</td>
+                    <td>
+                      {elem.type === 7
+                        ? `${elem.company_ticker}'s Share Suspended to Opening Price`
+                        : ""}
+                      {elem.type === 6
+                        ? "Your Available Cash Balance Deducted to 10%"
+                        : ""}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
-            </table>
-          </div>
+            ) : (
+              "No Specail Card Has been used"
+            )}
+          </table>
         </div>
       </div>
-  )
-}
+    </div>
+  );
+};
 
-export default SpecialCardUsed
+export default SpecialCardUsed;

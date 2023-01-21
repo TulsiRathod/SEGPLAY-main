@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ROUND_DELAY, SERVER_URL } from "../Baseurl";
+import { ROUND_DELAY, SERVER_URL, toIndianCurrency } from "../Baseurl";
 import ExchangeModal from "./ExchangeModal";
 import OrderModal from "./OrderModal";
 import PortfolioModal from "./PortfolioModal";
@@ -16,7 +16,6 @@ import StockHistory from "./StockHistory";
 import Timer from "./Timer";
 import { Offcanvas } from "react-bootstrap";
 import SpecialCardUsed from "./SpecialCardUsed";
-import { get } from "jquery";
 import Swal from "sweetalert2";
 import ShortSellModal from "./ShortSellModal";
 
@@ -67,13 +66,30 @@ const Home = () => {
   const [news, setNews] = useState({});
   const [scModal, setScModal] = useState(false);
   const [ImpactCards, setImpactCards] = useState([]);
+  const [shortSellDetail, setShortSellDetail] = useState([]);
 
-  const toIndianCurrency = (num) => {
-    const curr = num.toLocaleString("en-IN", {
-      style: "currency",
-      currency: "INR",
-    });
-    return curr;
+  const getShortSellDetails = () => {
+    const team_id = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      data: {
+        day_no: 1,
+        team_id: team_id,
+      },
+      url: `${SERVER_URL}api/main/get-current-day-short-sell`,
+    })
+      .then((response) => {
+        // console.log(response, "shortSelldata");
+        setShortSellDetail(response.data.data);
+        if (response.data.data.length === 0) {
+          setShortSellModal(false);
+        } else {
+          setShortSellModal(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const closeModal = () => {
@@ -330,7 +346,7 @@ const Home = () => {
         icon: "success",
         title: `Day${data.day} is Started`,
         text: "Hold Tight And Have Fun.",
-        timer: 1500,
+        timer: 3000,
       });
       setDay(data.day);
       localStorage.setItem("SEG_CURRENT_DAY", data.day);
@@ -362,17 +378,16 @@ const Home = () => {
       if (data.isStarted === 1 && data.priceReveal === false) {
         // toast.success(`Market Start`);
         Swal.fire({
-          title: "Sweet!",
-          text: "Modal with a custom image.",
+          title: "Market Started!",
           imageUrl: "../assets/business-team.gif",
           imageWidth: 200,
           imageHeight: 200,
           imageAlt: "Custom image",
-          timer: 2000,
+          timer: 3000,
         });
         setTimeout(() => {
           handlePriceReveal(day);
-        }, 2000);
+        }, 3000);
         setCardReveal(true);
         localStorage.setItem("SEG_CARD_REVEAL", true);
       }
@@ -387,12 +402,10 @@ const Home = () => {
         Swal.fire({
           icon: "error",
           title: "Market Closed",
-          text: "Modal with a custom image.",
           //  imageUrl: "../assets/business-team.gif",
           //  imageWidth: 400,
           //  imageHeight: 200,
           //  imageAlt: "Custom image",
-          timer: 2000,
         });
       }
     });
@@ -404,7 +417,7 @@ const Home = () => {
       if (data.isDayEnd) {
         Swal.fire({
           icon: "error",
-          title: `Times Up!! Day ${day} is Ended.`,
+          title: `Times Up!! This Day Has Been Ended.`,
           // text: "Hold Tight And Have Fun.",
           // timer: 1500,
         });
@@ -413,7 +426,7 @@ const Home = () => {
         localStorage.setItem("SEG_CARD_REVEAL", false);
       }
       if (data.isShortSellSettled) {
-        setShortSellModal(true);
+        getShortSellDetails();
         getWalletDetails();
         getStockExchange();
         getOrderHistory();
@@ -555,7 +568,11 @@ const Home = () => {
         closeModal={closeModal}
       />
 
-      <ShortSellModal shortSellModal={shortSellModal} closeModal={closeModal} />
+      <ShortSellModal
+        shortSellModal={shortSellModal}
+        closeModal={closeModal}
+        shortSellDetail={shortSellDetail}
+      />
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
@@ -564,131 +581,143 @@ const Home = () => {
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <div id="order_share" action="#">
-            <select
-              className="form-select mb-3"
-              style={{ backgroundColor: "#d2f9f7" }}
-              name="company"
-              id="company"
-              onChange={(e) => {
-                setCompanyName(e.target.value);
-                setQuantity(1000);
-              }}
-            >
-              <option value="0" selected>
-                Select company
-              </option>
-              {stockExchangeDetails.map((company) => (
-                <option value={company.name}>{company.company_name}</option>
-              ))}
-            </select>
-            <p
-              className={`mb-2 text-dark d-${companyName ? "block" : "none"}`}
-              style={{ fontSize: "10px", fontWeight: "700" }}
-            >
-              Max Quantity:{" "}
-              <span className="text-warning me-2">
-                {toIndianCurrency(maxVQ)}
-              </span>{" "}
-              Share Price:{" "}
-              <span className="text-warning">{toIndianCurrency(price)}</span>
-            </p>
-            <div className="row">
-              <input
-                type="button"
-                value="-"
-                className="col-2 mb-3"
-                style={{ margin: "0 10px" }}
-                onClick={handleDecrease}
-              />
-              <input
-                type="number"
-                value={quantity}
-                style={{ backgroundColor: "#d2f9f7" }}
-                className="col-6 mb-3"
-                onChange={(e) => setQuantity(e.target.value)}
-                step={1000}
-                min={1000}
-                max={maxVQ}
-                placeholder="Enter value in 500's figure"
-                name=""
-                id=""
-                disabled="true"
-              />
-              <input
-                type="button"
-                value="+"
-                className="col-2 mb-3"
-                style={{ margin: "0 10px" }}
-                onClick={handleIncrease}
-              />
-            </div>
-            <input
-              className="form-control mb-2"
-              style={{
-                backgroundColor: "#d2f9f7",
-              }}
-              onChange={(e) => setUserAmount(e.target.value)}
-              value={userAmount}
-              min={(price * 90) / 100}
-              type="number"
-              name="Total"
-              id="Totala"
-              placeholder="Enter Your Bidding Price"
-            />
-            <p
-              className={`mb-2 text-dark d-${companyName ? "block" : "none"}`}
-              style={{ fontSize: "10px", fontWeight: "700" }}
-            >
-              Minimun Bid Amount:{" "}
-              <span className="text-warning me-2">
-                {toIndianCurrency((bidAmount * 90) / 100)}
-              </span>{" "}
-            </p>
+          {localStorage.getItem("VETO_ORDER_COUNT") === 2 ? (
+            <>
+              <div id="order_share" action="#">
+                <select
+                  className="form-select mb-3"
+                  style={{ backgroundColor: "#d2f9f7" }}
+                  name="company"
+                  id="company"
+                  onChange={(e) => {
+                    setCompanyName(e.target.value);
+                    setQuantity(1000);
+                  }}
+                >
+                  <option value="0" selected>
+                    Select company
+                  </option>
+                  {stockExchangeDetails.map((company) => (
+                    <option value={company.name}>{company.company_name}</option>
+                  ))}
+                </select>
+                <p
+                  className={`mb-2 text-dark d-${
+                    companyName ? "block" : "none"
+                  }`}
+                  style={{ fontSize: "10px", fontWeight: "700" }}
+                >
+                  Max Quantity:{" "}
+                  <span className="text-warning me-2">
+                    {toIndianCurrency(maxVQ)}
+                  </span>{" "}
+                  Share Price:{" "}
+                  <span className="text-warning">
+                    {toIndianCurrency(price)}
+                  </span>
+                </p>
+                <div className="row">
+                  <input
+                    type="button"
+                    value="-"
+                    className="col-2 mb-3"
+                    style={{ margin: "0 10px" }}
+                    onClick={handleDecrease}
+                  />
+                  <input
+                    type="number"
+                    value={quantity}
+                    style={{ backgroundColor: "#d2f9f7" }}
+                    className="col-6 mb-3"
+                    onChange={(e) => setQuantity(e.target.value)}
+                    step={1000}
+                    min={1000}
+                    max={maxVQ}
+                    placeholder="Enter value in 500's figure"
+                    name=""
+                    id=""
+                    disabled="true"
+                  />
+                  <input
+                    type="button"
+                    value="+"
+                    className="col-2 mb-3"
+                    style={{ margin: "0 10px" }}
+                    onClick={handleIncrease}
+                  />
+                </div>
+                <input
+                  className="form-control mb-2"
+                  style={{
+                    backgroundColor: "#d2f9f7",
+                  }}
+                  onChange={(e) => setUserAmount(e.target.value)}
+                  value={userAmount}
+                  min={(price * 90) / 100}
+                  type="number"
+                  name="Total"
+                  id="Totala"
+                  placeholder="Enter Your Bidding Price"
+                />
+                <p
+                  className={`mb-2 text-dark d-${
+                    companyName ? "block" : "none"
+                  }`}
+                  style={{ fontSize: "10px", fontWeight: "700" }}
+                >
+                  Minimun Bid Amount:{" "}
+                  <span className="text-warning me-2">
+                    {toIndianCurrency((bidAmount * 90) / 100)}
+                  </span>{" "}
+                </p>
 
-            <div
-              className={`mb-2 text-dark d-${
-                companyName ? "block" : "none"
-              } mt-3 pt-2`}
-              style={{
-                fontSize: "18px",
-                fontWeight: "700",
-                borderTop: "2px dashed grey",
-              }}
-            >
-              Total Amount:{" "}
-              <span className="text-warning me-2">
-                {toIndianCurrency(((userAmount * 90) / 100) * quantity)}
-              </span>{" "}
-            </div>
-          </div>
-          <button
-            className="btn btn-success"
-            onClick={handleVeto}
-            style={{
-              position: "absolute",
-              width: "94%",
-              left: "10px",
-              bottom: "60px",
-            }}
-          >
-            Place Order
-          </button>
-          <button
-            className="btn btn-outline-secondary"
-            onClick={() => {
-              handlePass();
-              handleClose();
-            }}
-            style={{
-              position: "absolute",
-              width: "94%",
-              left: "10px",
-              bottom: "10px",
-            }}
-          >
-            Pass
-          </button>
+                <div
+                  className={`mb-2 text-dark d-${
+                    companyName ? "block" : "none"
+                  } mt-3 pt-2`}
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "700",
+                    borderTop: "2px dashed grey",
+                  }}
+                >
+                  Total Amount:{" "}
+                  <span className="text-warning me-2">
+                    {toIndianCurrency(((userAmount * 90) / 100) * quantity)}
+                  </span>{" "}
+                </div>
+              </div>
+              <button
+                className="btn btn-success"
+                onClick={handleVeto}
+                style={{
+                  position: "absolute",
+                  width: "94%",
+                  left: "10px",
+                  bottom: "60px",
+                }}
+              >
+                Place Order
+              </button>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  handlePass();
+                  handleClose();
+                }}
+                style={{
+                  position: "absolute",
+                  width: "94%",
+                  left: "10px",
+                  bottom: "10px",
+                }}
+              >
+                Pass
+              </button>
+            </>
+          ) : (
+            "You have utilized all your veto order credit"
+          )}
         </Offcanvas.Body>
       </Offcanvas>
     </>
