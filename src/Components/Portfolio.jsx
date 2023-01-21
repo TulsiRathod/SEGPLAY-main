@@ -387,6 +387,10 @@ const Portfolio = (props) => {
                                 elem.average_buying_price <
                               0
                                 ? "red"
+                                : elem.current_stock_price -
+                                    elem.average_buying_price ==
+                                  0
+                                ? "black"
                                 : "green"
                             }`,
                           }}
