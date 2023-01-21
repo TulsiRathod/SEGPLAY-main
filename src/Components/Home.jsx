@@ -67,6 +67,8 @@ const Home = () => {
   const [scModal, setScModal] = useState(false);
   const [ImpactCards, setImpactCards] = useState([]);
   const [shortSellDetail, setShortSellDetail] = useState([]);
+  const [passRes, setPassRes] = useState(false);
+  const [vetoResponse, setVetoResponse] = useState(false);
 
   const getShortSellDetails = () => {
     const team_id = localStorage.getItem("SEG_TEAM_ID");
@@ -196,6 +198,7 @@ const Home = () => {
   };
 
   const handleVeto = () => {
+    setVetoResponse(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
       method: "post",
@@ -214,10 +217,11 @@ const Home = () => {
       .then((response) => {
         // console.log("veto ho gaya", response.data);
         if (response.data.success) {
+          setVetoResponse(false);
           localStorage.setItem("VETO_ORDER_ID", response.data.data.OrderId);
           localStorage.setItem(
             "VETO_ORDER_COUNT",
-            localStorage.getItem("VETO_ORDER_COUNT") + 1
+            Number(localStorage.getItem("VETO_ORDER_COUNT")) + 1
           );
 
           toast.success(response.data.message);
@@ -278,6 +282,7 @@ const Home = () => {
   };
 
   const handlePass = () => {
+    setPassRes(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
       method: "post",
@@ -290,6 +295,7 @@ const Home = () => {
       },
     })
       .then((response) => {
+        setPassRes(false);
         // console.log(response);
         toast.success(response.data.message);
         getWalletDetails();
@@ -574,14 +580,14 @@ const Home = () => {
         shortSellDetail={shortSellDetail}
       />
 
-      <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
+      <Offcanvas show={show}>
+        <Offcanvas.Header>
           <Offcanvas.Title>
             <b>Veto Order</b>{" "}
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {localStorage.getItem("VETO_ORDER_COUNT") === 2 ? (
+          {Number(localStorage.getItem("VETO_ORDER_COUNT")) !== 2 ? (
             <>
               <div id="order_share" action="#">
                 <select
@@ -697,7 +703,7 @@ const Home = () => {
                   bottom: "60px",
                 }}
               >
-                Place Order
+                {vetoResponse ? "Loading..." : "Place Order"}
               </button>
               <button
                 className="btn btn-outline-secondary"
@@ -712,11 +718,28 @@ const Home = () => {
                   bottom: "10px",
                 }}
               >
-                Pass
+                {passRes ? "Loading..." : "Place Order"}
               </button>
             </>
           ) : (
-            "You have utilized all your veto order credit"
+            <div className="">
+              <p>You have utilized all your veto order credit</p>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  handlePass();
+                  handleClose();
+                }}
+                style={{
+                  position: "absolute",
+                  width: "94%",
+                  left: "10px",
+                  bottom: "80%",
+                }}
+              >
+                Pass
+              </button>
+            </div>
           )}
         </Offcanvas.Body>
       </Offcanvas>

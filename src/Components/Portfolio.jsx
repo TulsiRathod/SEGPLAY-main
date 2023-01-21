@@ -391,24 +391,26 @@ const Portfolio = (props) => {
                             }`,
                           }}
                         >
-                          {(
-                            ((
-                              elem.current_stock_price -
-                              elem.average_buying_price
-                            ).toFixed(2) /
-                              elem.average_buying_price) *
-                            100
-                          ).toFixed(2) === "NaN"
-                            ? 0
-                            : (
+                          {elem.current_stock_price === 0 ||
+                          elem.average_buying_price === 0
+                            ? (
                                 ((
                                   elem.current_stock_price -
                                   elem.average_buying_price
                                 ).toFixed(2) /
                                   elem.average_buying_price) *
                                 100
-                              ).toFixed(2)}
-                          %
+                              ).toFixed(2) === "NaN"
+                              ? 0.0
+                              : (
+                                  ((
+                                    elem.current_stock_price -
+                                    elem.average_buying_price
+                                  ).toFixed(2) /
+                                    elem.average_buying_price) *
+                                  100
+                                ).toFixed(2) + "%"
+                            : "-"}
                         </p>
                       </td>
                       <td style={{ textAlign: "end" }}>

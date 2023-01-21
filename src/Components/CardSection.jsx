@@ -1,3 +1,4 @@
+import { Translate } from "@mui/icons-material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
@@ -296,7 +297,7 @@ const CardSection = ({
     //   toast("Cant't Use Now");
     //   return;
     // }
-    if (round === 5 && !disableOrders) {
+    if (round === 5) {
       setEl(elem);
       setSpecialShow(true);
     } else {
@@ -364,6 +365,9 @@ const CardSection = ({
                           margin: "auto",
                           borderRadius: "50%",
                           objectFit: "cover",
+                          position: "absolute",
+                          left: "50%",
+                          transform: "translate(-50%,-50%)",
                         }}
                       ></img>
                       <div className="card_sign">
@@ -403,7 +407,7 @@ const CardSection = ({
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div
-                      className={`card__face back special_card2 ${
+                      className={`card__face back special_card1 ${
                         isLoanUsed ? "disable" : ""
                       }`}
                       style={{ cursor: "pointer" }}
@@ -450,7 +454,7 @@ const CardSection = ({
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div
-                      className={`card__face back special_card2 ${
+                      className={`card__face back special_card1 ${
                         isDebUsed ? "disable" : ""
                       }`}
                     >
@@ -497,7 +501,7 @@ const CardSection = ({
                       <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div
-                      className={`card__face back special_card2 ${
+                      className={`card__face back special_card1 ${
                         isRightUsed ? "disable" : ""
                       }`}
                     >

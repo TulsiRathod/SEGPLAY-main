@@ -89,7 +89,12 @@ const DayNews = ({ news, day }) => {
           //   </div>
           // </div>
           <Accordion
-            expanded={expanded === `panel${i}`}
+            // expanded={}
+            expanded={
+              Number(localStorage.getItem("SEG_CURRENT_DAY")) === elem
+                ? true
+                : expanded === `panel${i}`
+            }
             onChange={handleChange(`panel${i}`)}
           >
             <AccordionSummary

@@ -36,13 +36,27 @@ const Wallet = ({ balance, portfolioDetails }) => {
           <div className="balance">
             <p>Available Cash Balance</p>
             <h4>
-              <span>{balance ? toIndianCurrency(balance) : 0}</span>
+              <span>
+                {balance ? toIndianCurrency(balance) : 0}{" "}
+                {/* {toString(balance).length > 7
+                  ? "Cr"
+                  : toString(balance).length > 5
+                  ? "Lacs"
+                  : ""} */}
+              </span>
             </h4>
           </div>
           <div className="balance">
             <p>Holding Value</p>
             <h4>
-              <span>{holdings ? toIndianCurrency(holdings) : 0}</span>
+              <span>
+                {holdings ? toIndianCurrency(holdings) : 0}{" "}
+                {/* {toString(holdings).length > 7
+                  ? "Cr"
+                  : toString(holdings).length > 5
+                  ? "Lacs"
+                  : ""} */}
+              </span>
             </h4>
           </div>
           <hr
@@ -56,7 +70,12 @@ const Wallet = ({ balance, portfolioDetails }) => {
             <p>Total Networth</p>
             <h4>
               <span>
-                {balance + holdings ? toIndianCurrency(balance + holdings) : 0}
+                {balance + holdings ? toIndianCurrency(balance + holdings) : 0}{" "}
+                {/* {toString(balance + holdings).length > 7
+                  ? "Cr"
+                  : toString(balance + holdings).length > 5
+                  ? "Lacs"
+                  : ""} */}
               </span>
             </h4>
           </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { SERVER_URL } from "../Baseurl";
+import { SERVER_URL, toIndianCurrency } from "../Baseurl";
 
 const Order = (props) => {
   const {
@@ -99,6 +99,8 @@ const Order = (props) => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
+        setQuantity(1000);
+        setPrice(0);
         orderIsPlaced();
       })
       .catch((error) => {
@@ -131,6 +133,8 @@ const Order = (props) => {
         getWalletDetails();
         setdisableOrders();
         getOrderHistory();
+        setQuantity(1000);
+        setPrice(0);
         orderIsPlaced();
       })
       .catch((error) => {
@@ -225,7 +229,7 @@ const Order = (props) => {
               marginBottom: "calc(14vh - 46px)",
               backgroundColor: "#d2f9f7",
             }}
-            value={companyName ? nf.format(price * quantity) : ""}
+            value={companyName ? toIndianCurrency(price * quantity) : ""}
             type="text"
             name="Total"
             id="Totala"

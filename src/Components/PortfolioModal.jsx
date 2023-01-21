@@ -98,8 +98,14 @@ const PortfolioModal = ({
                       <p
                         style={{
                           color: `${
-                            elem.current_stock_price - elem.average_buying_price
+                            elem.current_stock_price -
+                              elem.average_buying_price <
+                            0
                               ? "red"
+                              : elem.current_stock_price -
+                                  elem.average_buying_price ===
+                                0
+                              ? "black"
                               : "green"
                           }`,
                         }}
