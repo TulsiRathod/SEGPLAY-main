@@ -65,7 +65,7 @@ const Order = (props) => {
         setdisableOrders();
         getOrderHistory();
         setQuantity(1000);
-        setPrice(0);
+        // setPrice(price);
         orderIsPlaced();
       })
       .catch((error) => {
@@ -100,7 +100,6 @@ const Order = (props) => {
         setdisableOrders();
         getOrderHistory();
         setQuantity(1000);
-        setPrice(0);
         orderIsPlaced();
       })
       .catch((error) => {
@@ -134,7 +133,6 @@ const Order = (props) => {
         setdisableOrders();
         getOrderHistory();
         setQuantity(1000);
-        setPrice(0);
         orderIsPlaced();
       })
       .catch((error) => {

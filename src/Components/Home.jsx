@@ -718,7 +718,7 @@ const Home = () => {
                   bottom: "10px",
                 }}
               >
-                {passRes ? "Loading..." : "Place Order"}
+                {passRes ? "Loading..." : "Pass"}
               </button>
             </>
           ) : (
