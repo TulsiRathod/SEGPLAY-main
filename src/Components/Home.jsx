@@ -527,7 +527,7 @@ const Home = () => {
                 />
               </div>
               <div className="col-lg-3 p-0">
-                <Wallet balance={balance} portfolioDetails={portfolioDetails} />
+                <Wallet balance={balance} portfolioDetails={portfolioDetails} shortShellDetails={shortShellDetails}/>
                 <Order
                   stockDetails={stockExchangeDetails}
                   getWalletDetails={getWalletDetails}

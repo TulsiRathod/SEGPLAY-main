@@ -1,7 +1,6 @@
 import React from "react";
 
 const SpecialCardUsed = ({ ImpactCards, scModal, closeModal }) => {
-  console.log(ImpactCards);
   const cardType = (e) => {
     switch (e) {
       case 2:

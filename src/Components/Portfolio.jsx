@@ -388,7 +388,7 @@ const Portfolio = (props) => {
                               0
                                 ? "red"
                                 : elem.current_stock_price -
-                                    elem.average_buying_price ==
+                                    elem.average_buying_price ===
                                   0
                                 ? "black"
                                 : "green"
@@ -403,7 +403,7 @@ const Portfolio = (props) => {
                               elem.average_buying_price) *
                             100
                           ).toFixed(2) === "NaN"
-                            ? "0.00%"
+                            ? "0.00"
                             : (
                                 ((
                                   elem.current_stock_price -
