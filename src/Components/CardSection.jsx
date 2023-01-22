@@ -43,6 +43,10 @@ const CardSection = ({
   useEffect(() => {
     if (day != 0) {
       getCard();
+      setSpecialCard(false);
+      setIsDebUsed(false);
+      setIsLoanUsed(false);
+      setIsRightUsed(false);
     }
   }, [day]);
 
@@ -85,10 +89,6 @@ const CardSection = ({
   };
 
   const handleCurPlus = (elem) => {
-    // if (disableOrders) {
-    //   toast("Cant't Use Now");
-    //   return;
-    // }
     if (round === 5) {
       if (!specialCard) {
         const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -120,10 +120,6 @@ const CardSection = ({
   };
 
   const handleCurMinus = (elem) => {
-    // if (disableOrders) {
-    //   toast("Cant't Use Now");
-    //   return;
-    // }
     if (round === 5) {
       if (!specialCard) {
         const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -242,9 +238,7 @@ const CardSection = ({
   };
 
   const handleRightIs = (elem) => {
-    if (isRightUsed) {
-      return;
-    }
+    if (!isRightUsed) {
     if (disableOrders) {
       toast("Cant't Use Now");
       return;
@@ -255,10 +249,10 @@ const CardSection = ({
     } else {
       toast("This Card will Use in Normal Round Only");
     }
+  }
   };
 
   const SubmitRightIs = () => {
-    if (!isRightUsed) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       const day = localStorage.getItem("SEG_CURRENT_DAY");
       const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -277,36 +271,29 @@ const CardSection = ({
         },
       })
         .then((response) => {
-          toast("Right Issue Card Used Successfully!!");
-          disableOrders(true);
+          toast(response.data.message);
+          setdisableOrders(true);
           setIsRightUsed(true);
           setSpecialShow(false);
         })
         .catch((error) => {
-          toast("Something Went Wrong!!");
+          toast(error.response.data);
           setSpecialShow(false);
         });
-    }
   };
 
   const handleShareSus = (elem) => {
-    if (specialCard) {
-      return;
-    }
-    // if (disableOrders) {
-    //   toast("Cant't Use Now");
-    //   return;
-    // }
+    if (!specialCard) {
     if (round === 5) {
       setEl(elem);
       setSpecialShow(true);
     } else {
       toast("This Card will Use in Special Round Only");
     }
+  }
   };
 
   const SubmitShareSus = () => {
-    if (!specialCard) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       const day = localStorage.getItem("SEG_CURRENT_DAY");
       const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -328,12 +315,12 @@ const CardSection = ({
           toast("Share Suspend Card Used Successfully!!");
           setSpecialShow(false);
           setdisableOrders(true);
+          setSpecialCard(true);
         })
         .catch((error) => {
           toast("Something Went Wrong!!");
           setSpecialShow(false);
         });
-    }
   };
 
   const handleSubmit = () => {
