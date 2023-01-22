@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Wallet = ({ balance, portfolioDetails }) => {
+const Wallet = ({ balance, portfolioDetails,shortShellDetails }) => {
   const [holdings, setHoldings] = useState(0);
 
   const toIndianCurrency = (num) => {
@@ -15,6 +15,9 @@ const Wallet = ({ balance, portfolioDetails }) => {
     var temp = 0;
     portfolioDetails.map((elem) => {
       temp += elem.current_stock_price * elem.total_stock;
+    });
+    shortShellDetails.map((elem)=>{
+      temp+= elem.buying_price * elem.stock_quantity;
     });
     setHoldings(temp);
   }, [portfolioDetails]);
