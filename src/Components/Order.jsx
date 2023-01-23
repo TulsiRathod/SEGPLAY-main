@@ -200,7 +200,7 @@ const Order = (props) => {
           >
             Max Quantity:{" "}
             <span className="text-warning me-2">
-              {nf.format(maxQ - (maxQ % 1000))}
+              {toIndianCurrency(parseInt(maxQ)).substring(1).split(".")[0]}
             </span>{" "}
             Share Price:{" "}
             <span className="text-warning">{nf.format(price)}</span>
