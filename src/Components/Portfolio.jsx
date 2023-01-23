@@ -1,3 +1,4 @@
+import { fontWeight } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { toIndianCurrency } from "../Baseurl";
 
@@ -375,7 +376,9 @@ const Portfolio = (props) => {
                   {portfolio.map((elem) => (
                     <tr>
                       <td>
-                        <h5>{elem.company_name}</h5>
+                        <p style={{ fontSize: "18px", fontWeight: "700" }}>
+                          {elem.company_name}
+                        </p>
                       </td>
                       <td style={{ textAlign: "center" }}>
                         <p>{toIndianCurrency(elem.current_stock_price)}</p>
@@ -420,15 +423,21 @@ const Portfolio = (props) => {
                         <p>{elem.total_stock}</p>
                       </td>
                       <td style={{ textAlign: "end" }}>
-                        <p>{elem.total_stock*elem.current_stock_price}</p>
+                        <p>
+                          {toIndianCurrency(
+                            elem.total_stock * elem.current_stock_price
+                          )}
+                        </p>
                       </td>
                     </tr>
                   ))}
                   {shortShellDetails.map((elem) => (
                     <tr>
                       <td>
-                        <h5>{elem.company_ticker}</h5>
-                        SHORT SHELL
+                        <p style={{ fontSize: "18px", fontWeight: "700" }}>
+                          {elem.company_ticker}
+                        </p>
+                        Shortsell
                       </td>
                       <td style={{ textAlign: "center" }}>
                         <p>{toIndianCurrency(elem.buying_price)}</p>

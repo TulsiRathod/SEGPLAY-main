@@ -556,7 +556,7 @@ const Home = () => {
                 <Order
                   stockDetails={stockExchangeDetails}
                   getWalletDetails={getWalletDetails}
-                  setdisableOrders={() => setdisableOrders(true)}
+                  setdisableOrders={setdisableOrders}
                   disableOrders={disableOrders}
                   handlePass={handlePass}
                   loggedInUsers={loggedInUsers}
