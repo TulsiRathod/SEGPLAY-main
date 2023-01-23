@@ -237,7 +237,7 @@ const Home = () => {
         // console.log("veto ho gaya", response.data);
         if (response.data.success) {
           setVetoResponse(false);
-          orderPlaced(true);
+          setOrderPlaced(true);
           localStorage.setItem("VETO_ORDER_ID", response.data.data.OrderId);
           localStorage.setItem(
             "VETO_ORDER_COUNT",
@@ -246,7 +246,6 @@ const Home = () => {
 
           toast.success(response.data.message);
           getWalletDetails();
-          getOrderHistory();
           handleClose();
           setCompanyId("");
           setCompanyName("");
@@ -316,10 +315,8 @@ const Home = () => {
     })
       .then((response) => {
         setPassRes(false);
-        // console.log(response);
         toast.success(response.data.message);
         getWalletDetails();
-        getOrderHistory();
         setdisableOrders(true);
         setOrderPlaced(true);
       })
@@ -418,7 +415,6 @@ const Home = () => {
         localStorage.setItem("SEG_CARD_REVEAL", true);
       }
       if (data.isStarted === 0 && data.priceReveal === true) {
-        toast.success("price reveal");
         handleVetoWinner();
         handlePriceReveal(day + 1);
         getWalletDetails();
@@ -455,7 +451,6 @@ const Home = () => {
         getShortSellDetails();
         getWalletDetails();
         getStockExchange();
-        getOrderHistory();
       }
     });
 
@@ -480,7 +475,6 @@ const Home = () => {
   useEffect(() => {
     getWalletDetails();
     getStockExchange();
-    getOrderHistory();
   }, [day]);
 
   useEffect(() => {
@@ -524,6 +518,7 @@ const Home = () => {
           handleShow={() => handleShow()}
           news={news}
           handlePriceReveal={handlePriceReveal}
+          getOrderHistory={getOrderHistory}
         />
         <div className="containers  ">
           <div className="main_section">
@@ -557,7 +552,6 @@ const Home = () => {
                   getWalletDetails={getWalletDetails}
                   setdisableOrders={() => setdisableOrders(true)}
                   disableOrders={disableOrders}
-                  getOrderHistory={getOrderHistory}
                   handlePass={handlePass}
                   loggedInUsers={loggedInUsers}
                   orderIsPlaced={() => {

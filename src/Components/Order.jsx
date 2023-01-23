@@ -9,7 +9,6 @@ const Order = (props) => {
     getWalletDetails,
     setdisableOrders,
     disableOrders,
-    getOrderHistory,
     handlePass,
     orderIsPlaced,
     loggedInUsers,
@@ -68,9 +67,7 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
-        getOrderHistory();
         setQuantity(1000);
-        // setPrice(price);
         orderIsPlaced();
       })
       .catch((error) => {
@@ -107,7 +104,6 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
-        getOrderHistory();
         setQuantity(1000);
         orderIsPlaced();
       })
@@ -145,7 +141,6 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setdisableOrders();
-        getOrderHistory();
         setQuantity(1000);
         orderIsPlaced();
       })

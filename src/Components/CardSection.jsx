@@ -155,7 +155,7 @@ const CardSection = ({
 
   const handleLoanStock = (elem) => {
     if (disableOrders) {
-      toast("Cant't Use Now");
+      toast("Can't Use Now");
       return;
     }
     if (round < 4 && round > 0) {
@@ -194,7 +194,7 @@ const CardSection = ({
       return;
     }
     if (disableOrders) {
-      toast("Cant't Use Now");
+      toast("Can't Use Now");
       return;
     }
     if (round < 4 && round > 0) {
@@ -241,7 +241,7 @@ const CardSection = ({
   const handleRightIs = (elem) => {
     if (!isRightUsed) {
       if (disableOrders) {
-        toast("Cant't Use Now");
+        toast("Can't Use Now");
         return;
       }
       if (round < 4 && round > 0) {
@@ -285,6 +285,10 @@ const CardSection = ({
 
   const handleShareSus = (elem) => {
     if (!specialCard) {
+      if (disableOrders) {
+        toast("Can't Use Now");
+        return;
+      }
       if (round === 5) {
         setEl(elem);
         setSpecialShow(true);

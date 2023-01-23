@@ -20,7 +20,7 @@ const Sidebar = ({
   cardReveal,
   news,
   handlePriceReveal,
-  handleShow,
+  getOrderHistory,
 }) => {
   const nav = useNavigate();
   const logout = () => {
@@ -91,6 +91,7 @@ const Sidebar = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setOrderModal(true);
+                    getOrderHistory();
                   }}
                   className="mb-3"
                 >

@@ -34,7 +34,9 @@ const ShortSellModal = ({ shortSellModal, closeModal, shortSellDetail }) => {
                   <th style={{ textAlign: "center", color: "#fff" }}>
                     Quantity
                   </th>
-                  <th style={{ textAlign: "center", color: "#fff" }}>Invested Amount</th>
+                  <th style={{ textAlign: "center", color: "#fff" }}>
+                    Invested Amount
+                  </th>
                   <th style={{ textAlign: "center", color: "#fff" }}>P&L</th>
                   <th style={{ textAlign: "center", color: "#fff" }}>
                     Total Amount
@@ -59,9 +61,24 @@ const ShortSellModal = ({ shortSellModal, closeModal, shortSellDetail }) => {
                           <p>{nf.format(elem.stock_quantity)}</p>
                         </td>
                         <td style={{ textAlign: "center" }}>
-                          <p>{toIndianCurrency(Number(elem.stock_quantity*elem.stock_price))}</p>
+                          <p>
+                            {toIndianCurrency(
+                              Number(elem.stock_quantity * elem.stock_price)
+                            )}
+                          </p>
                         </td>
-                        <td style={{ textAlign: "center" }}>
+                        <td
+                          style={{
+                            textAlign: "center",
+                            color: `${
+                              elem.profit_lost < 0
+                                ? "red"
+                                : elem.profit_lost > 0
+                                ? "green"
+                                : "black"
+                            }`,
+                          }}
+                        >
                           <p>{toIndianCurrency(Number(elem.profit_lost))}</p>
                         </td>
                         <td style={{ textAlign: "center" }}>
