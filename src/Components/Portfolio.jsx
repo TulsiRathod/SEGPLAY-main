@@ -369,7 +369,8 @@ const Portfolio = (props) => {
                     <th>Company</th>
                     <th style={{ textAlign: "center" }}>Last Price</th>
                     <th style={{ textAlign: "center" }}>P&L</th>
-                    <th style={{ textAlign: "end" }}>Quantity</th>
+                    <th style={{ textAlign: "center" }}>Quantity</th>
+                    <th style={{ textAlign: "end" }}>Total</th>
                   </tr>
                   {portfolio.map((elem) => (
                     <tr>
@@ -415,8 +416,11 @@ const Portfolio = (props) => {
                           %
                         </p>
                       </td>
-                      <td style={{ textAlign: "end" }}>
+                      <td style={{ textAlign: "center" }}>
                         <p>{elem.total_stock}</p>
+                      </td>
+                      <td style={{ textAlign: "end" }}>
+                        <p>{elem.total_stock*elem.current_stock_price}</p>
                       </td>
                     </tr>
                   ))}
@@ -432,9 +436,12 @@ const Portfolio = (props) => {
                       <td style={{ textAlign: "center" }}>
                         <p>0.00%</p>
                       </td>
-                      <td style={{ textAlign: "end" }}>
+                      <td style={{ textAlign: "center" }}>
                         <p>{elem.stock_quantity}</p>
                       </td>
+                      {/* <td style={{ textAlign: "end" }}>
+                        <p>{elem.stock_quantity*elem.buying_price}</p>
+                      </td> */}
                     </tr>
                   ))}
                 </table>
