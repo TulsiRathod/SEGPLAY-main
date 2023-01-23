@@ -44,6 +44,11 @@ const Order = (props) => {
   const handleBuy = () => {
     setBuyRes(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
+    if (price === 0) {
+      toast.error("Can't buy! Stock Price is 0.");
+      setBuyRes(false);
+      return;
+    }
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/buy-order`,
@@ -77,8 +82,12 @@ const Order = (props) => {
 
   const handleSell = () => {
     setSellRes(true);
-
     const teamId = localStorage.getItem("SEG_TEAM_ID");
+    if (price === 0) {
+      toast.error("Can't buy! Stock Price is 0.");
+      setBuyRes(false);
+      return;
+    }
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/sell-order`,
@@ -112,6 +121,11 @@ const Order = (props) => {
   const handleShortSell = () => {
     setShortsellRes(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
+    if (price === 0) {
+      toast.error("Can't buy! Stock Price is 0.");
+      setBuyRes(false);
+      return;
+    }
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/short-sell-order`,

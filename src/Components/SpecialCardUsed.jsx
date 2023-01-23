@@ -55,7 +55,7 @@ const SpecialCardUsed = ({ ImpactCards, scModal, closeModal }) => {
                         ? `${elem.company_ticker}'s Share Suspended to Opening Price`
                         : ""}
                       {elem.type === 6
-                        ? "Your Available Cash Balance Deducted to 10%"
+                        ? "Available Cash Balance Deducted to 10%"
                         : ""}
                     </td>
                   </tr>

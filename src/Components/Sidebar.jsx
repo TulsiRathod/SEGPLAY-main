@@ -5,6 +5,10 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../Baseurl";
 import DayNews from "./DayNews";
+import * as Bi from "react-icons/bi";
+import * as Fi from "react-icons/fa";
+import * as Ri from "react-icons/ri";
+import { Tooltip } from "@mui/material";
 
 const Sidebar = ({
   setOrderModal,
@@ -52,47 +56,54 @@ const Sidebar = ({
                   onClick={() => {
                     setExchangeModal(true);
                   }}
+                  className="mb-3"
                 >
-                  <a>
-                    <i
-                      className="fa-solid fa-right-left"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="Stock Exchnage"
-                    ></i>
-                  </a>
+                  <Tooltip
+                    title="Stock Exchange"
+                    color="black"
+                    placement="right"
+                    arrow
+                  >
+                    <a>
+                      <Fi.FaChartLine size={20} color="white" />
+                    </a>
+                  </Tooltip>
                 </li>
                 <li
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setPortfolioModal(true);
                   }}
+                  className="mb-3"
                 >
-                  <a>
-                    <i
-                      className="fa-regular fa-id-card-clip "
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="Portfolio"
-                      style={{ fontSize: "16px" }}
-                    ></i>
-                  </a>
+                  <Tooltip
+                    title="Portfolio"
+                    color="black"
+                    placement="right"
+                    arrow
+                  >
+                    <a>
+                      <Bi.BiUserCircle size={25} color="white" />
+                    </a>
+                  </Tooltip>
                 </li>
                 <li
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setOrderModal(true);
                   }}
+                  className="mb-3"
                 >
-                  <a>
-                    <i
-                      className="fa-solid fa-chart-line "
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="Order History"
-                      style={{ fontSize: "15px" }}
-                    ></i>
-                  </a>
+                  <Tooltip
+                    title="Order History"
+                    color="black"
+                    placement="right"
+                    arrow
+                  >
+                    <a>
+                      <Bi.BiHistory size={25} color="white" />
+                    </a>
+                  </Tooltip>
                 </li>
                 <li
                   style={{ cursor: "pointer" }}
@@ -100,32 +111,31 @@ const Sidebar = ({
                     setStockHistoryModal(true);
                     handlePriceReveal();
                   }}
+                  className="mb-3"
                 >
-                  <a>
-                    <i
-                      className="fa fa-history"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="Stock Exchnage History"
-                      style={{ fontSize: "16px" }}
-                    ></i>
-                  </a>
+                  <Tooltip
+                    title="Stock Exchange History"
+                    color="black"
+                    placement="right"
+                    arrow
+                  >
+                    <a>
+                      <Ri.RiStockLine size={25} color="white" />
+                    </a>
+                  </Tooltip>
                 </li>
                 <li
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setRulesModal(true);
                   }}
+                  className="mb-3"
                 >
-                  <a>
-                    <i
-                      className="fa-solid fa-square-info mb-0"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="Rules"
-                      style={{ fontSize: "18px" }}
-                    ></i>
-                  </a>
+                  <Tooltip title="Rules" color="black" placement="right" arrow>
+                    <a>
+                      <Bi.BiInfoCircle size={25} color="white" />
+                    </a>
+                  </Tooltip>
                 </li>
 
                 {/* <li
@@ -151,15 +161,11 @@ const Sidebar = ({
                   </a>
                 </li>
                 <li style={{ paddingTop: "20px", cursor: "pointer" }}>
-                  <a onClick={logout}>
-                    <i
-                      className="fa-solid fa-power-off"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="Logout"
-                      style={{ fontSize: "18px" }}
-                    ></i>
-                  </a>
+                  <Tooltip title="Logout" color="black" placement="right" arrow>
+                    <a onClick={logout}>
+                      <Bi.BiLogOut size={25} color="white" />
+                    </a>
+                  </Tooltip>
                 </li>
               </ul>
             </div>
@@ -167,8 +173,12 @@ const Sidebar = ({
         </div>
         <div className="newsbar">
           <section>
-            <h3 className="mt-1">News</h3>
-            {/* <hr style={{ width: "calc(100% - 10px)" }} /> */}
+            <h3
+              className="mt-1 pb-1"
+              style={{ borderBottom: "2px solid grey" }}
+            >
+              News
+            </h3>
             <div
               style={{
                 overflowY: "scroll",

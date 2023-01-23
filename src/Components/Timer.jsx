@@ -15,7 +15,7 @@ const Timer = ({
 
   useEffect(() => {
     // exit early when we reach 0
-    if (timeLeft === 1 && orderPlaced === false && round !== 4 && round !== 5) {
+    if (timeLeft === 1 && orderPlaced === false) {
       handlePass();
     }
     if (!timeLeft) return;
@@ -25,7 +25,6 @@ const Timer = ({
     }
     if (timeLeft === 1 && round === 4) {
       handleVetoClose();
-      handlePass();
     }
 
     // save intervalId to clear the interval when the

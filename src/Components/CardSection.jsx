@@ -5,6 +5,7 @@ import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { SERVER_URL } from "../Baseurl";
 import Timer from "./Timer";
+import * as Bs from "react-icons/bs";
 
 const CardSection = ({
   day,
@@ -239,88 +240,88 @@ const CardSection = ({
 
   const handleRightIs = (elem) => {
     if (!isRightUsed) {
-    if (disableOrders) {
-      toast("Cant't Use Now");
-      return;
+      if (disableOrders) {
+        toast("Cant't Use Now");
+        return;
+      }
+      if (round < 4 && round > 0) {
+        setEl(elem);
+        setSpecialShow(true);
+      } else {
+        toast("This Card will Use in Normal Round Only");
+      }
     }
-    if (round < 4 && round > 0) {
-      setEl(elem);
-      setSpecialShow(true);
-    } else {
-      toast("This Card will Use in Normal Round Only");
-    }
-  }
   };
 
   const SubmitRightIs = () => {
-      const teamId = localStorage.getItem("SEG_TEAM_ID");
-      const day = localStorage.getItem("SEG_CURRENT_DAY");
-      const round = localStorage.getItem("SEG_CURRENT_ROUND");
-      axios({
-        method: "post",
-        url: `${SERVER_URL}api/main/right-issue`,
-        data: {
-          team_id: teamId,
-          card_no: el.card_no,
-          card_used_time: new Date().toJSON(),
-          day: parseInt(day),
-          round: parseInt(round),
-          description: el.description,
-          type: el.type,
-          company_ticker: companyName,
-        },
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    const day = localStorage.getItem("SEG_CURRENT_DAY");
+    const round = localStorage.getItem("SEG_CURRENT_ROUND");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/right-issue`,
+      data: {
+        team_id: teamId,
+        card_no: el.card_no,
+        card_used_time: new Date().toJSON(),
+        day: parseInt(day),
+        round: parseInt(round),
+        description: el.description,
+        type: el.type,
+        company_ticker: companyName,
+      },
+    })
+      .then((response) => {
+        toast(response.data.message);
+        setdisableOrders(true);
+        setIsRightUsed(true);
+        setSpecialShow(false);
       })
-        .then((response) => {
-          toast(response.data.message);
-          setdisableOrders(true);
-          setIsRightUsed(true);
-          setSpecialShow(false);
-        })
-        .catch((error) => {
-          toast(error.response.data);
-          setSpecialShow(false);
-        });
+      .catch((error) => {
+        toast(error.response.data);
+        setSpecialShow(false);
+      });
   };
 
   const handleShareSus = (elem) => {
     if (!specialCard) {
-    if (round === 5) {
-      setEl(elem);
-      setSpecialShow(true);
-    } else {
-      toast("This Card will Use in Special Round Only");
+      if (round === 5) {
+        setEl(elem);
+        setSpecialShow(true);
+      } else {
+        toast("This Card will Use in Special Round Only");
+      }
     }
-  }
   };
 
   const SubmitShareSus = () => {
-      const teamId = localStorage.getItem("SEG_TEAM_ID");
-      const day = localStorage.getItem("SEG_CURRENT_DAY");
-      const round = localStorage.getItem("SEG_CURRENT_ROUND");
-      axios({
-        method: "post",
-        url: `${SERVER_URL}api/main/share-suspended`,
-        data: {
-          team_id: teamId,
-          card_no: el.card_no,
-          card_used_time: new Date().toJSON(),
-          day: parseInt(day),
-          round: parseInt(round),
-          description: el.description,
-          type: el.type,
-          company_ticker: companyName,
-        },
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    const day = localStorage.getItem("SEG_CURRENT_DAY");
+    const round = localStorage.getItem("SEG_CURRENT_ROUND");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/share-suspended`,
+      data: {
+        team_id: teamId,
+        card_no: el.card_no,
+        card_used_time: new Date().toJSON(),
+        day: parseInt(day),
+        round: parseInt(round),
+        description: el.description,
+        type: el.type,
+        company_ticker: companyName,
+      },
+    })
+      .then((response) => {
+        toast("Share Suspend Card Used Successfully!!");
+        setSpecialShow(false);
+        setdisableOrders(true);
+        setSpecialCard(true);
       })
-        .then((response) => {
-          toast("Share Suspend Card Used Successfully!!");
-          setSpecialShow(false);
-          setdisableOrders(true);
-          setSpecialCard(true);
-        })
-        .catch((error) => {
-          toast("Something Went Wrong!!");
-          setSpecialShow(false);
-        });
+      .catch((error) => {
+        toast("Something Went Wrong!!");
+        setSpecialShow(false);
+      });
   };
 
   const handleSubmit = () => {
@@ -358,11 +359,21 @@ const CardSection = ({
                         }}
                       ></img>
                       <div className="card_sign">
-                        <i
+                        {/* <i
                           className={`fa-sharp fa-solid fa-triangle ${
                             elem.price < 0 ? "down" : ""
                           }`}
-                        ></i>
+                        ></i> */}
+
+                        {elem.price < 0 ? (
+                          <Bs.BsFillTriangleFill
+                            color="#d14047"
+                            size={35}
+                            style={{ transform: "rotate(180deg)" }}
+                          />
+                        ) : (
+                          <Bs.BsFillTriangleFill color="#63ca71" size={35} />
+                        )}
                         <span>
                           Rs. {elem.price > 0 ? "+" : ""}
                           {elem.price}/-

@@ -189,7 +189,22 @@ const Home = () => {
     }
   };
 
+  const handleVetoIncrease = () => {
+    if (quantity + 1000 < maxVQ) {
+      setQuantity(quantity + 1000);
+    } else {
+      toast("Can't Increase Quantity");
+    }
+  };
+
   const handleDecrease = () => {
+    if (quantity - 1000 > 0) {
+      setQuantity(quantity - 1000);
+    } else {
+      toast("Quantity can't less than 0");
+    }
+  };
+  const handleVetoDecrease = () => {
     if (quantity - 1000 > 0) {
       setQuantity(quantity - 1000);
     } else {
@@ -200,10 +215,14 @@ const Home = () => {
   const handleVeto = () => {
     setVetoResponse(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
+    if (((userAmount * 90) / 100) * quantity > balance) {
+      toast.error("Insufficient Cash Balance.");
+      setVetoResponse(false);
+      return;
+    }
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/place-veto-order`,
-      headers: {},
       data: {
         team_id: teamId,
         company_id: companyId,
@@ -218,6 +237,7 @@ const Home = () => {
         // console.log("veto ho gaya", response.data);
         if (response.data.success) {
           setVetoResponse(false);
+          orderPlaced(true);
           localStorage.setItem("VETO_ORDER_ID", response.data.data.OrderId);
           localStorage.setItem(
             "VETO_ORDER_COUNT",
@@ -365,10 +385,10 @@ const Home = () => {
         round = data.round;
         setdisableOrders(false);
       } else if (data.round === 4) {
-        round = "Veto Round";
+        round = "Veto";
         handleShow();
       } else if (data.round === 5) {
-        round = "Special round";
+        round = "Special";
       }
       setIsRoundStart(true);
       setTimeout(() => {
@@ -527,7 +547,11 @@ const Home = () => {
                 />
               </div>
               <div className="col-lg-3 p-0">
-                <Wallet balance={balance} portfolioDetails={portfolioDetails} shortShellDetails={shortShellDetails}/>
+                <Wallet
+                  balance={balance}
+                  portfolioDetails={portfolioDetails}
+                  shortShellDetails={shortShellDetails}
+                />
                 <Order
                   stockDetails={stockExchangeDetails}
                   getWalletDetails={getWalletDetails}
@@ -628,7 +652,7 @@ const Home = () => {
                     value="-"
                     className="col-2 mb-3"
                     style={{ margin: "0 10px" }}
-                    onClick={handleDecrease}
+                    onClick={handleVetoDecrease}
                   />
                   <input
                     type="number"
@@ -649,7 +673,7 @@ const Home = () => {
                     value="+"
                     className="col-2 mb-3"
                     style={{ margin: "0 10px" }}
-                    onClick={handleIncrease}
+                    onClick={handleVetoIncrease}
                   />
                 </div>
                 <input
