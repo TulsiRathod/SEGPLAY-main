@@ -1,9 +1,8 @@
-import { Translate } from "@mui/icons-material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import { SERVER_URL } from "../Baseurl";
+import { ROUND_DELAY, SERVER_URL } from "../Baseurl";
 import Timer from "./Timer";
 import * as Bs from "react-icons/bs";
 
@@ -17,16 +16,14 @@ const CardSection = ({
   getNews,
   setdisableOrders,
   disableOrders,
+  setOrderPlaced,
 }) => {
   const [cards, setCards] = useState([]);
-  const [specialshow, setSpecialShow] = useState(false);
-  const [show, setShow] = useState(false);
-  const [ticker, setTicker] = useState("");
+  const [specialShow, setSpecialShow] = useState(false);
   const [companyName, setCompanyName] = useState("");
-  const [showSpecial, setShowSpecial] = useState(false);
   const [el, setEl] = useState({});
-  const handleClose = () => setSpecialShow(false);
-  const handleShow = () => setSpecialShow(true);
+  // const handleClose = () => setSpecialShow(false);
+  // const handleShow = () => setSpecialShow(true);
   const [cardCount, setCardCount] = useState({
     GOOGL: 0,
     TESLA: 0,
@@ -35,10 +32,11 @@ const CardSection = ({
     SHELL: 0,
     YESBK: 0,
   });
-
+  // const [usedCardNo, setUsedCardNo] = useState([]);
   const [isLoanUsed, setIsLoanUsed] = useState(false);
   const [isRightUsed, setIsRightUsed] = useState(false);
   const [isDebUsed, setIsDebUsed] = useState(false);
+  const [isShareSus, setIsShareSus] = useState(false);
   const [specialCard, setSpecialCard] = useState(false);
 
   useEffect(() => {
@@ -51,9 +49,9 @@ const CardSection = ({
     }
   }, [day]);
 
-  useEffect(() => {
-    localStorage.getItem("SEG_CARD_REVEAL") ? setShow(true) : setShow(false);
-  }, [cardReveal]);
+  // useEffect(() => {
+  //   localStorage.getItem("SEG_CARD_REVEAL") ? setShow(true) : setShow(false);
+  // }, [cardReveal]);
 
   const getCard = async () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -69,8 +67,7 @@ const CardSection = ({
         setCards(response.data.cards);
         getNews();
         setSpecialCard(false);
-        setShow(true);
-        setSpecialCard(false);
+        // setShow(true);
         let counts = {
           GOOGL: 0,
           TESLA: 0,
@@ -92,6 +89,8 @@ const CardSection = ({
   const handleCurPlus = (elem) => {
     if (round === 5) {
       if (!specialCard) {
+        setOrderPlaced(true);
+        setSpecialCard(true);
         const teamId = localStorage.getItem("SEG_TEAM_ID");
         axios({
           method: "post",
@@ -109,10 +108,11 @@ const CardSection = ({
           .then((response) => {
             setdisableOrders(true);
             toast("Cuurency Increament Card Used Successfully!!");
-            setSpecialCard(true);
           })
           .catch((error) => {
             console.log("error", error);
+            setOrderPlaced(false);
+            setSpecialCard(false);
           });
       }
     } else {
@@ -123,6 +123,8 @@ const CardSection = ({
   const handleCurMinus = (elem) => {
     if (round === 5) {
       if (!specialCard) {
+        setOrderPlaced(true);
+        setSpecialCard(true);
         const teamId = localStorage.getItem("SEG_TEAM_ID");
         axios({
           method: "post",
@@ -140,12 +142,12 @@ const CardSection = ({
           .then((response) => {
             toast("Cuurency Decreament Card Used Successfully!!");
             setdisableOrders(true);
-
-            setSpecialCard(true);
             getWalletDetails();
           })
           .catch((error) => {
             console.log("error", error);
+            setOrderPlaced(false);
+            setSpecialCard(false);
           });
       }
     } else {
@@ -160,6 +162,8 @@ const CardSection = ({
     }
     if (round < 4 && round > 0) {
       if (!isLoanUsed) {
+        setIsLoanUsed(true);
+        setOrderPlaced(true);
         const teamId = localStorage.getItem("SEG_TEAM_ID");
         axios({
           method: "post",
@@ -177,11 +181,12 @@ const CardSection = ({
           .then((response) => {
             toast("Loan Mature Card Used Successfully");
             getWalletDetails();
-            setIsLoanUsed(true);
             setdisableOrders(true);
           })
           .catch((error) => {
             console.log("error", error);
+            setIsLoanUsed(false);
+            setOrderPlaced(false);
           });
       }
     } else {
@@ -206,6 +211,8 @@ const CardSection = ({
   };
 
   const SubmitDebenture = () => {
+    setIsDebUsed(true);
+    setOrderPlaced(true);
     if (!isDebUsed) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       const day = localStorage.getItem("SEG_CURRENT_DAY");
@@ -222,18 +229,21 @@ const CardSection = ({
           description: el.description,
           type: el.type,
           company_ticker: companyName,
-          order_time: "",
         },
       })
         .then((response) => {
-          toast("Debenture Card Used Successfully!!");
-          disableOrders(true);
-          setSpecialShow(false);
-          setIsDebUsed(true);
+          console.log(response.data.success, "response aaya");
+          if (response.data.success) {
+            toast.success(response.data.message);
+            setdisableOrders(true);
+            setSpecialShow(false);
+            setCompanyName("");
+          }
         })
         .catch((error) => {
-          toast("Something Went Wrong!!");
-          setSpecialShow(false);
+          console.log(error, "error aai bhai");
+          setOrderPlaced(false);
+          setIsDebUsed(false);
         });
     }
   };
@@ -246,14 +256,18 @@ const CardSection = ({
       }
       if (round < 4 && round > 0) {
         setEl(elem);
+        // setUsedCardNo([...usedCardNo, `${elem.card_no}`]);
         setSpecialShow(true);
       } else {
         toast("This Card will Use in Normal Round Only");
       }
+      // console.log(usedCardNo, "used Cards");
     }
   };
 
   const SubmitRightIs = () => {
+    setIsRightUsed(true);
+    setOrderPlaced(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -272,14 +286,17 @@ const CardSection = ({
       },
     })
       .then((response) => {
-        toast(response.data.message);
-        setdisableOrders(true);
-        setIsRightUsed(true);
-        setSpecialShow(false);
+        if (response.data.success) {
+          toast(response.data.message);
+          setdisableOrders(true);
+          setSpecialShow(false);
+          setCompanyName("");
+        }
       })
       .catch((error) => {
         toast(error.response.data);
-        setSpecialShow(false);
+        setOrderPlaced(false);
+        setIsRightUsed(false);
       });
   };
 
@@ -299,6 +316,9 @@ const CardSection = ({
   };
 
   const SubmitShareSus = () => {
+    setIsShareSus(true);
+    setOrderPlaced(true);
+
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -317,18 +337,26 @@ const CardSection = ({
       },
     })
       .then((response) => {
-        toast("Share Suspend Card Used Successfully!!");
-        setSpecialShow(false);
-        setdisableOrders(true);
-        setSpecialCard(true);
+        // console.log(response);
+        if (response.data.success) {
+          toast.success(response.data.success);
+          setSpecialShow(false);
+          setdisableOrders(true);
+          setSpecialCard(true);
+        }
       })
       .catch((error) => {
-        toast("Something Went Wrong!!");
-        setSpecialShow(false);
+        toast(error.response.data.message);
+        setIsShareSus(false);
+        setOrderPlaced(false);
       });
   };
 
   const handleSubmit = () => {
+    if (companyName === "") {
+      toast.error("Please Select Company");
+      return;
+    }
     if (el.type === 3) SubmitDebenture();
     else if (el.type === 4) SubmitRightIs();
     else if (el.type === 7) SubmitShareSus();
@@ -406,7 +434,11 @@ const CardSection = ({
                     } `}
                   >
                     <div className="card__face front">
-                      <img src="../assets/BullBear.png" alt="" />
+                      {!isLoanUsed ? (
+                        <img src="../assets/BullBear.png" alt="" />
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div
                       className={`card__face back special_card1 ${
@@ -500,7 +532,11 @@ const CardSection = ({
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
                   >
                     <div className="card__face front">
-                      <img src="../assets/BullBear.png" alt="" />
+                      {!isRightUsed ? (
+                        <img src="../assets/BullBear.png" alt="" />
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div
                       className={`card__face back special_card1 ${
@@ -749,7 +785,7 @@ const CardSection = ({
         )}
       </div>
 
-      <Offcanvas show={specialshow} onHide={handleClose}>
+      <Offcanvas show={specialShow} onHide={() => setSpecialShow(false)}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
             <b>Special Order</b>{" "}
@@ -805,9 +841,6 @@ const CardSection = ({
           </div>
         </Offcanvas.Body>
       </Offcanvas>
-      <div className="d-none">
-        <Timer setShowSpecial={(e) => setShowSpecial(e)} />
-      </div>
     </>
   );
 };

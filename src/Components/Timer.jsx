@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 
 const Timer = ({
   seconds,
-  setIsRoundStart,
   orderPlaced,
   handlePass,
   round,
   CardImpact,
-  setShowSpecial,
   handleVetoClose,
-  handleVetoWinner,
 }) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
 

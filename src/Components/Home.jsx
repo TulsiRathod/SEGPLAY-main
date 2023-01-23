@@ -61,7 +61,7 @@ const Home = () => {
   const [maxQ, setMaxQ] = useState(0);
   const [maxVQ, setMaxVQ] = useState(0);
   const [price, setPrice] = useState(0);
-  const [companyId, setCompanyId] = useState();
+  const [companyId, setCompanyId] = useState("");
   const [bidAmount, setBidAmount] = useState(0);
   const [news, setNews] = useState({});
   const [scModal, setScModal] = useState(false);
@@ -218,6 +218,10 @@ const Home = () => {
     if (((userAmount * 90) / 100) * quantity > balance) {
       toast.error("Insufficient Cash Balance.");
       setVetoResponse(false);
+      return;
+    }
+    if (companyId === "") {
+      toast.error("Please select the company first.");
       return;
     }
     axios({
@@ -437,6 +441,7 @@ const Home = () => {
 
     socket.on("day_end_short_sell_settle", (data) => {
       if (data.isDayEnd) {
+        localStorage.removeItem("VETO_ORDER_ID");
         Swal.fire({
           icon: "error",
           title: `Times Up!! This Day Has Been Ended.`,
@@ -539,6 +544,7 @@ const Home = () => {
                   getNews={getNews}
                   disableOrders={disableOrders}
                   setdisableOrders={setdisableOrders}
+                  setOrderPlaced={setOrderPlaced}
                 />
               </div>
               <div className="col-lg-3 p-0">

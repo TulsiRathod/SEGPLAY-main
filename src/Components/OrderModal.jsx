@@ -1,7 +1,5 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import { SERVER_URL, toIndianCurrency } from "../Baseurl";
+import React from "react";
+import { toIndianCurrency } from "../Baseurl";
 
 const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
   return (
@@ -22,6 +20,7 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
               <thead style={{ backgroundColor: "#20958f", color: "#fff" }}>
                 <tr>
                   <th scope="col">Day</th>
+                  <th scope="col">Round</th>
                   <th scope="col">Status</th>
                   <th scope="col">Script</th>
                   <th scope="col">Quantity</th>
@@ -43,6 +42,8 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                     ) : (
                       <>
                         <td>{order.day}</td>
+                        <td>{order.round_type}</td>
+
                         <td>
                           {order.execution === 0 ? "Failed" : ""}
                           {order.execution === 1 ? "Executed" : ""}
