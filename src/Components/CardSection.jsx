@@ -532,11 +532,7 @@ const CardSection = ({
                     className={`card_content ${cardReveal ? "is-flipped" : ""}`}
                   >
                     <div className="card__face front">
-                      {!isRightUsed ? (
-                        <img src="../assets/BullBear.png" alt="" />
-                      ) : (
-                        ""
-                      )}
+                      <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div
                       className={`card__face back special_card1 ${

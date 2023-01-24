@@ -75,7 +75,7 @@ const Home = () => {
     axios({
       method: "post",
       data: {
-        day_no: 1,
+        day_no: localStorage.getItem("SEG_CURRENT_DAY"),
         team_id: team_id,
       },
       url: `${SERVER_URL}api/main/get-current-day-short-sell`,
@@ -259,6 +259,8 @@ const Home = () => {
       })
       .catch((error) => {
         console.log(error);
+        setVetoResponse(false);
+
         toast.error(error.response.data.message);
       });
   };
