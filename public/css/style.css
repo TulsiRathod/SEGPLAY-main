@@ -450,6 +450,15 @@ h3 {
   left: 35%;
   top: 40%;
 }
+
+.portfolio-qty {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* .change-color > tr > th {
+  color: "white";
+} */
 /************media query *********************/
 @media screen and (min-height: 900px) {
   .portfolio_tbl_wrapper {

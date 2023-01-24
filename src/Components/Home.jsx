@@ -221,6 +221,7 @@ const Home = () => {
       return;
     }
     if (companyId === "") {
+      setVetoResponse(false);
       toast.error("Please select the company first.");
       return;
     }
@@ -277,7 +278,7 @@ const Home = () => {
             Swal.fire({
               icon: "success",
               title: "Congratulations",
-              text: "You Have Won The Veto Round.",
+              text: "Your Veto Order has been executed",
               // timer: 1500,
             });
           }
@@ -433,6 +434,7 @@ const Home = () => {
           //  imageWidth: 400,
           //  imageHeight: 200,
           //  imageAlt: "Custom image",
+          timer: 3000,
         });
       }
     });
@@ -503,7 +505,7 @@ const Home = () => {
                   round={round}
                   setRound={setRound}
                   CardImpact={CardImpact}
-                  handleVetoClose={handleClose}
+                  handleClose={handleClose}
                 />
               ) : (
                 "00:00"

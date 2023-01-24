@@ -64,7 +64,13 @@ const PortfolioModal = ({
                       {elem.company_name}
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>{elem.total_stock}</p>
+                      <p>
+                        {
+                          toIndianCurrency(parseInt(elem.total_stock))
+                            .substring(1)
+                            .split(".")[0]
+                        }
+                      </p>
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>
@@ -88,7 +94,7 @@ const PortfolioModal = ({
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>
-                        {Math.round(
+                        {toIndianCurrency(
                           elem.current_stock_price * elem.total_stock -
                             elem.total_investment_amount
                         )}
@@ -127,10 +133,16 @@ const PortfolioModal = ({
                   <tr>
                     <td>
                       <h5>{elem.company_ticker}</h5>
-                      {elem.company_name}(Short Shell)
+                      {elem.company_name.toLowerCase()}(ShortSell)
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>{toIndianCurrency(elem.stock_quantity)}</p>
+                      <p>
+                        {
+                          toIndianCurrency(parseInt(elem.stock_quantity))
+                            .substring(1)
+                            .split(".")[0]
+                        }
+                      </p>
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>{toIndianCurrency(elem.buying_price)}</p>

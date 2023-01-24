@@ -369,9 +369,7 @@ const Portfolio = (props) => {
                   <tr>
                     <th>Company</th>
                     <th style={{ textAlign: "center" }}>Last Price</th>
-                    <th style={{ textAlign: "center" }}>P&L</th>
-                    <th style={{ textAlign: "center" }}>Quantity</th>
-                    <th style={{ textAlign: "end" }}>Total</th>
+                    <th style={{ textAlign: "end" }}>P&L</th>
                   </tr>
                   {portfolio.map((elem) => (
                     <tr>
@@ -379,11 +377,21 @@ const Portfolio = (props) => {
                         <p style={{ fontSize: "18px", fontWeight: "700" }}>
                           {elem.company_name}
                         </p>
+                        <p
+                          className="portfolio-qty"
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: "700",
+                            color: "grey",
+                          }}
+                        >
+                          Qty. :{elem.total_stock}
+                        </p>
                       </td>
                       <td style={{ textAlign: "center" }}>
                         <p>{toIndianCurrency(elem.current_stock_price)}</p>
                       </td>
-                      <td style={{ textAlign: "center" }}>
+                      <td style={{ textAlign: "end" }}>
                         <p
                           style={{
                             color: `${
@@ -399,6 +407,34 @@ const Portfolio = (props) => {
                             }`,
                           }}
                         >
+                          {toIndianCurrency(
+                            (elem.current_stock_price -
+                              elem.average_buying_price) *
+                              elem.total_stock
+                          ) === "NaN"
+                            ? "0.00"
+                            : toIndianCurrency(
+                                elem.current_stock_price * elem.total_stock -
+                                  elem.average_buying_price * elem.total_stock
+                              )}
+                        </p>
+                        <p
+                          style={{
+                            color: `${
+                              elem.current_stock_price -
+                                elem.average_buying_price <
+                              0
+                                ? "red"
+                                : elem.current_stock_price -
+                                    elem.average_buying_price ===
+                                  0
+                                ? "black"
+                                : "green"
+                            }`,
+                            fontSize: "10px",
+                          }}
+                        >
+                          (
                           {(
                             ((
                               elem.current_stock_price -
@@ -416,19 +452,17 @@ const Portfolio = (props) => {
                                   elem.average_buying_price) *
                                 100
                               ).toFixed(2)}
-                          %
+                          %)
                         </p>
                       </td>
-                      <td style={{ textAlign: "center" }}>
-                        <p>{elem.total_stock}</p>
-                      </td>
-                      <td style={{ textAlign: "end" }}>
+
+                      {/* <td style={{ textAlign: "end" }}>
                         <p>
                           {toIndianCurrency(
                             elem.total_stock * elem.current_stock_price
                           )}
                         </p>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                   {shortShellDetails.map((elem) => (
@@ -437,20 +471,23 @@ const Portfolio = (props) => {
                         <p style={{ fontSize: "18px", fontWeight: "700" }}>
                           {elem.company_ticker}
                         </p>
-                        Shortsell
+                        <p
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: "600",
+                            color: "grey",
+                          }}
+                        >
+                          {" "}
+                          Qty. : {elem.stock_quantity} (ShortSell)
+                        </p>
                       </td>
                       <td style={{ textAlign: "center" }}>
                         <p>{toIndianCurrency(elem.buying_price)}</p>
                       </td>
-                      <td style={{ textAlign: "center" }}>
-                        <p>0.00%</p>
+                      <td style={{ textAlign: "end" }}>
+                        <p>--</p>
                       </td>
-                      <td style={{ textAlign: "center" }}>
-                        <p>{elem.stock_quantity}</p>
-                      </td>
-                      {/* <td style={{ textAlign: "end" }}>
-                        <p>{elem.stock_quantity*elem.buying_price}</p>
-                      </td> */}
                     </tr>
                   ))}
                 </table>

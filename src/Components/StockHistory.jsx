@@ -24,15 +24,18 @@ const StockHistory = ({
           <hr />
           <div className="scroll_content">
             <table className="table table-striped">
-              <thead style={{ backgroundColor: "#20958f" }}>
+              <thead
+                style={{ backgroundColor: "#20958f" }}
+                className="change-color"
+              >
                 <tr>
-                  <th>DAY</th>
-                  <th>ADANI</th>
-                  <th>GOOGLE</th>
-                  <th>SHELL</th>
-                  <th>SUN PHARMA</th>
-                  <th>TESLA</th>
-                  <th>YES BANK</th>
+                  <th style={{ color: "white" }}>DAY</th>
+                  <th style={{ color: "white" }}>GOOGLE</th>
+                  <th style={{ color: "white" }}>ADANI</th>
+                  <th style={{ color: "white" }}>SHELL</th>
+                  <th style={{ color: "white" }}>YES BANK</th>
+                  <th style={{ color: "white" }}>TESLA</th>
+                  <th style={{ color: "white" }}>SUN PHARMA</th>
                 </tr>
               </thead>
 
