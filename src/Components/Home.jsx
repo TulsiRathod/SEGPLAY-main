@@ -247,7 +247,6 @@ const Home = () => {
             "VETO_ORDER_COUNT",
             Number(localStorage.getItem("VETO_ORDER_COUNT")) + 1
           );
-
           toast.success(response.data.message);
           getWalletDetails();
           handleClose();

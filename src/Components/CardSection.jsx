@@ -301,7 +301,7 @@ const CardSection = ({
   };
 
   const handleShareSus = (elem) => {
-    if (!specialCard) {
+    if (!isShareSus) {
       if (disableOrders) {
         toast("Can't Use Now");
         return;
