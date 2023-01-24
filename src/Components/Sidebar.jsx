@@ -21,6 +21,7 @@ const Sidebar = ({
   news,
   handlePriceReveal,
   getOrderHistory,
+  getStockExchange,
 }) => {
   const nav = useNavigate();
   const logout = () => {
@@ -55,6 +56,7 @@ const Sidebar = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setExchangeModal(true);
+                    getStockExchange();
                   }}
                   className="mb-3"
                 >
@@ -115,7 +117,7 @@ const Sidebar = ({
                   className="mb-3"
                 >
                   <Tooltip
-                    title="Stock Exchange History"
+                    title="Price History"
                     color="black"
                     placement="right"
                     arrow

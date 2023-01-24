@@ -7,6 +7,7 @@ const Timer = ({
   round,
   CardImpact,
   handleClose,
+  setSpecialUse,
 }) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
@@ -19,6 +20,7 @@ const Timer = ({
 
     if (timeLeft === 1 && round === 5) {
       CardImpact();
+      setSpecialUse(false);
     }
     if (timeLeft === 1 && round === 4) {
       handleClose();

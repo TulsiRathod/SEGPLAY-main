@@ -17,6 +17,8 @@ const CardSection = ({
   setdisableOrders,
   disableOrders,
   setOrderPlaced,
+  setSpecialUse,
+  specialUse,
 }) => {
   const [cards, setCards] = useState([]);
   const [specialShow, setSpecialShow] = useState(false);
@@ -235,6 +237,7 @@ const CardSection = ({
           console.log(response.data.success, "response aaya");
           if (response.data.success) {
             toast.success(response.data.message);
+            getWalletDetails();
             setdisableOrders(true);
             setSpecialShow(false);
             setCompanyName("");
@@ -302,23 +305,20 @@ const CardSection = ({
 
   const handleShareSus = (elem) => {
     if (!isShareSus) {
-      if (disableOrders) {
-        toast("Can't Use Now");
-        return;
-      }
-      if (round === 5) {
+      if (round === 5 && specialUse) {
         setEl(elem);
         setSpecialShow(true);
       } else {
         toast("This Card will Use in Special Round Only");
       }
+    } else {
+      toast.error("Can't Use Now");
     }
   };
 
   const SubmitShareSus = () => {
     setIsShareSus(true);
     setOrderPlaced(true);
-
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -339,7 +339,9 @@ const CardSection = ({
       .then((response) => {
         // console.log(response);
         if (response.data.success) {
-          toast.success(response.data.success);
+          toast.success(response.data.message);
+          setSpecialUse(true);
+          getWalletDetails();
           setSpecialShow(false);
           setdisableOrders(true);
           setSpecialCard(true);
@@ -434,11 +436,7 @@ const CardSection = ({
                     } `}
                   >
                     <div className="card__face front">
-                      {!isLoanUsed ? (
-                        <img src="../assets/BullBear.png" alt="" />
-                      ) : (
-                        ""
-                      )}
+                      <img src="../assets/BullBear.png" alt="" />
                     </div>
                     <div
                       className={`card__face back special_card1 ${

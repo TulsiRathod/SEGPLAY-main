@@ -69,6 +69,7 @@ const Home = () => {
   const [shortSellDetail, setShortSellDetail] = useState([]);
   const [passRes, setPassRes] = useState(false);
   const [vetoResponse, setVetoResponse] = useState(false);
+  const [specialUse, setSpecialUse] = useState(true);
 
   const getShortSellDetails = () => {
     const team_id = localStorage.getItem("SEG_TEAM_ID");
@@ -392,6 +393,7 @@ const Home = () => {
         handleShow();
       } else if (data.round === 5) {
         round = "Special Round";
+        setSpecialUse(true);
       }
       setIsRoundStart(true);
       setTimeout(() => {
@@ -506,6 +508,7 @@ const Home = () => {
                   setRound={setRound}
                   CardImpact={CardImpact}
                   handleClose={handleClose}
+                  setSpecialUse={setSpecialUse}
                 />
               ) : (
                 "00:00"
@@ -527,6 +530,7 @@ const Home = () => {
           news={news}
           handlePriceReveal={handlePriceReveal}
           getOrderHistory={getOrderHistory}
+          getStockExchange={getStockExchange}
         />
         <div className="containers  ">
           <div className="main_section">
@@ -548,6 +552,8 @@ const Home = () => {
                   disableOrders={disableOrders}
                   setdisableOrders={setdisableOrders}
                   setOrderPlaced={setOrderPlaced}
+                  setSpecialUse={setSpecialUse}
+                  specialUse={specialUse}
                 />
               </div>
               <div className="col-lg-3 p-0">
