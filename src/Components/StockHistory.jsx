@@ -20,7 +20,7 @@ const StockHistory = ({
           <span className="close" id="portfolio_close" onClick={closeModal}>
             &times;
           </span>
-          <p className="modal_title">Stock Exchange History</p>
+          <p className="modal_title">Price History</p>
           <hr />
           <div className="scroll_content">
             <table className="table table-striped">

@@ -372,7 +372,7 @@ const Home = () => {
       // toast.success(`Day ${data.day} Started`);
       Swal.fire({
         icon: "success",
-        title: `Day${data.day} is Started`,
+        title: `Day ${data.day} Started`,
         text: "Hold Tight And Have Fun.",
         timer: 3000,
       });
@@ -384,20 +384,20 @@ const Home = () => {
       var round;
       setOrderPlaced(false);
       if (data.round === 1 || data.round === 2 || data.round === 3) {
-        round = data.round;
+        round = `Round ${data.round}`;
         setdisableOrders(false);
       } else if (data.round === 4) {
-        round = "Veto";
+        round = "Veto Round";
         handleShow();
       } else if (data.round === 5) {
-        round = "Special";
+        round = "Special Round";
       }
       setIsRoundStart(true);
       setTimeout(() => {
         setIsRoundStart(false);
         setdisableOrders(true);
       }, ROUND_DELAY * 1000);
-      toast.success(`Round ${round} Started`);
+      toast.success(`${round} Started`);
       setRound(data.round);
       localStorage.setItem("SEG_CURRENT_ROUND", data.round);
     });
@@ -445,7 +445,7 @@ const Home = () => {
         localStorage.removeItem("VETO_ORDER_ID");
         Swal.fire({
           icon: "error",
-          title: `Times Up!! This Day Has Been Ended.`,
+          title: `Day ${localStorage.getItem("SEG_CURRENT_DAY")} Ended.`,
           // text: "Hold Tight And Have Fun.",
           // timer: 1500,
         });
@@ -640,7 +640,11 @@ const Home = () => {
                 >
                   Max Quantity:{" "}
                   <span className="text-warning me-2">
-                    {toIndianCurrency(maxVQ)}
+                    {
+                      toIndianCurrency(parseInt(maxVQ))
+                        .substring(1)
+                        .split(".")[0]
+                    }
                   </span>{" "}
                   Share Price:{" "}
                   <span className="text-warning">
