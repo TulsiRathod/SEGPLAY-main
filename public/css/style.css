@@ -410,11 +410,10 @@ h3 {
   padding: 2px 0;
   display: flex;
   justify-content: center;
-  border-radius: 5px 5px 5px 5px;
-  width: 100%;
-  min-height: 40px;
-  height: auto;
-  bottom: -50px;
+  border-radius: 5px 5px 0px 0px;
+  width: 57%;
+  height: 40px;
+  bottom: 0px;
   background-color: #2e837e;
 }
 
@@ -462,9 +461,9 @@ h3 {
 } */
 /************media query *********************/
 @media screen and (min-height: 900px) {
-  .balance p {
+  /* .balance p {
     font-size: 19px;
-  }
+  } */
   .balance h4 {
     margin-bottom: 25px;
   }

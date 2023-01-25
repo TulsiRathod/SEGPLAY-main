@@ -1,9 +1,13 @@
 import { border } from "@mui/system";
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { socket, toIndianCurrency } from "../Baseurl";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { SERVER_URL, socket, toIndianCurrency } from "../Baseurl";
 
 const LeaderBoard = () => {
+  const nav = useNavigate();
   const [leaderboard, setLeaderboard] = useState([]);
   useEffect(() => {
     socket.on("winner", (data) => {
@@ -12,16 +16,37 @@ const LeaderBoard = () => {
     });
   }, []);
 
+  const logout = () => {
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "post",
+      url: `${SERVER_URL}api/main/logout`,
+      data: {
+        teamid: teamId,
+      },
+    })
+      .then((response) => {
+        // console.log("Success", response);
+        toast.success(response.data.message);
+        localStorage.clear();
+        nav("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
+
   return (
     <>
       <div className="container-fluid">
         <div
-          className="container my-4 border"
+          className="container my-4"
           style={{
             borderRadius: "15px",
             boxShadow:
               "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
-            height: "92vh",
+            height: "85vh",
             overflowY: "scroll",
           }}
         >
@@ -57,6 +82,11 @@ const LeaderBoard = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="d-flex justify-content-center">
+          <div className="btn btn-danger" onClick={logout}>
+            Logout
+          </div>
         </div>
       </div>
     </>
