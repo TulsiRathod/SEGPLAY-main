@@ -46,9 +46,10 @@ const Portfolio = (props) => {
               className="row"
               style={{
                 width: "800px",
-                height: "260px",
+                height: "auto",
                 margin: "10px",
-                border: "3px solid black",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px",
                 borderRadius: "20px",
               }}
             >

@@ -407,13 +407,14 @@ h3 {
 .card_count {
   position: absolute;
   color: white;
-  padding: 2px 5px;
+  padding: 2px 0;
   display: flex;
   justify-content: center;
-  border-radius: 5px 5px 0px 0px;
-  width: 57%;
-  height: 40px;
-  bottom: 0px;
+  border-radius: 5px 5px 5px 5px;
+  width: 100%;
+  min-height: 40px;
+  height: auto;
+  bottom: -50px;
   background-color: #2e837e;
 }
 
@@ -461,18 +462,11 @@ h3 {
 } */
 /************media query *********************/
 @media screen and (min-height: 900px) {
-  .portfolio_tbl_wrapper {
-    padding-top: 50px;
-  }
   .balance p {
     font-size: 19px;
   }
   .balance h4 {
     margin-bottom: 25px;
-  }
-  .wallet {
-    padding-top: calc(15vh - 115px);
-    padding-bottom: calc(15vh - 115px);
   }
 }
 
@@ -495,4 +489,15 @@ h3 {
   text-align: center;
   user-select: none !important;
   font-weight: 900;
+}
+
+.l-header {
+  position: sticky;
+  top: 0;
+  background: rgb(46, 131, 126);
+  background: radial-gradient(
+    circle,
+    rgba(46, 131, 126, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
 }

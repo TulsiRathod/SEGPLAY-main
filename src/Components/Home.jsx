@@ -18,10 +18,12 @@ import { Offcanvas } from "react-bootstrap";
 import SpecialCardUsed from "./SpecialCardUsed";
 import Swal from "sweetalert2";
 import ShortSellModal from "./ShortSellModal";
+import { useNavigate } from "react-router-dom";
 
 const socket = io(SERVER_URL);
 
 const Home = () => {
+  const nav = useNavigate();
   const [rulesModal, setRulesModal] = useState(false);
   const [show, setShow] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
@@ -280,7 +282,7 @@ const Home = () => {
               icon: "success",
               title: "Congratulations",
               text: "Your Veto Order has been executed",
-              // timer: 1500,
+              timer: 4000,
             });
           }
         })
@@ -432,10 +434,6 @@ const Home = () => {
         Swal.fire({
           icon: "error",
           title: "Market Closed",
-          //  imageUrl: "../assets/business-team.gif",
-          //  imageWidth: 400,
-          //  imageHeight: 200,
-          //  imageAlt: "Custom image",
           timer: 3000,
         });
       }
@@ -450,8 +448,7 @@ const Home = () => {
         Swal.fire({
           icon: "error",
           title: `Day ${localStorage.getItem("SEG_CURRENT_DAY")} Ended.`,
-          // text: "Hold Tight And Have Fun.",
-          // timer: 1500,
+          timer: 3000,
         });
         setRound(0);
         setCardReveal(false);
@@ -461,6 +458,11 @@ const Home = () => {
         getShortSellDetails();
         getWalletDetails();
         getStockExchange();
+      }
+      if (data.gameEnd) {
+        setTimeout(() => {
+          nav("/Leaderboard");
+        }, 4000);
       }
     });
 

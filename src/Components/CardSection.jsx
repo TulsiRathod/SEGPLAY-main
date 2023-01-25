@@ -729,54 +729,54 @@ const CardSection = ({
             />
           </div>
         )}
-      </div>
-      <div className="card_count">
-        {cardReveal ? (
-          <>
-            <div className="count-block">
-              <p>
-                {" "}
-                <img src="../assets/GOOGL.png" alt="" srcset="" />
-                {cardCount.GOOGL > 0 ? "+" : ""} {cardCount.GOOGL}
-              </p>
-            </div>
-            <div className="count-block">
-              <p>
-                <img src="../assets/ADANI.png" />
-                {cardCount.ADANI > 0 ? "+" : ""} {cardCount.ADANI}
-              </p>
-            </div>
-            <div className="count-block">
-              <p>
-                <img src="../assets/TESLA.png" />
-                {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
-              </p>
-            </div>
+        <div className="card_count">
+          {cardReveal ? (
+            <>
+              <div className="count-block">
+                <p>
+                  {" "}
+                  <img src="../assets/GOOGL.png" alt="" srcset="" />
+                  {cardCount.GOOGL > 0 ? "+" : ""} {cardCount.GOOGL}
+                </p>
+              </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/ADANI.png" />
+                  {cardCount.ADANI > 0 ? "+" : ""} {cardCount.ADANI}
+                </p>
+              </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/TESLA.png" />
+                  {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
+                </p>
+              </div>
 
-            <div className="count-block">
-              <p>
-                <img src="../assets/YESBK.png" />
-                {cardCount.YESBK > 0 ? "+" : ""} {cardCount.YESBK}
-              </p>
-            </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/YESBK.png" />
+                  {cardCount.YESBK > 0 ? "+" : ""} {cardCount.YESBK}
+                </p>
+              </div>
 
-            <div className="count-block">
-              <p>
-                <img src="../assets/SUNPM.png" />
-                {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
-              </p>
-            </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/SUNPM.png" />
+                  {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
+                </p>
+              </div>
 
-            <div className="count-block">
-              <p>
-                <img src="../assets/SHELL.png" />
-                {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
-              </p>
-            </div>
-          </>
-        ) : (
-          ""
-        )}
+              <div className="count-block">
+                <p>
+                  <img src="../assets/SHELL.png" />
+                  {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
+                </p>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
 
       <Offcanvas show={specialShow} onHide={() => setSpecialShow(false)}>
