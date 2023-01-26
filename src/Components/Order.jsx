@@ -53,7 +53,6 @@ const Order = (props) => {
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/buy-order`,
-      headers: {},
       data: {
         team_id: teamId,
         company_id: companyId,
@@ -74,7 +73,6 @@ const Order = (props) => {
       .catch((error) => {
         setBuyRes(false);
         setdisableOrders(false);
-
         console.log(error);
         toast.error(error.response.data.message);
       });
@@ -113,7 +111,6 @@ const Order = (props) => {
       .catch((error) => {
         setSellRes(false);
         setdisableOrders(false);
-
         console.log(error);
         toast.error(error.response.data.message);
       });

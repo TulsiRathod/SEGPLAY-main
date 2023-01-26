@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { ROUND_DELAY, SERVER_URL } from "../Baseurl";
-import Timer from "./Timer";
 import * as Bs from "react-icons/bs";
 
 const CardSection = ({
@@ -44,6 +43,7 @@ const CardSection = ({
   useEffect(() => {
     if (day != 0) {
       getCard();
+      setIsShareSus(false);
       setSpecialCard(false);
       setIsDebUsed(false);
       setIsLoanUsed(false);
@@ -294,6 +294,7 @@ const CardSection = ({
           setdisableOrders(true);
           setSpecialShow(false);
           setCompanyName("");
+          getWalletDetails();
         }
       })
       .catch((error) => {

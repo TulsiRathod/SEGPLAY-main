@@ -35,7 +35,7 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                     {order.order_type === 3 ? (
                       <>
                         <td>{order.day}</td>
-                        <td colSpan={6} style={{ textAlign: "center" }}>
+                        <td colSpan={7} style={{ textAlign: "center" }}>
                           Pass
                         </td>
                       </>
