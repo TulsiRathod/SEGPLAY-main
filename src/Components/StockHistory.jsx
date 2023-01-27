@@ -42,7 +42,7 @@ const StockHistory = ({
               <tbody>
                 {stockHistoryDetails.map((element, i) => (
                   <tr>
-                    <td>{i + 1}</td>
+                    <td>{i + 1 === 1 ? "Opening" : i + " (Closing)"}</td>
                     {element.map((e, i) => (
                       <td>{toIndianCurrency(e.price)}</td>
                     ))}

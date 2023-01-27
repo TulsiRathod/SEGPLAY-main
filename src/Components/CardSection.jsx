@@ -93,6 +93,8 @@ const CardSection = ({
       if (!specialCard) {
         setOrderPlaced(true);
         setSpecialCard(true);
+        setdisableOrders(true);
+
         const teamId = localStorage.getItem("SEG_TEAM_ID");
         axios({
           method: "post",
@@ -108,17 +110,21 @@ const CardSection = ({
           },
         })
           .then((response) => {
-            setdisableOrders(true);
-            toast("Cuurency Increament Card Used Successfully!!");
+            if (response.data.success) {
+              toast.success(response.data.message);
+              setdisableOrders(true);
+            }
           })
           .catch((error) => {
             console.log("error", error);
+            setdisableOrders(false);
+
             setOrderPlaced(false);
             setSpecialCard(false);
           });
       }
     } else {
-      toast("This Card will Use in Special Round Only");
+      toast("Can Use In Special Round Only");
     }
   };
 
@@ -126,6 +132,7 @@ const CardSection = ({
     if (round === 5) {
       if (!specialCard) {
         setOrderPlaced(true);
+        setdisableOrders(true);
         setSpecialCard(true);
         const teamId = localStorage.getItem("SEG_TEAM_ID");
         axios({
@@ -142,13 +149,18 @@ const CardSection = ({
           },
         })
           .then((response) => {
-            toast("Cuurency Decreament Card Used Successfully!!");
-            setdisableOrders(true);
-            getWalletDetails();
+            // toast("Cuurency Decreament Card Used Successfully!!");
+            if (response.data.success) {
+              toast.success(response.data.message);
+              setdisableOrders(true);
+              getWalletDetails();
+            }
           })
           .catch((error) => {
             console.log("error", error);
             setOrderPlaced(false);
+            setdisableOrders(false);
+
             setSpecialCard(false);
           });
       }
@@ -165,6 +177,8 @@ const CardSection = ({
     if (round < 4 && round > 0) {
       if (!isLoanUsed) {
         setIsLoanUsed(true);
+        setdisableOrders(true);
+
         setOrderPlaced(true);
         const teamId = localStorage.getItem("SEG_TEAM_ID");
         axios({
@@ -181,12 +195,15 @@ const CardSection = ({
           },
         })
           .then((response) => {
-            toast("Loan Mature Card Used Successfully");
-            getWalletDetails();
-            setdisableOrders(true);
+            if (response.data.success) {
+              toast.success("response.data.message");
+              getWalletDetails();
+              // setdisableOrders(true);
+            }
           })
           .catch((error) => {
             console.log("error", error);
+            setdisableOrders(false);
             setIsLoanUsed(false);
             setOrderPlaced(false);
           });
@@ -215,6 +232,7 @@ const CardSection = ({
   const SubmitDebenture = () => {
     setIsDebUsed(true);
     setOrderPlaced(true);
+    setdisableOrders(true);
     if (!isDebUsed) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       const day = localStorage.getItem("SEG_CURRENT_DAY");
@@ -245,6 +263,8 @@ const CardSection = ({
         })
         .catch((error) => {
           console.log(error, "error aai bhai");
+          setdisableOrders(false);
+
           setOrderPlaced(false);
           setIsDebUsed(false);
         });
@@ -271,6 +291,7 @@ const CardSection = ({
   const SubmitRightIs = () => {
     setIsRightUsed(true);
     setOrderPlaced(true);
+    setdisableOrders(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -291,14 +312,14 @@ const CardSection = ({
       .then((response) => {
         if (response.data.success) {
           toast(response.data.message);
-          setdisableOrders(true);
           setSpecialShow(false);
           setCompanyName("");
           getWalletDetails();
         }
       })
       .catch((error) => {
-        toast(error.response.data);
+        toast(error.response.data.message);
+        setdisableOrders(false);
         setOrderPlaced(false);
         setIsRightUsed(false);
       });
@@ -320,6 +341,7 @@ const CardSection = ({
   const SubmitShareSus = () => {
     setIsShareSus(true);
     setOrderPlaced(true);
+    setdisableOrders(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -338,7 +360,6 @@ const CardSection = ({
       },
     })
       .then((response) => {
-        // console.log(response);
         if (response.data.success) {
           toast.success(response.data.message);
           setSpecialUse(true);
@@ -352,6 +373,7 @@ const CardSection = ({
         toast(error.response.data.message);
         setIsShareSus(false);
         setOrderPlaced(false);
+        setdisableOrders(false);
       });
   };
 
@@ -457,7 +479,7 @@ const CardSection = ({
                       <div className="card_sign">
                         <p className="special_card_head">loan stock matured</p>
                         <p className="special_card_detail">
-                          Collect Rs. 25,00,000 from the stockvroker
+                          Collect Rs. 25,00,000 from the stockbroker
                         </p>
                         <img
                           src="../assets/loan.png"
@@ -822,7 +844,7 @@ const CardSection = ({
               </select>
             )}
           </div>
-          <div
+          <button
             className="btn btn-success"
             style={{
               position: "absolute",
@@ -831,9 +853,10 @@ const CardSection = ({
               bottom: "10px",
             }}
             onClick={handleSubmit}
+            // disabled={}
           >
             Submit
-          </div>
+          </button>
         </Offcanvas.Body>
       </Offcanvas>
     </>

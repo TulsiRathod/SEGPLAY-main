@@ -10,7 +10,7 @@ const Order = (props) => {
     setdisableOrders,
     disableOrders,
     handlePass,
-    orderIsPlaced,
+    setOrderPlaced,
     loggedInUsers,
   } = props;
   const [quantity, setQuantity] = useState(1000);
@@ -43,6 +43,7 @@ const Order = (props) => {
   const handleBuy = () => {
     setBuyRes(true);
     setdisableOrders(true);
+    setOrderPlaced(true);
 
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     if (price === 0) {
@@ -68,11 +69,13 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setQuantity(1000);
-        orderIsPlaced();
+        setOrderPlaced(true);
       })
       .catch((error) => {
         setBuyRes(false);
         setdisableOrders(false);
+        setOrderPlaced(false);
+
         console.log(error);
         toast.error(error.response.data.message);
       });
@@ -81,6 +84,7 @@ const Order = (props) => {
   const handleSell = () => {
     setSellRes(true);
     setdisableOrders(true);
+    setOrderPlaced(true);
 
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     if (price === 0) {
@@ -106,11 +110,11 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setQuantity(1000);
-        orderIsPlaced();
       })
       .catch((error) => {
         setSellRes(false);
         setdisableOrders(false);
+        setOrderPlaced(false);
         console.log(error);
         toast.error(error.response.data.message);
       });
@@ -119,6 +123,7 @@ const Order = (props) => {
   const handleShortSell = () => {
     setShortsellRes(true);
     setdisableOrders(true);
+    setOrderPlaced(true);
 
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     if (price === 0) {
@@ -145,11 +150,12 @@ const Order = (props) => {
         toast.success(response.data.message);
         getWalletDetails();
         setQuantity(1000);
-        orderIsPlaced();
+        setOrderPlaced(true);
       })
       .catch((error) => {
         console.log(error);
         toast.error(error.response.data.message);
+        setOrderPlaced(false);
         setdisableOrders(false);
         setShortsellRes(false);
       });

@@ -25,24 +25,26 @@ const Sidebar = ({
 }) => {
   const nav = useNavigate();
   const logout = () => {
-    const teamId = localStorage.getItem("SEG_TEAM_ID");
-    axios({
-      method: "post",
-      url: `${SERVER_URL}api/main/logout`,
-      data: {
-        teamid: teamId,
-      },
-    })
-      .then((response) => {
-        // console.log("Success", response);
-        toast.success(response.data.message);
-        localStorage.clear();
-        nav("/");
+    if (window.confirm("Are You Sure?")) {
+      const teamId = localStorage.getItem("SEG_TEAM_ID");
+      axios({
+        method: "post",
+        url: `${SERVER_URL}api/main/logout`,
+        data: {
+          teamid: teamId,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data.message);
-      });
+        .then((response) => {
+          // console.log("Success", response);
+          toast.success(response.data.message);
+          localStorage.clear();
+          nav("/");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    }
   };
 
   return (

@@ -1,4 +1,3 @@
-import { border } from "@mui/system";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -41,7 +40,7 @@ const LeaderBoard = () => {
     <>
       <div className="container-fluid">
         <div
-          className="container my-4"
+          className="container my-4 bg-light"
           style={{
             borderRadius: "15px",
             boxShadow:
@@ -50,7 +49,7 @@ const LeaderBoard = () => {
             overflowY: "scroll",
           }}
         >
-          <div className="d-flex justify-content-center py-3 l-header">
+          <div className="d-flex justify-content-center py-3 l-header bg-light">
             <h1 className="text-light">Leaderboard</h1>
           </div>
 

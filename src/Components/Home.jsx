@@ -19,6 +19,7 @@ import SpecialCardUsed from "./SpecialCardUsed";
 import Swal from "sweetalert2";
 import ShortSellModal from "./ShortSellModal";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 const socket = io(SERVER_URL);
 
@@ -72,6 +73,20 @@ const Home = () => {
   const [passRes, setPassRes] = useState(false);
   const [vetoResponse, setVetoResponse] = useState(false);
   const [specialUse, setSpecialUse] = useState(true);
+
+  const escFunction = useCallback((event) => {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, [escFunction]);
 
   const getShortSellDetails = () => {
     const team_id = localStorage.getItem("SEG_TEAM_ID");
@@ -184,14 +199,6 @@ const Home = () => {
     });
   };
 
-  const handleIncrease = () => {
-    if (quantity + 1000 < maxQ) {
-      setQuantity(quantity + 1000);
-    } else {
-      toast("Can't Increase Quantity");
-    }
-  };
-
   const handleVetoIncrease = () => {
     if (quantity + 1000 < maxVQ) {
       setQuantity(quantity + 1000);
@@ -200,13 +207,6 @@ const Home = () => {
     }
   };
 
-  const handleDecrease = () => {
-    if (quantity - 1000 > 0) {
-      setQuantity(quantity - 1000);
-    } else {
-      toast("Quantity can't less than 0");
-    }
-  };
   const handleVetoDecrease = () => {
     if (quantity - 1000 > 0) {
       setQuantity(quantity - 1000);
@@ -571,9 +571,7 @@ const Home = () => {
                   disableOrders={disableOrders}
                   handlePass={handlePass}
                   loggedInUsers={loggedInUsers}
-                  orderIsPlaced={() => {
-                    setOrderPlaced(true);
-                  }}
+                  setOrderPlaced={setOrderPlaced}
                 />
               </div>
             </div>
