@@ -374,6 +374,7 @@ const Home = () => {
 
     socket.on("day", (data) => {
       // toast.success(`Day ${data.day} Started`);
+      setSpecialUse(false);
       Swal.fire({
         icon: "success",
         title: `Day ${data.day} Started`,

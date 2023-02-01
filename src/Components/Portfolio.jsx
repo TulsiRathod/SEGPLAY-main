@@ -94,7 +94,7 @@ const Portfolio = (props) => {
                                   stockDetails[0].previous_day_price) *
                                   100) /
                                 stockDetails[0].previous_day_price
-                              ).toPrecision(4)
+                              ).toPrecision(2)
                             : 0}
                           %
                         </div>
@@ -144,7 +144,7 @@ const Portfolio = (props) => {
                                   stockDetails[1].previous_day_price) *
                                   100) /
                                 stockDetails[1].previous_day_price
-                              ).toPrecision(4)
+                              ).toPrecision(2)
                             : 0}
                           %
                         </div>
@@ -196,7 +196,7 @@ const Portfolio = (props) => {
                                   stockDetails[2].previous_day_price) *
                                   100) /
                                 stockDetails[2].previous_day_price
-                              ).toPrecision(4)
+                              ).toPrecision(2)
                             : 0}
                           %
                         </div>
@@ -246,7 +246,7 @@ const Portfolio = (props) => {
                                     stockDetails[3].previous_day_price) *
                                     100) /
                                   stockDetails[3].previous_day_price
-                                ).toPrecision(4)
+                                ).toPrecision(2)
                               : 0}
                             %
                           </div>
@@ -296,7 +296,7 @@ const Portfolio = (props) => {
                                       stockDetails[4].previous_day_price) *
                                       100) /
                                     stockDetails[4].previous_day_price
-                                  ).toPrecision(4)
+                                  ).toPrecision(2)
                                 : 0}
                               %
                             </div>
@@ -346,7 +346,7 @@ const Portfolio = (props) => {
                                       stockDetails[5].previous_day_price) *
                                       100) /
                                     stockDetails[5].previous_day_price
-                                  ).toPrecision(4)
+                                  ).toPrecision(2)
                                 : 0}
                               %
                             </div>

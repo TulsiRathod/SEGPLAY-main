@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { ROUND_DELAY, SERVER_URL } from "../Baseurl";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import * as Bs from "react-icons/bs";
 
 const CardSection = ({
@@ -23,8 +25,6 @@ const CardSection = ({
   const [specialShow, setSpecialShow] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [el, setEl] = useState({});
-  // const handleClose = () => setSpecialShow(false);
-  // const handleShow = () => setSpecialShow(true);
   const [cardCount, setCardCount] = useState({
     GOOGL: 0,
     TESLA: 0,
@@ -33,16 +33,19 @@ const CardSection = ({
     SHELL: 0,
     YESBK: 0,
   });
-  // const [usedCardNo, setUsedCardNo] = useState([]);
   const [isLoanUsed, setIsLoanUsed] = useState(false);
   const [isRightUsed, setIsRightUsed] = useState(false);
   const [isDebUsed, setIsDebUsed] = useState(false);
   const [isShareSus, setIsShareSus] = useState(false);
   const [specialCard, setSpecialCard] = useState(false);
+  const [spDisable, setSpDisable] = useState(false);
+  const [spResponse, setSpResponse] = useState(false);
+  const [weHaveCard, setWeHaveCard] = useState(false);
 
   useEffect(() => {
     if (day != 0) {
       getCard();
+      setSpecialUse(false);
       setIsShareSus(false);
       setSpecialCard(false);
       setIsDebUsed(false);
@@ -51,11 +54,9 @@ const CardSection = ({
     }
   }, [day]);
 
-  // useEffect(() => {
-  //   localStorage.getItem("SEG_CARD_REVEAL") ? setShow(true) : setShow(false);
-  // }, [cardReveal]);
-
   const getCard = async () => {
+    setWeHaveCard(true);
+
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     await axios({
       method: "post",
@@ -66,24 +67,29 @@ const CardSection = ({
       },
     })
       .then((response) => {
-        setCards(response.data.cards);
-        getNews();
-        setSpecialCard(false);
-        // setShow(true);
-        let counts = {
-          GOOGL: 0,
-          TESLA: 0,
-          ADANI: 0,
-          SUNPM: 0,
-          SHELL: 0,
-          YESBK: 0,
-        };
-        response.data.cards.map((elem) => {
-          counts[elem.company_ticker] += elem.price;
-        });
-        setCardCount(counts);
+        if (response.data.success) {
+          setCards(response.data.cards);
+          getNews();
+          setSpecialCard(false);
+          // setShow(true);
+          let counts = {
+            GOOGL: 0,
+            TESLA: 0,
+            ADANI: 0,
+            SUNPM: 0,
+            SHELL: 0,
+            YESBK: 0,
+          };
+          response.data.cards.map((elem) => {
+            counts[elem.company_ticker] += elem.price;
+          });
+          setCardCount(counts);
+        } else {
+          setWeHaveCard(false);
+        }
       })
       .catch((error) => {
+        setWeHaveCard(false);
         console.log("error", error);
       });
   };
@@ -196,9 +202,8 @@ const CardSection = ({
         })
           .then((response) => {
             if (response.data.success) {
-              toast.success("response.data.message");
+              toast.success(response.data.message);
               getWalletDetails();
-              // setdisableOrders(true);
             }
           })
           .catch((error) => {
@@ -223,7 +228,9 @@ const CardSection = ({
     }
     if (round < 4 && round > 0) {
       setEl(elem);
+      setSpDisable(false);
       setSpecialShow(true);
+      setSpResponse(false);
     } else {
       toast("This Card will Use in Normal Round Only");
     }
@@ -233,6 +240,9 @@ const CardSection = ({
     setIsDebUsed(true);
     setOrderPlaced(true);
     setdisableOrders(true);
+    setSpDisable(true);
+    setSpResponse(true);
+
     if (!isDebUsed) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
       const day = localStorage.getItem("SEG_CURRENT_DAY");
@@ -258,13 +268,15 @@ const CardSection = ({
             getWalletDetails();
             setdisableOrders(true);
             setSpecialShow(false);
+            setSpResponse(false);
             setCompanyName("");
           }
         })
         .catch((error) => {
           console.log(error, "error aai bhai");
           setdisableOrders(false);
-
+          setSpResponse(false);
+          setSpDisable(false);
           setOrderPlaced(false);
           setIsDebUsed(false);
         });
@@ -279,7 +291,8 @@ const CardSection = ({
       }
       if (round < 4 && round > 0) {
         setEl(elem);
-        // setUsedCardNo([...usedCardNo, `${elem.card_no}`]);
+        setSpDisable(false);
+        setSpResponse(false);
         setSpecialShow(true);
       } else {
         toast("This Card will Use in Normal Round Only");
@@ -290,6 +303,9 @@ const CardSection = ({
 
   const SubmitRightIs = () => {
     setIsRightUsed(true);
+    setSpDisable(true);
+    setSpResponse(true);
+
     setOrderPlaced(true);
     setdisableOrders(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -313,6 +329,7 @@ const CardSection = ({
         if (response.data.success) {
           toast(response.data.message);
           setSpecialShow(false);
+          setSpResponse(false);
           setCompanyName("");
           getWalletDetails();
         }
@@ -320,6 +337,8 @@ const CardSection = ({
       .catch((error) => {
         toast(error.response.data.message);
         setdisableOrders(false);
+        setSpResponse(false);
+        setSpDisable(false);
         setOrderPlaced(false);
         setIsRightUsed(false);
       });
@@ -329,6 +348,9 @@ const CardSection = ({
     if (!isShareSus) {
       if (round === 5 && specialUse) {
         setEl(elem);
+        setSpDisable(false);
+        setSpResponse(false);
+
         setSpecialShow(true);
       } else {
         toast("This Card will Use in Special Round Only");
@@ -342,6 +364,8 @@ const CardSection = ({
     setIsShareSus(true);
     setOrderPlaced(true);
     setdisableOrders(true);
+    setSpDisable(true);
+    setSpResponse(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     const day = localStorage.getItem("SEG_CURRENT_DAY");
     const round = localStorage.getItem("SEG_CURRENT_ROUND");
@@ -363,6 +387,7 @@ const CardSection = ({
         if (response.data.success) {
           toast.success(response.data.message);
           setSpecialUse(true);
+          setSpResponse(false);
           getWalletDetails();
           setSpecialShow(false);
           setdisableOrders(true);
@@ -371,6 +396,9 @@ const CardSection = ({
       })
       .catch((error) => {
         toast(error.response.data.message);
+        setSpResponse(false);
+
+        setSpDisable(false);
         setIsShareSus(false);
         setOrderPlaced(false);
         setdisableOrders(false);
@@ -704,7 +732,7 @@ const CardSection = ({
                     </div>
                     <div
                       className={`card__face back special_card2 ${
-                        specialCard ? "disable" : ""
+                        isShareSus ? "disable" : ""
                       }`}
                     >
                       {specialCard ? (
@@ -738,7 +766,7 @@ const CardSection = ({
               )
             )}
           </div>
-        ) : (
+        ) : !weHaveCard ? (
           <div className="d-flex justify-content-center my-auto">
             <img
               src="../assets/no-card.png"
@@ -751,6 +779,83 @@ const CardSection = ({
               }}
             />
           </div>
+        ) : (
+          <>
+            <div className="d-flex justify-content-between ">
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+            <div className="d-flex justify-content-between py-2">
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+              <Skeleton
+                style={{
+                  width: "140px",
+                  height: "170px",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+          </>
         )}
       </div>
       <div className="card_count">
@@ -853,9 +958,9 @@ const CardSection = ({
               bottom: "10px",
             }}
             onClick={handleSubmit}
-            // disabled={}
+            disabled={spDisable}
           >
-            Submit
+            {spResponse ? "Loading..." : "Submit"}
           </button>
         </Offcanvas.Body>
       </Offcanvas>
