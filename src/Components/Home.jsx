@@ -18,6 +18,8 @@ import { Offcanvas } from "react-bootstrap";
 import SpecialCardUsed from "./SpecialCardUsed";
 import Swal from "sweetalert2";
 import ShortSellModal from "./ShortSellModal";
+import ShortSellHistoryModal from "./ShortSellHistory";
+import SpecialCardsHistoryModal from "./SpecialCardHistory";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 
@@ -73,6 +75,10 @@ const Home = () => {
   const [passRes, setPassRes] = useState(false);
   const [vetoResponse, setVetoResponse] = useState(false);
   const [specialUse, setSpecialUse] = useState(true);
+  const [shortSellHistoryModal, setShortSellHistoryModal] = useState(false);
+  const [specialCardsHistoryModal, setSpecialCardsHistoryModal] = useState(false);
+  const [specialCardsHistory, setSpecialCardsHistory] = useState([]);
+  const [shortSellHistory, setShortSellHistory] = useState([]);
 
   const escFunction = useCallback((event) => {
     if (event.key === "Escape") {
@@ -120,6 +126,8 @@ const Home = () => {
     setStockHistoryModal(false);
     setScModal(false);
     setShortSellModal(false);
+    setShortSellHistoryModal(false);
+    setSpecialCardsHistoryModal(false);
   };
 
   const getWalletDetails = () => {
@@ -355,6 +363,34 @@ const Home = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const openSpecialCardHistory = () => {
+    setSpecialCardsHistoryModal(true);
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/get-special-card-used`,
+    })
+    .then((response)=>{
+      setSpecialCardsHistory(response.data.data);
+      console.log(response.data.data);
+    })
+    .catch((error)=>{
+      toast.error(error.data.message);
+    })
+  }
+  const openShortSellHistory = () => {
+    setShortSellHistoryModal(true);
+    const teamId = localStorage.getItem("SEG_TEAM_ID");
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/main/get-short-sell-history?team_id=${teamId}`,
+    })
+    .then((response)=>{
+      setShortSellHistory(response.data.data);
+    })
+    .catch((error)=>{
+      toast.error(error.data.message);
+    })
+  }
 
   useEffect(() => {
     const unloadCallback = (event) => {
@@ -534,6 +570,8 @@ const Home = () => {
           handlePriceReveal={handlePriceReveal}
           getOrderHistory={getOrderHistory}
           getStockExchange={getStockExchange}
+          openShortSellHistory={openShortSellHistory}
+          openSpecialCardHistory={openSpecialCardHistory}
         />
         <div className="containers  ">
           <div className="main_section">
@@ -613,6 +651,18 @@ const Home = () => {
         closeModal={closeModal}
         shortSellDetail={shortSellDetail}
       />
+
+      <ShortSellHistoryModal
+        shortSellHistoryModal={shortSellHistoryModal}
+        closeModal={closeModal}
+        shortSellHistory={shortSellHistory}
+       />
+
+       <SpecialCardsHistoryModal
+        specialCardsHistoryModal={specialCardsHistoryModal}
+        closeModal={closeModal}
+        specialCardsHistory={specialCardsHistory}
+       />
 
       <Offcanvas show={show}>
         <Offcanvas.Header>

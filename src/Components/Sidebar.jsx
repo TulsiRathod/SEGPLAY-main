@@ -8,6 +8,8 @@ import DayNews from "./DayNews";
 import * as Bi from "react-icons/bi";
 import * as Fi from "react-icons/fa";
 import * as Ri from "react-icons/ri";
+import {TbStar} from "react-icons/tb";
+import {FaRegMoneyBillAlt} from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 
 const Sidebar = ({
@@ -22,8 +24,11 @@ const Sidebar = ({
   handlePriceReveal,
   getOrderHistory,
   getStockExchange,
+  openSpecialCardHistory,
+  openShortSellHistory
 }) => {
   const nav = useNavigate();
+
   const logout = () => {
     if (window.confirm("Are You Sure?")) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -46,6 +51,8 @@ const Sidebar = ({
         });
     }
   };
+
+  
 
   return (
     <>
@@ -139,6 +146,30 @@ const Sidebar = ({
                   <Tooltip title="Rules" color="black" placement="right" arrow>
                     <a>
                       <Bi.BiInfoCircle size={25} color="white" />
+                    </a>
+                  </Tooltip>
+                </li>
+
+                <li
+                  style={{ cursor: "pointer" }}
+                  onClick={openSpecialCardHistory}
+                  className="mb-3"
+                >
+                  <Tooltip title="Special Cards History" color="black" placement="right" arrow>
+                    <a>
+                      <TbStar size={25} color="white" />
+                    </a>
+                  </Tooltip>
+                </li>
+
+                <li
+                  style={{ cursor: "pointer" }}
+                  onClick={openShortSellHistory}
+                  className="mb-3"
+                >
+                  <Tooltip title="Short-sell History" color="black" placement="right" arrow>
+                    <a>
+                      <FaRegMoneyBillAlt size={25} color="white" />
                     </a>
                   </Tooltip>
                 </li>
