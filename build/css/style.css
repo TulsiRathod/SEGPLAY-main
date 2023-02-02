@@ -456,6 +456,25 @@ h3 {
   font-weight: 600;
 }
 
+.rule-point span {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.rule-box li::marker {
+  /* content: "\25A0"; */
+  font-size: 2rem;
+  color: black;
+  vertical-align: bottom;
+}
+
+.segment-block span {
+  font-size: 15px;
+  font-style: italic;
+  margin-right: 10px;
+}
+
 /* .change-color > tr > th {
   color: "white";
 } */

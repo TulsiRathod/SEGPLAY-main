@@ -62,8 +62,7 @@ const Home = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [companyName, setCompanyName] = useState();
   const [quantity, setQuantity] = useState(1000);
-  const [userAmount, setUserAmount] = useState(0);
-  const [maxQ, setMaxQ] = useState(0);
+  const [userAmount, setUserAmount] = useState();
   const [maxVQ, setMaxVQ] = useState(0);
   const [price, setPrice] = useState(0);
   const [companyId, setCompanyId] = useState("");
@@ -76,7 +75,8 @@ const Home = () => {
   const [vetoResponse, setVetoResponse] = useState(false);
   const [specialUse, setSpecialUse] = useState(true);
   const [shortSellHistoryModal, setShortSellHistoryModal] = useState(false);
-  const [specialCardsHistoryModal, setSpecialCardsHistoryModal] = useState(false);
+  const [specialCardsHistoryModal, setSpecialCardsHistoryModal] =
+    useState(false);
   const [specialCardsHistory, setSpecialCardsHistory] = useState([]);
   const [shortSellHistory, setShortSellHistory] = useState([]);
 
@@ -199,7 +199,6 @@ const Home = () => {
     stockExchangeDetails.map((stock) => {
       if (companyName === stock.company_name) {
         setCompanyId(stock.id);
-        setMaxQ(parseInt(stock.quantity / loggedInUsers.length));
         setPrice(parseInt(stock.price));
         setBidAmount(stock.price);
         setMaxVQ(stock.quantity);
@@ -226,6 +225,12 @@ const Home = () => {
   const handleVeto = () => {
     setVetoResponse(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
+    if (userAmount < (bidAmount * 90) / 100) {
+      toast.error("Invalid Bid Amount");
+      setVetoResponse(false);
+
+      return;
+    }
     if (((userAmount * 90) / 100) * quantity > balance) {
       toast.error("Insufficient Cash Balance.");
       setVetoResponse(false);
@@ -265,7 +270,7 @@ const Home = () => {
           setCompanyId("");
           setCompanyName("");
           setQuantity(0);
-          setUserAmount(0);
+          setUserAmount();
         }
       })
       .catch((error) => {
@@ -368,14 +373,14 @@ const Home = () => {
       method: "get",
       url: `${SERVER_URL}api/main/get-special-card-used`,
     })
-    .then((response)=>{
-      setSpecialCardsHistory(response.data.data);
-      console.log(response.data.data);
-    })
-    .catch((error)=>{
-      toast.error(error.data.message);
-    })
-  }
+      .then((response) => {
+        setSpecialCardsHistory(response.data.data);
+        console.log(response.data.data);
+      })
+      .catch((error) => {
+        toast.error(error.data.message);
+      });
+  };
   const openShortSellHistory = () => {
     setShortSellHistoryModal(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -383,13 +388,13 @@ const Home = () => {
       method: "get",
       url: `${SERVER_URL}api/main/get-short-sell-history?team_id=${teamId}`,
     })
-    .then((response)=>{
-      setShortSellHistory(response.data.data);
-    })
-    .catch((error)=>{
-      toast.error(error.data.message);
-    })
-  }
+      .then((response) => {
+        setShortSellHistory(response.data.data);
+      })
+      .catch((error) => {
+        toast.error(error.data.message);
+      });
+  };
 
   useEffect(() => {
     const unloadCallback = (event) => {
@@ -529,6 +534,10 @@ const Home = () => {
     calMaxLot();
   }, [companyName]);
 
+  useEffect(() => {
+    setUserAmount((bidAmount * 90) / 100);
+  }, [bidAmount]);
+
   return (
     <>
       <div className="container-fluid page-wrapper">
@@ -655,13 +664,13 @@ const Home = () => {
         shortSellHistoryModal={shortSellHistoryModal}
         closeModal={closeModal}
         shortSellHistory={shortSellHistory}
-       />
+      />
 
-       <SpecialCardsHistoryModal
+      <SpecialCardsHistoryModal
         specialCardsHistoryModal={specialCardsHistoryModal}
         closeModal={closeModal}
         specialCardsHistory={specialCardsHistory}
-       />
+      />
 
       <Offcanvas show={show}>
         <Offcanvas.Header>
@@ -694,17 +703,17 @@ const Home = () => {
                   className={`mb-2 text-dark d-${
                     companyName ? "block" : "none"
                   }`}
-                  style={{ fontSize: "14px", fontWeight: "700" }}
+                  style={{ fontSize: "12px", fontWeight: "700" }}
                 >
                   Max Quantity:{" "}
                   <span className="text-warning me-2">
                     {
-                      toIndianCurrency(parseInt(maxVQ))
+                      toIndianCurrency(Math.floor(maxVQ / 1000) * 1000)
                         .substring(1)
                         .split(".")[0]
                     }
                   </span>
-                  <br />
+                  {/* <br /> */}
                   Share Price:{" "}
                   <span className="text-warning">
                     {toIndianCurrency(price)}
@@ -745,8 +754,10 @@ const Home = () => {
                   style={{
                     backgroundColor: "#d2f9f7",
                   }}
-                  onChange={(e) => setUserAmount(e.target.value)}
-                  value={userAmount}
+                  onChange={(e) => {
+                    setUserAmount(e.target.value);
+                  }}
+                  value={userAmount ? parseInt(userAmount) : ""}
                   min={(bidAmount * 90) / 100}
                   type="number"
                   name="Total"
@@ -757,11 +768,11 @@ const Home = () => {
                   className={`mb-2 text-dark d-${
                     companyName ? "block" : "none"
                   }`}
-                  style={{ fontSize: "10px", fontWeight: "700" }}
+                  style={{ fontSize: "12px", fontWeight: "700" }}
                 >
                   Minimun Bid Amount:{" "}
                   <span className="text-warning me-2">
-                    {toIndianCurrency((bidAmount * 90) / 100)}
+                    {toIndianCurrency((bidAmount * 90) / 100).split(".")[0]}
                   </span>{" "}
                 </p>
 

@@ -8,8 +8,8 @@ import DayNews from "./DayNews";
 import * as Bi from "react-icons/bi";
 import * as Fi from "react-icons/fa";
 import * as Ri from "react-icons/ri";
-import {TbStar} from "react-icons/tb";
-import {FaRegMoneyBillAlt} from "react-icons/fa";
+import { TbStar } from "react-icons/tb";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 
 const Sidebar = ({
@@ -25,7 +25,8 @@ const Sidebar = ({
   getOrderHistory,
   getStockExchange,
   openSpecialCardHistory,
-  openShortSellHistory
+  openShortSellHistory,
+  handleShow,
 }) => {
   const nav = useNavigate();
 
@@ -51,8 +52,6 @@ const Sidebar = ({
         });
     }
   };
-
-  
 
   return (
     <>
@@ -155,7 +154,12 @@ const Sidebar = ({
                   onClick={openSpecialCardHistory}
                   className="mb-3"
                 >
-                  <Tooltip title="Special Cards History" color="black" placement="right" arrow>
+                  <Tooltip
+                    title="Special Cards History"
+                    color="black"
+                    placement="right"
+                    arrow
+                  >
                     <a>
                       <TbStar size={25} color="white" />
                     </a>
@@ -167,21 +171,26 @@ const Sidebar = ({
                   onClick={openShortSellHistory}
                   className="mb-3"
                 >
-                  <Tooltip title="Short-sell History" color="black" placement="right" arrow>
+                  <Tooltip
+                    title="Short-sell History"
+                    color="black"
+                    placement="right"
+                    arrow
+                  >
                     <a>
                       <FaRegMoneyBillAlt size={25} color="white" />
                     </a>
                   </Tooltip>
                 </li>
 
-                {/* <li
+                <li
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     handleShow();
                   }}
                 >
                   <a>V</a>
-                </li> */}
+                </li>
               </ul>
             </div>
 
