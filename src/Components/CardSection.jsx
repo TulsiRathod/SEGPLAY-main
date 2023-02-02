@@ -601,7 +601,7 @@ const CardSection = ({
                         <p className="special_card_head">Right Issue</p>
                         <p className="special_card_detail">
                           1 Additional share for every two held in any one
-                          company price Rs. xx/- per share
+                          company price Rs. 250/- per share
                         </p>
                         <img
                           src="../assets/right_issue.png"
@@ -876,7 +876,7 @@ const CardSection = ({
             </div>
             <div className="count-block">
               <p>
-                <img src="../assets/TESLA.png" />
+                <img src="../assets/SHELL.png" />
                 {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
               </p>
             </div>
@@ -890,14 +890,14 @@ const CardSection = ({
 
             <div className="count-block">
               <p>
-                <img src="../assets/SUNPM.png" />
+                <img src="../assets/TESLA.png" />
                 {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
               </p>
             </div>
 
             <div className="count-block">
               <p>
-                <img src="../assets/SHELL.png" />
+                <img src="../assets/SUNPM.png" />
                 {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
               </p>
             </div>

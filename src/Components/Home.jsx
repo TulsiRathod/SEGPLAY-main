@@ -315,7 +315,6 @@ const Home = () => {
     axios({
       method: "post",
       url: `${SERVER_URL}api/main/pass-order`,
-      headers: {},
       data: {
         team_id: teamId,
         day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
@@ -645,7 +644,7 @@ const Home = () => {
                   className={`mb-2 text-dark d-${
                     companyName ? "block" : "none"
                   }`}
-                  style={{ fontSize: "10px", fontWeight: "700" }}
+                  style={{ fontSize: "14px", fontWeight: "700" }}
                 >
                   Max Quantity:{" "}
                   <span className="text-warning me-2">
@@ -654,7 +653,8 @@ const Home = () => {
                         .substring(1)
                         .split(".")[0]
                     }
-                  </span>{" "}
+                  </span>
+                  <br />
                   Share Price:{" "}
                   <span className="text-warning">
                     {toIndianCurrency(price)}
@@ -697,7 +697,7 @@ const Home = () => {
                   }}
                   onChange={(e) => setUserAmount(e.target.value)}
                   value={userAmount}
-                  min={(price * 90) / 100}
+                  min={(bidAmount * 90) / 100}
                   type="number"
                   name="Total"
                   id="Totala"

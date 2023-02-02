@@ -15,7 +15,13 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
           </span>
           <p className="modal_title">Order History</p>
           <hr />
-          <div className="scroll_content">
+          <div
+            className="scroll_content border mt-3"
+            // style={{
+            //   borderRadius: "10px",
+            //   boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+            // }}
+          >
             <table className="table table-striped">
               <thead style={{ backgroundColor: "#20958f", color: "#fff" }}>
                 <tr>
@@ -35,6 +41,8 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                     {order.order_type === 3 ? (
                       <>
                         <td>{order.day}</td>
+                        <td>{order.round_type}</td>
+
                         <td colSpan={7} style={{ textAlign: "center" }}>
                           Pass
                         </td>
@@ -61,7 +69,6 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                           {order.order_type === 0 ? "Buy" : ""}
                           {order.order_type === 1 ? "Sell" : ""}
                           {order.order_type === 2 ? "ShortSell" : ""}
-                          {/* {order.order_type === 3 ? "Pass" : ""} */}
                           {order.order_type === 4 ? "Veto" : ""}
                         </td>
                       </>
