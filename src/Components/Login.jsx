@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { SERVER_URL, socket } from "../Baseurl";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { ThreeDots } from "react-loader-spinner";
 
 const Login = () => {
   const [teamName, setTeamName] = useState("");
@@ -123,7 +122,7 @@ const Login = () => {
                     }}
                   />
                   <label
-                    for="input_teamName"
+                    htmlFor="input_teamName"
                     className="floating_label"
                     data-content="TEAM NAME"
                   >
@@ -150,7 +149,7 @@ const Login = () => {
                     }}
                   />
                   <label
-                    for="input_password"
+                    htmlFor="input_password"
                     className="floating_label"
                     data-content="PASSWORD"
                   >
