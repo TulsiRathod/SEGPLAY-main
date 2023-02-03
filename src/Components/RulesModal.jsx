@@ -25,7 +25,7 @@ const RulesModal = ({ rulesModal, closeModal }) => {
             &nbsp;
           </span>
           <p className="modal_title">Game Rules</p>
-          <hr />
+          {/* <hr /> */}
           <div className="scroll_content p-4">
             <div className="d-flex justify-content-center">
               <p style={{ fontWeight: 800 }}> The Fin Sharp </p>

@@ -9,6 +9,7 @@ const LeaderBoard = () => {
   const nav = useNavigate();
   const [leaderboard, setLeaderboard] = useState([]);
   useEffect(() => {
+    socket.emit("winner", {});
     socket.on("winner", (data) => {
       setLeaderboard(data);
       console.log(data);

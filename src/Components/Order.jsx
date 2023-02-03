@@ -257,7 +257,7 @@ const Order = (props) => {
             disabled
           />
           <div className="row">
-            <div className="col-lg-7 mb-1">
+            <div className="col-lg-6 mb-1">
               <button
                 type="button"
                 className="bn bn-red"
@@ -267,7 +267,7 @@ const Order = (props) => {
                 {sellRes === false ? "SELL" : "Loading.."}
               </button>
             </div>
-            <div className="col-lg-5 ps-0 mb-1">
+            <div className="col-lg-6 ps-0 mb-1">
               <button
                 type="button"
                 className="bn bn-green"
@@ -279,7 +279,7 @@ const Order = (props) => {
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-5 mt-1">
+            <div className="col mt-1">
               <button
                 type="button"
                 className="bn bn-clear"
@@ -289,7 +289,7 @@ const Order = (props) => {
                 {passRes ? "Loading..." : "PASS"}
               </button>
             </div>
-            <div className="col-lg-7 ps-0 mt-1">
+            {/* <div className="col-lg-7 ps-0 mt-1">
               <button
                 type="button"
                 className="bn bn-red"
@@ -298,7 +298,7 @@ const Order = (props) => {
               >
                 {shortsellRes === false ? "SHORT SELL" : "Loading.."}
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
