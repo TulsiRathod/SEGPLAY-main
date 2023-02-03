@@ -210,7 +210,7 @@ const Home = () => {
     if (quantity + 1000 < maxVQ) {
       setQuantity(quantity + 1000);
     } else {
-      toast("Can't Increase Quantity");
+      toast("You have reached max quantity");
     }
   };
 
@@ -218,7 +218,7 @@ const Home = () => {
     if (quantity - 1000 > 0) {
       setQuantity(quantity - 1000);
     } else {
-      toast("Quantity can't less than 0");
+      toast("Quantity can't be less than 1000");
     }
   };
 
@@ -332,6 +332,7 @@ const Home = () => {
         team_id: teamId,
         day_no: parseInt(localStorage.getItem("SEG_CURRENT_DAY")),
         order_time: new Date().toJSON(),
+        round: parseInt(localStorage.getItem("SEG_CURRENT_ROUND")),
       },
     })
       .then((response) => {
@@ -603,6 +604,7 @@ const Home = () => {
                   setOrderPlaced={setOrderPlaced}
                   setSpecialUse={setSpecialUse}
                   specialUse={specialUse}
+                  getStockExchange={getStockExchange}
                 />
               </div>
               <div className="col-lg-3 p-0">

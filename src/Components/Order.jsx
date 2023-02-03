@@ -64,7 +64,6 @@ const Order = (props) => {
       },
     })
       .then((response) => {
-        // console.log("order ho gaya", response);
         setBuyRes(false);
         toast.success(response.data.message);
         getWalletDetails();
@@ -162,18 +161,18 @@ const Order = (props) => {
   };
 
   const handleIncrease = () => {
-    if (quantity + 1000 < maxQ) {
+    if (quantity + 1000 <= maxQ) {
       setQuantity(quantity + 1000);
     } else {
-      toast("Can't Increase Quantity");
+      toast("You have reached max quantity");
     }
   };
 
   const handleDecrease = () => {
-    if (quantity - 1000 > 0) {
+    if (quantity - 1000 >= 0) {
       setQuantity(quantity - 1000);
     } else {
-      toast("Quantity can't less than 0");
+      toast("Quantity can't be less than 0");
     }
   };
 

@@ -56,6 +56,7 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                           {order.execution === 0 ? "Failed" : ""}
                           {order.execution === 1 ? "Executed" : ""}
                           {order.execution === 2 ? "Settled" : ""}
+                          {order.execution === 3 ? "Lose" : ""}
                         </td>
                         <td>{order.company_name}</td>
                         <td>{order.stock_quantity}</td>

@@ -20,6 +20,7 @@ const CardSection = ({
   setOrderPlaced,
   setSpecialUse,
   specialUse,
+  getStockExchange,
 }) => {
   const [cards, setCards] = useState([]);
   const [specialShow, setSpecialShow] = useState(false);
@@ -56,7 +57,6 @@ const CardSection = ({
 
   const getCard = async () => {
     setWeHaveCard(true);
-
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     await axios({
       method: "post",
@@ -119,12 +119,12 @@ const CardSection = ({
             if (response.data.success) {
               toast.success(response.data.message);
               setdisableOrders(true);
+              getWalletDetails();
             }
           })
           .catch((error) => {
             console.log("error", error);
             setdisableOrders(false);
-
             setOrderPlaced(false);
             setSpecialCard(false);
           });
@@ -166,7 +166,6 @@ const CardSection = ({
             console.log("error", error);
             setOrderPlaced(false);
             setdisableOrders(false);
-
             setSpecialCard(false);
           });
       }
@@ -389,15 +388,14 @@ const CardSection = ({
           setSpecialUse(true);
           setSpResponse(false);
           getWalletDetails();
+          getStockExchange();
           setSpecialShow(false);
-          setdisableOrders(true);
           setSpecialCard(true);
         }
       })
       .catch((error) => {
         toast(error.response.data.message);
         setSpResponse(false);
-
         setSpDisable(false);
         setIsShareSus(false);
         setOrderPlaced(false);
