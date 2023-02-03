@@ -323,6 +323,7 @@ const Home = () => {
   };
 
   const handlePass = () => {
+    setdisableOrders(true);
     setPassRes(true);
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({
@@ -339,11 +340,11 @@ const Home = () => {
         setPassRes(false);
         toast.success(response.data.message);
         getWalletDetails();
-        setdisableOrders(true);
         setOrderPlaced(true);
       })
       .catch((error) => {
         console.log(error);
+        setdisableOrders(false);
         toast.error(error.response.data.message);
       });
   };
@@ -621,6 +622,7 @@ const Home = () => {
                   handlePass={handlePass}
                   loggedInUsers={loggedInUsers}
                   setOrderPlaced={setOrderPlaced}
+                  passRes={passRes}
                 />
               </div>
             </div>

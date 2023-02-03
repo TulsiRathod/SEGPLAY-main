@@ -51,7 +51,6 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
                       <>
                         <td>{order.day}</td>
                         <td>{order.round_type}</td>
-
                         <td>
                           {order.execution === 0 ? "Failed" : ""}
                           {order.execution === 1 ? "Executed" : ""}

@@ -469,6 +469,15 @@ h3 {
   vertical-align: bottom;
 }
 
+.rule-box p {
+  width: 1000px;
+}
+
+.segment-block {
+  margin: 10px 0;
+  width: 1000px;
+}
+
 .segment-block span {
   font-size: 15px;
   font-style: italic;

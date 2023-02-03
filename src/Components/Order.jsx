@@ -12,6 +12,7 @@ const Order = (props) => {
     handlePass,
     setOrderPlaced,
     loggedInUsers,
+    passRes,
   } = props;
   const [quantity, setQuantity] = useState(1000);
   const [maxQ, setMaxQ] = useState();
@@ -21,7 +22,6 @@ const Order = (props) => {
   const [buyRes, setBuyRes] = useState(false);
   const [sellRes, setSellRes] = useState(false);
   const [shortsellRes, setShortsellRes] = useState(false);
-  const [passRes, setPassRes] = useState(false);
 
   const nf = new Intl.NumberFormat();
 
@@ -286,7 +286,7 @@ const Order = (props) => {
                 disabled={disableOrders}
                 onClick={() => handlePass()}
               >
-                PASS
+                {passRes ? "Loading..." : "PASS"}
               </button>
             </div>
             <div className="col-lg-7 ps-0 mt-1">
