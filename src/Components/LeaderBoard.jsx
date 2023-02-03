@@ -25,7 +25,6 @@ const LeaderBoard = () => {
       },
     })
       .then((response) => {
-        // console.log("Success", response);
         toast.success(response.data.message);
         localStorage.clear();
         nav("/");
