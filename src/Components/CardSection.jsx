@@ -875,7 +875,7 @@ const CardSection = ({
             <div className="count-block">
               <p>
                 <img src="../assets/SHELL.png" />
-                {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
+                {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
               </p>
             </div>
 
@@ -889,14 +889,14 @@ const CardSection = ({
             <div className="count-block">
               <p>
                 <img src="../assets/TESLA.png" />
-                {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
+                {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
               </p>
             </div>
 
             <div className="count-block">
               <p>
                 <img src="../assets/SUNPM.png" />
-                {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
+                {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
               </p>
             </div>
           </>

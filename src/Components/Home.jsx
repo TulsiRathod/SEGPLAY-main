@@ -504,6 +504,7 @@ const Home = () => {
       }
       if (data.gameEnd) {
         setTimeout(() => {
+          socket.emit("winner", {});
           nav("/Leaderboard");
         }, 4000);
       }
