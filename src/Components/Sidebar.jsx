@@ -166,7 +166,7 @@ const Sidebar = ({
                   </Tooltip>
                 </li>
 
-                {/* <li
+                <li
                   style={{ cursor: "pointer" }}
                   onClick={openShortSellHistory}
                   className="mb-3"
@@ -181,7 +181,7 @@ const Sidebar = ({
                       <FaRegMoneyBillAlt size={25} color="white" />
                     </a>
                   </Tooltip>
-                </li> */}
+                </li>
 
                 {/* <li
                   style={{ cursor: "pointer" }}

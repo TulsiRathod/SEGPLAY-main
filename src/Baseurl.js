@@ -2,8 +2,9 @@ import { io } from "socket.io-client";
 
 export const SERVER_URL = "http://20.219.164.153/";
 export const ROUND_DELAY = 60;
+export const SOCKET_URL = "http://20.219.164.153:8000/";
 
-export const socket = io(SERVER_URL);
+export const socket = io(SOCKET_URL);
 
 export const toIndianCurrency = (num) => {
   const curr = num.toLocaleString("en-IN", {
