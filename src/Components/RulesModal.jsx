@@ -429,7 +429,10 @@ const RulesModal = ({ rulesModal, closeModal }) => {
           </div>
           {!accept ? (
             <>
-              <div className="d-flex justify-content-between pt-4 bg-light mt-auto">
+              <div
+                className="d-flex justify-content-between pt-4 mt-auto"
+                style={{ backgroundColor: "#ffffff" }}
+              >
                 <div className="d-flex px-3 my-auto">
                   <input
                     className="me-2"

@@ -42,35 +42,43 @@ const Login = () => {
 
   const handleLogin = () => {
     setRes(true);
-    if (!isGameStarted) {
-      if (validator()) {
-        axios({
-          method: "post",
-          url: `${SERVER_URL}api/main/login`,
-          headers: {},
-          data: {
-            username: teamName,
-            password: password,
-          },
-        })
-          .then((response) => {
-            toast.success(response.data.message);
-            localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
-            localStorage.setItem("TEAM_NAME", response.data.data.username);
-            localStorage.setItem("VETO_ORDER_COUNT", 0);
-
-            setRes(false);
-            nav("/home");
-          })
-          .catch((error) => {
-            console.log(error);
-            setRes(false);
-            toast.error(error.response.data.message);
-          });
-      }
-    } else {
+    if (teamName === localStorage.getItem("TEAM_NAME")) {
+      nav("/home");
       setRes(false);
-      toast.error("Sorry! Game Is Already Started");
+
+      return;
+    } else {
+      if (!isGameStarted) {
+        if (validator()) {
+          axios({
+            method: "post",
+            url: `${SERVER_URL}api/main/login`,
+            headers: {},
+            data: {
+              username: teamName,
+              password: password,
+            },
+          })
+            .then((response) => {
+              localStorage.clear();
+              toast.success(response.data.message);
+              localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
+              localStorage.setItem("TEAM_NAME", response.data.data.username);
+              localStorage.setItem("VETO_ORDER_COUNT", 0);
+
+              setRes(false);
+              nav("/home");
+            })
+            .catch((error) => {
+              console.log(error);
+              setRes(false);
+              toast.error(error.response.data.message);
+            });
+        }
+      } else {
+        setRes(false);
+        toast.error("Sorry! Game Is Already Started");
+      }
     }
   };
 

@@ -26,10 +26,11 @@ const Sidebar = ({
   getStockExchange,
   openSpecialCardHistory,
   openShortSellHistory,
-  handleShow,
 }) => {
   const nav = useNavigate();
-
+  window.onbeforeunload = function () {
+    localStorage.clear();
+  };
   const logout = () => {
     if (window.confirm("Are You Sure?")) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");
@@ -43,7 +44,6 @@ const Sidebar = ({
         .then((response) => {
           // console.log("Success", response);
           toast.success(response.data.message);
-          localStorage.clear();
           nav("/");
         })
         .catch((error) => {
@@ -135,19 +135,6 @@ const Sidebar = ({
                     </a>
                   </Tooltip>
                 </li>
-                <li
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setRulesModal(true);
-                  }}
-                  className="mb-3"
-                >
-                  <Tooltip title="Rules" color="black" placement="right" arrow>
-                    <a>
-                      <Bi.BiInfoCircle size={25} color="white" />
-                    </a>
-                  </Tooltip>
-                </li>
 
                 <li
                   style={{ cursor: "pointer" }}
@@ -182,36 +169,50 @@ const Sidebar = ({
                     </a>
                   </Tooltip>
                 </li>
-
                 <li
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setRulesModal(true);
+                  }}
+                  className="mb-3"
+                >
+                  <Tooltip title="Rules" color="black" placement="right" arrow>
+                    <a>
+                      <Bi.BiInfoCircle size={25} color="white" />
+                    </a>
+                  </Tooltip>
+                </li>
+
+                {/* <li
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     handleShow();
                   }}
                 >
                   <a>V</a>
-                </li>
+                </li> */}
               </ul>
             </div>
 
             <div className="bottom_menu d-flex h-100">
               <ul className="list-unstyled text-center align-self-start mt-auto mb-0">
                 <li style={{ cursor: "pointer" }}>
-                <Tooltip
+                  <Tooltip
                     title={localStorage
                       .getItem("TEAM_NAME")
                       .toLocaleUpperCase()
                       .replace("_", " ")}
                     color="black"
                     placement="right"
-                    arrow>
-                  <a>
-                    <img
-                      src="../assets/man.png"
-                      width="30"
-                      style={{ paddingTop: "20px" }}
-                    />
-                  </a>
+                    arrow
+                  >
+                    <a>
+                      <img
+                        src="../assets/man.png"
+                        width="30"
+                        style={{ paddingTop: "20px" }}
+                      />
+                    </a>
                   </Tooltip>
                 </li>
                 <li style={{ paddingTop: "20px", cursor: "pointer" }}>
