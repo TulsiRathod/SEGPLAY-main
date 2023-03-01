@@ -183,20 +183,28 @@ const Sidebar = ({
                   </Tooltip>
                 </li>
 
-                {/* <li
+                <li
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     handleShow();
                   }}
                 >
                   <a>V</a>
-                </li> */}
+                </li>
               </ul>
             </div>
 
             <div className="bottom_menu d-flex h-100">
               <ul className="list-unstyled text-center align-self-start mt-auto mb-0">
                 <li style={{ cursor: "pointer" }}>
+                <Tooltip
+                    title={localStorage
+                      .getItem("TEAM_NAME")
+                      .toLocaleUpperCase()
+                      .replace("_", " ")}
+                    color="black"
+                    placement="right"
+                    arrow>
                   <a>
                     <img
                       src="../assets/man.png"
@@ -204,6 +212,7 @@ const Sidebar = ({
                       style={{ paddingTop: "20px" }}
                     />
                   </a>
+                  </Tooltip>
                 </li>
                 <li style={{ paddingTop: "20px", cursor: "pointer" }}>
                   <Tooltip title="Logout" color="black" placement="right" arrow>

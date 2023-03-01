@@ -855,8 +855,7 @@ const CardSection = ({
             </div>
           </>
         )}
-      </div>
-      <div className="card_count">
+        <div className="card_count">
         {cardReveal ? (
           <>
             <div className="count-block">
@@ -904,6 +903,8 @@ const CardSection = ({
           ""
         )}
       </div>
+      </div>
+    
 
       <Offcanvas show={specialShow} onHide={() => setSpecialShow(false)}>
         <Offcanvas.Header closeButton>

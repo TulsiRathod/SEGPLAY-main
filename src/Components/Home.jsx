@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ROUND_DELAY, SERVER_URL, toIndianCurrency } from "../Baseurl";
+import { ROUND_DELAY, SERVER_URL, socket, toIndianCurrency } from "../Baseurl";
 import ExchangeModal from "./ExchangeModal";
 import OrderModal from "./OrderModal";
 import PortfolioModal from "./PortfolioModal";
 import RulesModal from "./RulesModal";
 import Sidebar from "./Sidebar";
-import { io } from "socket.io-client";
 import { toast } from "react-hot-toast";
 import Portfolio from "./Portfolio";
 import CardSection from "./CardSection";
@@ -23,8 +22,7 @@ import SpecialCardsHistoryModal from "./SpecialCardHistory";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 
-const socket = io(SERVER_URL);
-
+// const socket = io(SERVER_URL)
 const Home = () => {
   const nav = useNavigate();
   const [rulesModal, setRulesModal] = useState(false);
@@ -231,7 +229,7 @@ const Home = () => {
 
       return;
     }
-    if (((userAmount * 90) / 100) * quantity > balance) {
+    if (userAmount * quantity > balance) {
       toast.error("Insufficient Cash Balance.");
       setVetoResponse(false);
       return;
@@ -544,7 +542,25 @@ const Home = () => {
   return (
     <>
       <div className="container-fluid page-wrapper">
-        <div className="dynamic_island">
+       
+        <Sidebar
+          setOrderModal={setOrderModal}
+          setPortfolioModal={setPortfolioModal}
+          setExchangeModal={setExchangeModal}
+          setRulesModal={setRulesModal}
+          setStockHistoryModal={setStockHistoryModal}
+          day={day}
+          round={round}
+          cardReveal={cardReveal}
+          handleShow={() => handleShow()}
+          news={news}
+          handlePriceReveal={handlePriceReveal}
+          getOrderHistory={getOrderHistory}
+          getStockExchange={getStockExchange}
+          openShortSellHistory={openShortSellHistory}
+          openSpecialCardHistory={openSpecialCardHistory}
+        />
+         <div className="dynamic_island">
           <div className="d-flex justify-content-between">
             <div className="">Day {day}</div>
             <div className="" style={{ fontSize: "18px", fontWeight: "500" }}>
@@ -567,27 +583,10 @@ const Home = () => {
             <div className="">Round-{round}</div>
           </div>
         </div>
-        <Sidebar
-          setOrderModal={setOrderModal}
-          setPortfolioModal={setPortfolioModal}
-          setExchangeModal={setExchangeModal}
-          setRulesModal={setRulesModal}
-          setStockHistoryModal={setStockHistoryModal}
-          day={day}
-          round={round}
-          cardReveal={cardReveal}
-          handleShow={() => handleShow()}
-          news={news}
-          handlePriceReveal={handlePriceReveal}
-          getOrderHistory={getOrderHistory}
-          getStockExchange={getStockExchange}
-          openShortSellHistory={openShortSellHistory}
-          openSpecialCardHistory={openSpecialCardHistory}
-        />
         <div className="containers  ">
           <div className="main_section">
             <div className="row">
-              <div className="col-lg-9">
+              <div className="col-lg-9 position-relative">
                 <Portfolio
                   portfolioDetails={portfolioDetails}
                   stockExchangeDetails={stockExchangeDetails}
@@ -793,7 +792,7 @@ const Home = () => {
                 >
                   Total Amount:{" "}
                   <span className="text-warning me-2">
-                    {toIndianCurrency(((userAmount * 90) / 100) * quantity)}
+                    {toIndianCurrency(userAmount  * quantity)}
                   </span>{" "}
                 </div>
               </div>

@@ -56,6 +56,7 @@ const Login = () => {
           .then((response) => {
             toast.success(response.data.message);
             localStorage.setItem("SEG_TEAM_ID", response.data.data.id);
+            localStorage.setItem("TEAM_NAME", response.data.data.username);
             localStorage.setItem("VETO_ORDER_COUNT", 0);
 
             setRes(false);

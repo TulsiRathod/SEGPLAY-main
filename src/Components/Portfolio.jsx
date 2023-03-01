@@ -39,7 +39,7 @@ const Portfolio = (props) => {
       <div className="portfolio ">
         <div
           className="row justify-content-center"
-          style={{ height: "calc(40vh - 60px)" }}
+          style={{ /*height: "calc(40vh - 60px)" */}}
         >
           <div className="col-5 d-flex">
             <div
