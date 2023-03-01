@@ -16,7 +16,7 @@ const OrderModal = ({ orderModal, closeModal, orderHistory }) => {
           <p className="modal_title">Order History</p>
           <hr />
           <div
-            className="scroll_content border mt-3"
+            className="scroll_content mt-3"
             // style={{
             //   borderRadius: "10px",
             //   boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",

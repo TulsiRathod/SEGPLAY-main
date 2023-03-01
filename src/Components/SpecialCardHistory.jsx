@@ -1,7 +1,10 @@
 import React from "react";
 
-const SpecialCardHistory = ({ specialCardsHistoryModal, specialCardsHistory, closeModal }) => {
-
+const SpecialCardHistory = ({
+  specialCardsHistoryModal,
+  specialCardsHistory,
+  closeModal,
+}) => {
   const cardType = (e) => {
     switch (e) {
       case 2:
@@ -25,12 +28,8 @@ const SpecialCardHistory = ({ specialCardsHistoryModal, specialCardsHistory, clo
       id="exchange_modal"
       className="modal"
       style={
-        specialCardsHistoryModal 
-        ?
-         { display: "flex" } 
-        : 
-        { display: "none" }
-    }
+        specialCardsHistoryModal ? { display: "flex" } : { display: "none" }
+      }
     >
       <div className="modal-content" id="exchange_modal_content">
         <span className="close" id="exchange_close" onClick={closeModal}>
@@ -65,23 +64,21 @@ const SpecialCardHistory = ({ specialCardsHistoryModal, specialCardsHistory, clo
                         : ""}
                     </td>
                     <td>
-                        {elem.team_id === localStorage.getItem("SEG_TEAM_ID")
-                         ? 'You'
-                         : 'Others'
-                         }
+                      {elem.team_id === localStorage.getItem("SEG_TEAM_ID")
+                        ? "You"
+                        : "Others"}
                     </td>
                   </tr>
                 ))}
               </tbody>
             ) : (
-            <tbody>
+              <tbody>
                 <tr>
-                    <td colSpan={5} align="center">
+                  <td colSpan={5} align="center">
                     No Specail Card Has been used
-                    </td>
+                  </td>
                 </tr>
-            </tbody>
-              
+              </tbody>
             )}
           </table>
         </div>
