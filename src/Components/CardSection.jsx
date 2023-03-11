@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { toast } from "react-hot-toast";
-import { ROUND_DELAY, SERVER_URL } from "../Baseurl";
+import { ROUND_DELAY, SERVER_URL, socket } from "../Baseurl";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import * as Bs from "react-icons/bs";
@@ -69,9 +69,9 @@ const CardSection = ({
       .then((response) => {
         if (response.data.success) {
           setCards(response.data.cards);
+          socket.emit("cardDistribution", {});
           getNews();
           setSpecialCard(false);
-          // setShow(true);
           let counts = {
             GOOGL: 0,
             TESLA: 0,
@@ -856,55 +856,54 @@ const CardSection = ({
           </>
         )}
         <div className="card_count">
-        {cardReveal ? (
-          <>
-            <div className="count-block">
-              <p>
-                {" "}
-                <img src="../assets/GOOGL.png" alt="" srcset="" />
-                {cardCount.GOOGL > 0 ? "+" : ""} {cardCount.GOOGL}
-              </p>
-            </div>
-            <div className="count-block">
-              <p>
-                <img src="../assets/ADANI.png" />
-                {cardCount.ADANI > 0 ? "+" : ""} {cardCount.ADANI}
-              </p>
-            </div>
-            <div className="count-block">
-              <p>
-                <img src="../assets/SHELL.png" />
-                {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
-              </p>
-            </div>
+          {cardReveal ? (
+            <>
+              <div className="count-block">
+                <p>
+                  {" "}
+                  <img src="../assets/GOOGL.png" alt="" srcset="" />
+                  {cardCount.GOOGL > 0 ? "+" : ""} {cardCount.GOOGL}
+                </p>
+              </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/ADANI.png" />
+                  {cardCount.ADANI > 0 ? "+" : ""} {cardCount.ADANI}
+                </p>
+              </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/SHELL.png" />
+                  {cardCount.SHELL > 0 ? "+" : ""} {cardCount.SHELL}
+                </p>
+              </div>
 
-            <div className="count-block">
-              <p>
-                <img src="../assets/YESBK.png" />
-                {cardCount.YESBK > 0 ? "+" : ""} {cardCount.YESBK}
-              </p>
-            </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/YESBK.png" />
+                  {cardCount.YESBK > 0 ? "+" : ""} {cardCount.YESBK}
+                </p>
+              </div>
 
-            <div className="count-block">
-              <p>
-                <img src="../assets/TESLA.png" />
-                {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
-              </p>
-            </div>
+              <div className="count-block">
+                <p>
+                  <img src="../assets/TESLA.png" />
+                  {cardCount.TESLA > 0 ? "+" : ""} {cardCount.TESLA}
+                </p>
+              </div>
 
-            <div className="count-block">
-              <p>
-                <img src="../assets/SUNPM.png" />
-                {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
-              </p>
-            </div>
-          </>
-        ) : (
-          ""
-        )}
+              <div className="count-block">
+                <p>
+                  <img src="../assets/SUNPM.png" />
+                  {cardCount.SUNPM > 0 ? "+" : ""} {cardCount.SUNPM}
+                </p>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-      </div>
-    
 
       <Offcanvas show={specialShow} onHide={() => setSpecialShow(false)}>
         <Offcanvas.Header closeButton>
