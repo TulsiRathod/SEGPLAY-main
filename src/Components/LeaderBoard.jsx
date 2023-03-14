@@ -10,13 +10,22 @@ const LeaderBoard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    socket.emit("winner", {});
-    socket.on("winner", (data) => {
-      setLeaderboard(data);
-      console.log(data);
-    });
+    getWinnerList();
   }, []);
-
+  const getWinnerList = () => {
+    axios({
+      method: "get",
+      url: `${SERVER_URL}api/Admin/leader-board?auth_code=SEGPLAY`,
+    })
+      .then((response) => {
+        console.log(response.data.data);
+        setLeaderboard(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.message);
+      });
+  };
   const logout = () => {
     const teamId = localStorage.getItem("SEG_TEAM_ID");
     axios({

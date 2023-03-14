@@ -6,21 +6,21 @@ import LeaderBoard from "./Components/LeaderBoard";
 import Login from "./Components/Login";
 
 function App() {
-  // useEffect(() => {
-  //   const handleContextmenu = (e) => {
-  //     e.preventDefault();
-  //   };
-  //   document.addEventListener("contextmenu", handleContextmenu);
+  useEffect(() => {
+    const handleContextmenu = (e) => {
+      e.preventDefault();
+    };
+    document.addEventListener("contextmenu", handleContextmenu);
 
-  //   window.history.pushState(null, null, window.location.href);
-  //   window.onpopstate = function () {
-  //     window.history.go(1);
-  //   };
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+      window.history.go(1);
+    };
 
-  //   return function cleanup() {
-  //     document.removeEventListener("contextmenu", handleContextmenu);
-  //   };
-  // }, []);
+    return function cleanup() {
+      document.removeEventListener("contextmenu", handleContextmenu);
+    };
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
