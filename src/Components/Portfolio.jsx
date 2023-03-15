@@ -39,8 +39,13 @@ const Portfolio = (props) => {
       <div className="portfolio ">
         <div
           className="row justify-content-center"
-          style={{ /*height: "calc(40vh - 60px)" */}}
+          style={
+            {
+              /*height: "calc(40vh - 60px)" */
+            }
+          }
         >
+          {/* Heatmap Start */}
           <div className="col-5 d-flex">
             <div
               className="row"
@@ -94,8 +99,8 @@ const Portfolio = (props) => {
                                   stockDetails[0].previous_day_price) *
                                   100) /
                                 stockDetails[0].previous_day_price
-                              ).toPrecision(2)
-                            : 0}
+                              ).toFixed(2)
+                            : "0.0"}
                           %
                         </div>
                       </div>
@@ -144,8 +149,8 @@ const Portfolio = (props) => {
                                   stockDetails[1].previous_day_price) *
                                   100) /
                                 stockDetails[1].previous_day_price
-                              ).toPrecision(2)
-                            : 0}
+                              ).toFixed(2)
+                            : "0.0"}
                           %
                         </div>
                       </div>
@@ -196,8 +201,8 @@ const Portfolio = (props) => {
                                   stockDetails[2].previous_day_price) *
                                   100) /
                                 stockDetails[2].previous_day_price
-                              ).toPrecision(2)
-                            : 0}
+                              ).toFixed(2)
+                            : "0.0"}
                           %
                         </div>
                       </div>
@@ -246,8 +251,8 @@ const Portfolio = (props) => {
                                     stockDetails[3].previous_day_price) *
                                     100) /
                                   stockDetails[3].previous_day_price
-                                ).toPrecision(2)
-                              : 0}
+                                ).toFixed(2)
+                              : "0.0"}
                             %
                           </div>
                         </div>
@@ -296,8 +301,8 @@ const Portfolio = (props) => {
                                       stockDetails[4].previous_day_price) *
                                       100) /
                                     stockDetails[4].previous_day_price
-                                  ).toPrecision(2)
-                                : 0}
+                                  ).toFixed(2)
+                                : "0.0"}
                               %
                             </div>
                           </div>
@@ -346,8 +351,8 @@ const Portfolio = (props) => {
                                       stockDetails[5].previous_day_price) *
                                       100) /
                                     stockDetails[5].previous_day_price
-                                  ).toPrecision(2)
-                                : 0}
+                                  ).toFixed(2)
+                                : "0.0"}
                               %
                             </div>
                           </div>
@@ -361,6 +366,7 @@ const Portfolio = (props) => {
               </div>
             </div>
           </div>
+          {/* Heatmap End  */}
           <div className="col-7 p-2">
             <div className="px-3 portfolio_tbl_wrapper">
               <h3 className="mb-0">Portfolio</h3>

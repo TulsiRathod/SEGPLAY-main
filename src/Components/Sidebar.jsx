@@ -28,9 +28,9 @@ const Sidebar = ({
   openShortSellHistory,
 }) => {
   const nav = useNavigate();
-  window.onbeforeunload = function () {
-    localStorage.clear();
-  };
+  // window.onbeforeunload = function () {
+  //   localStorage.clear();
+  // };
   const logout = () => {
     if (window.confirm("Are You Sure?")) {
       const teamId = localStorage.getItem("SEG_TEAM_ID");

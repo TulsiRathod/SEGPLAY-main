@@ -165,10 +165,10 @@ const PortfolioModal = ({
                       </p>
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>0</p>
+                      <p>₹0.00</p>
                     </td>
                     <td style={{ textAlign: "center" }}>
-                      <p>0%</p>
+                      <p>0.00%</p>
                     </td>
                   </tr>
                 ))}
